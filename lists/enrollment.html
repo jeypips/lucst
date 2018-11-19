@@ -1,0 +1,35 @@
+<div class="panel panel-border panel-primary">
+	<div class="panel-heading">
+		<h4><i class="icon-layers"></i> Personal Information
+		<button class="btn btn-facebook waves-effect waves-light pull-right" ng-click="form.registration(this)">Add <i class="fa fa-plus"></i></button>
+		</h4>
+	</div>
+<hr>
+	<div class="panel-body">
+		<table id="students" class="table table-striped">
+		  <thead>
+			<tr>
+			  <th>No.</th>
+			  <th>Name</th>
+			  <th>Sex</th>
+			  <th>Home Address</th>
+			  <th>Course</th>
+			  <th>&nbsp;</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr ng-repeat="s in students">
+			  <td>{{s.$index+1}}</td>
+			  <td>{{s.fullname}}</td>
+			  <td>{{s.sex}}</td>
+			  <td>{{s.home_address}}</td>
+			  <td>{{s.course}}</td>
+			  <td>
+			  <button class="btn btn-sm btn-primary" ng-click="form.registration(this,p)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
+			  <button class="btn btn-sm btn-googleplus" ng-click="form.delete(this,p)" ng-show="accountProfile.account_type == 'Admin'"><i class="fa fa-close" style="cursor: pointer;"></i></button>
+			  </td>
+			</tr>
+		  </tbody>
+		</table>
+	</div>
+</div>
