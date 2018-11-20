@@ -1,17 +1,14 @@
-angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl','bootstrap-modal']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal) {
+angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal) {
 
 	function app() {
 
-		var self = this;				
+		var self = this;
+
+		var loading = '<div class="col-sm-offset-4 col-sm-8"><button type="button" class="btn btn-dark" title="Loading" disabled><i class="fa fa-spinner fa-spin"></i>&nbsp; Please wait...</button></div>';		
 
 		self.data = function(scope) {
 
 			scope.formHolder = {};
-			
-			scope.views = {};
-			scope.views.currentPage = 1;
-
-			scope.views.list = true;
 			
 			scope.btns = {
 				ok: { btn: false, label: 'Save'},
@@ -21,50 +18,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.student = {};
 			scope.student.id = 0;			
 			
-			scope.students = [];
+			scope.students = []; //list
 			
 		};
 		
-		self.list = function(scope) {
+		function validate(scope) {
 			
-			bui.show();
+			var controls = scope.formHolder.student.$$controls;
 			
-			if (scope.$id > 2) scope = scope.$parent;			
-			
-			scope.views.list = true;			
-			
-			scope.employee = {};
-			scope.employee.employee_id = 0;						
-			
-			$http({
-			  method: 'POST',
-			  url: 'handlers/enrollment/list.php'
-			}).then(function success(response) {
+			angular.forEach(controls,function(elem,i) {
 				
-				scope.students = angular.copy(response.data);
-				
-				bui.hide();
-				
-			}, function error(response) {
-				
-				bui.hide();
+				if (elem.$$attr.$attr.required) elem.$touched = elem.$invalid;
+									
+			});
 
-			});			
-			
-			$('#content').load('lists/enrollment.html', function() {
-				
-				$timeout(function() { $compile($('#content')[0])(scope); },200);
-				
-				// instantiate datable
-				scope.$on('$routeChangeSuccess', function() {
-					$('#students').DataTable({
-						"ordering": false,
-						"processing": true
-					});	
-				});
-				
-				
-			});	
+			return scope.formHolder.student.$invalid;
 			
 		};
 		
@@ -81,21 +49,53 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				scope.btns.ok.btn = true;
 			}
 			
-		};	
-		/* 
-		self.employee = function(scope,row) {			
-			
-			if (!access.has(scope,scope.profile.groups,scope.module.id,scope.module.privileges.add)) return;
+		};
+		
+		self.list = function(scope) {
 			
 			bui.show();
 			
-			scope.views.list = false;
+			if (scope.$id > 2) scope = scope.$parent;			
 			
-			departments(scope);
+			scope.student = {};
+			scope.student.id = 0;						
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/enrollment/list.php'
+			}).then(function success(response) {
+				
+				scope.students = angular.copy(response.data);
+				
+				bui.hide();
+				
+			}, function error(response) {
+				
+				bui.hide();
+
+			});			
+			
+			$('#content').html(loading);
+			$('#content').load('lists/enrollment.html', function() {
+				$timeout(function() { $compile($('#content')[0])(scope); },100);								
+				// instantiate datable
+				$timeout(function() {
+					$('#students').DataTable({
+						"ordering": false
+					});	
+				},200);
+				
+			});		
+			
+		};
+		
+		self.student = function(scope,row) {			
+			
+			bui.show();
 			
 			mode(scope,row);
 			
-			$('#content').load('forms/employee.html',function() {
+			$('#content').load('forms/enrollment.html',function() {
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -104,12 +104,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 						$http({
 						  method: 'POST',
-						  url: 'handlers/employees/view.php',
-						  data: {where: {employee_id: row.employee_id}, model: model(scope,'employee',["employee_id"])}
+						  url: 'handlers/enrollment/view.php',
+						  data: {id: row.id}
 						}).then(function success(response) {
 							
-							scope.employee = angular.copy(response.data);
-							if (scope.employee.employee_dob) scope.employee.employee_dob = new Date(scope.employee.employee_dob);
+							scope.student = angular.copy(response.data);
+							// if (scope.employee.employee_dob) scope.employee.employee_dob = new Date(scope.employee.employee_dob);
 							bui.hide();							
 							
 						}, function error(response) {
@@ -120,8 +120,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 					} else {
 						
-						scope.employee = {};
-						scope.employee.employee_id = 0;
+						scope.student = {};
+						scope.student.id = 0;
 						
 					};
 					
@@ -134,9 +134,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			
-			scope.employee = {};
-			scope.employee.employee_id = 0;			
+			scope.student = {};
+			scope.student.id = 0;			
 			
 			self.list(scope);
 			
@@ -150,21 +149,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.save = function(scope) {
 
-			if (validate.form(scope,'employee')) {
-				growl.show('danger',{from: 'top', amount: 55},'Some fields are required');				
+			if (validate(scope)) {
+				growl.show('btn btn-danger',{from: 'top', amount: 55},'Some fields are required');				
 				return;
 			};
 
 			$http({
 			  method: 'POST',
-			  url: 'handlers/employees/save.php',
-			  data: scope.employee
+			  url: 'handlers/enrollment/save.php',
+			  data: {student: scope.student}
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.employee.employee_id == 0) growl.show('success',{from: 'top', amount: 55},'New employee successfully added');				
-				else growl.show('success',{from: 'top', amount: 55},'Employee info successfully updated');				
-				self.list(scope);								
+				if (scope.student.id == 0) growl.show('success',{from: 'top', amount: 55},'New student info successfully added');				
+				else growl.show('success',{from: 'top', amount: 55},'Student info successfully updated');				
+				mode(scope,scope.student);								
 				
 			}, function error(response) {
 				
@@ -176,14 +175,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.delete = function(scope,row) {
 			
-			if (!access.has(scope,scope.profile.groups,scope.module.id,scope.module.privileges.delete)) return;
-			
 			var onOk = function() {
 				
 				$http({
 					method: 'POST',
-					url: 'handlers/employees/delete.php',
-					data: {employee_id: row.employee_id}
+					url: 'handlers/enrollment/delete.php',
+					data: {id: row.id}
 				}).then(function mySuccess(response) {
 
 					self.list(scope);
@@ -197,18 +194,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this profile?',onOk,function() {});			
 			
 		};
-
-		function model(scope,form,model) {
-			
-			angular.forEach(scope.formHolder[form].$$controls,function (elem,i) {
-				
-				model.push(elem.$$attr.name);
-				
-			});
-			
-			return model;
-			
-		}; */
 		
 	};
 	
