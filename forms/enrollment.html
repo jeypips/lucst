@@ -1,21 +1,163 @@
+<style>
+.checkB {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkB input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+	border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #bfbfbf;
+}
+
+/* On mouse-over, add a grey background color */
+.checkB:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkB input:checked ~ .checkmark {
+    background-color: #096;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkB input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkB .checkmark:after {
+    left: 11px;
+    top: 5px;
+    width: 5px;
+    height: 14px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+</style>
 <div class="col-lg-8">
 	<div class="card-box">
 		<div class="row">
-			<h4 class="m-t-0 header-title"><b>Form</b></h4><hr>
+			<h4 class="m-t-0 header-title"><b>Personal Information</b></h4><hr>
 			<form name="formHolder.student" name="formHolder.student" novalidate autocomplete="off">				
-				<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.firstname.$touched && formHolder.student.firstname.$invalid}">
-					<label>First Name</label>
-					<input type="text" class="form-control" ng-model="student.firstname" ng-disabled="btns.ok.btn" required>
-					<span class="help-block" ng-show="formHolder.student.firstname.$touched && formHolder.student.firstname.$invalid">Firstname is required</span>
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.firstname.$touched && formHolder.student.firstname.$invalid}">
+						<label>First Name</label>
+						<input type="text" class="form-control" name="firstname" ng-model="student.firstname" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.firstname.$touched && formHolder.student.firstname.$invalid">Firstname is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.lastname.$touched && formHolder.student.lastname.$invalid}">
+						<label>Last Name</label>
+						<input type="text" class="form-control" name="lastname" ng-model="student.lastname" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.lastname.$touched && formHolder.student.lastname.$invalid">Lastname is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.middlename.$touched && formHolder.student.middlename.$invalid}">
+						<label>Middle Name</label>
+						<input type="text" class="form-control" name="middlename" ng-model="student.middlename" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.middlename.$touched && formHolder.student.middlename.$invalid">Middlename is required</span>
+					</div>
 				</div>
-				<div class="col-lg-4 form-group">
-					<label>Last Name</label>
-					<input type="text" class="form-control" ng-model="student.lastname" ng-disabled="btns.ok.btn">
+				<div class="row">
+					<div class="col-lg-12 form-group" ng-class="{'has-error': formHolder.student.home_address.$touched && formHolder.student.home_address.$invalid}">
+						<label>Home Address</label>
+						<input type="text" class="form-control" name="home_address" ng-model="student.home_address" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.home_address.$touched && formHolder.student.home_address.$invalid">Home Address is required</span>
+					</div>
 				</div>
-				<div class="col-lg-4 form-group">
-					<label>Middle Name</label>
-					<input type="text" class="form-control" ng-model="student.middlename" ng-disabled="btns.ok.btn">
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.dob.$touched && formHolder.student.dob.$invalid}">
+						<label>Date of Birth</label>
+						<input type="date" class="form-control" name="dob" ng-model="student.dob" ng-disabled="btns.ok.btn" ng-change="app.dob(this)" required>
+						<span class="help-block" ng-show="formHolder.student.dob.$touched && formHolder.student.dob.$invalid">Date of Birth is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.pob.$touched && formHolder.student.pob.$invalid}">
+						<label>Place of Birth</label>
+						<input type="text" class="form-control" name="pob" ng-model="student.pob" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.pob.$touched && formHolder.student.pob.$invalid">Place of Birth is required</span>
+					</div>
+					<div class="col-lg-2 form-group" ng-class="{'has-error': formHolder.student.sex.$touched && formHolder.student.sex.$invalid}">
+						<label>Sex</label>
+						<select class="form-control" name="sex" ng-model="student.sex" ng-disabled="btns.ok.btn" required>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+						</select>
+						<span class="help-block" ng-show="formHolder.student.sex.$touched && formHolder.student.sex.$invalid">Sex is required</span>
+					</div>
+					<div class="col-lg-2 form-group" ng-class="{'has-error': formHolder.student.age.$touched && formHolder.student.age.$invalid}">
+						<label>Age</label>
+						<input type="text" class="form-control" name="age" ng-model="student.age" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.age.$touched && formHolder.student.age.$invalid">Age is required</span>
+					</div>
 				</div>
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.religion.$touched && formHolder.student.religion.$invalid}">
+						<label>Religion</label>
+						<input type="text" class="form-control" name="religion" ng-model="student.religion" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.religion.$touched && formHolder.student.religion.$invalid">Religion is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.status.$touched && formHolder.student.status.$invalid}">
+						<label>Civil Status</label>
+						  <select class="form-control" name="status" ng-model="student.status" ng-disabled="btns.ok.btn" required>
+							<option value="Single">Single</option>
+							<option value="Married">Married</option>
+							<option value="Widow/er">Widow/er</option>
+							<option value="Legally Separated">Legally Separated</option>
+							<option value="Annulled">Annulled</option>
+						  </select>
+						<span class="help-block" ng-show="formHolder.student.status.$touched && formHolder.student.status.$invalid">Status is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.phone_number.$touched && formHolder.student.phone_number.$invalid}">
+						<label>Phone Number</label>
+						<input type="text" class="form-control" name="phone_number" ng-model="student.phone_number" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.phone_number.$touched && formHolder.student.phone_number.$invalid">Phone Number is required</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 form-group">
+						<label class="checkB"> (if married)
+						  <input type="checkbox" checked="checked" ng-model="ifmarried">
+						  <span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="col-lg-8 form-group" ng-show="ifmarried" ng-class="{'has-error': formHolder.student.name_of_spouse.$touched && formHolder.student.name_of_spouse.$invalid}">
+						<label>Name of Spouse</label>
+						<input type="text" class="form-control" name="name_of_spouse" ng-model="student.name_of_spouse" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.name_of_spouse.$touched && formHolder.student.name_of_spouse.$invalid">Name of Spouse is required</span>
+					</div>
+				</div>
+				<hr>
 			</form>
 		</div>
 	</div>
@@ -36,6 +178,95 @@
 			<button class="btn btn-primary btn-lg pull-right" ng-click="app.cancel(this)">{{btns.cancel.label}}</button>
 			<button class="btn btn-primary btn-lg pull-right" style="margin-right: 5px;" ng-click="app.edit(this)">Edit</button>
 			<button class="btn btn-success btn-lg pull-right" style="margin-right: 5px;" ng-click="app.save(this)">{{btns.ok.label}}</button>
+		</div>
+	</div>
+</div>
+<div class="col-lg-8">
+	<div class="card-box">
+		<div class="row">
+			<h4 class="m-t-0 header-title"><b>Parents</b></h4><hr>
+			<form name="formHolder.student" name="formHolder.student" novalidate autocomplete="off">
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.father_name.$touched && formHolder.student.father_name.$invalid}">
+						<label>Name of Father </label>
+						<input type="text" class="form-control" name="father_name" ng-model="student.father_name" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.father_name.$touched && formHolder.student.father_name.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.father_occupation.$touched && formHolder.student.father_occupation.$invalid}">
+						<label>Occupation </label>
+						<input type="text" class="form-control" name="father_occupation" ng-model="student.father_occupation" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.father_occupation.$touched && formHolder.student.father_occupation.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.father_number.$touched && formHolder.student.father_number.$invalid}">
+						<label>Phone Number </label>
+						<input type="text" class="form-control" name="father_number" ng-model="student.father_number" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.father_number.$touched && formHolder.student.father_number.$invalid">This field is required</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.mother_name.$touched && formHolder.student.mother_name.$invalid}">
+						<label>Name of Mother </label>
+						<input type="text" class="form-control" name="mother_name" ng-model="student.mother_name" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.mother_name.$touched && formHolder.student.mother_name.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.mother_occupation.$touched && formHolder.student.mother_occupation.$invalid}">
+						<label>Occupation </label>
+						<input type="text" class="form-control" name="mother_occupation" ng-model="student.mother_occupation" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.mother_occupation.$touched && formHolder.student.mother_occupation.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.mother_number.$touched && formHolder.student.mother_number.$invalid}">
+						<label>Phone Number </label>
+						<input type="text" class="form-control" name="mother_number" ng-model="student.mother_number" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.mother_number.$touched && formHolder.student.mother_number.$invalid">This field is required</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 form-group" ng-class="{'has-error': formHolder.student.address_of_parents.$touched && formHolder.student.address_of_parents.$invalid}">
+						<label>Address of Parents </label>
+						<input type="text" class="form-control" name="address_of_parents" ng-model="student.address_of_parents" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.address_of_parents.$touched && formHolder.student.address_of_parents.$invalid">This field is required</span>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="col-lg-8">
+	<div class="card-box">
+		<div class="row">
+			<h4 class="m-t-0 header-title"><b>Guardian</b></h4><hr>
+			<form name="formHolder.student" name="formHolder.student" novalidate autocomplete="off">
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.guardian_name.$touched && formHolder.student.guardian_name.$invalid}">
+						<label>Name of Guardian </label>
+						<input type="text" class="form-control" name="guardian_name" ng-model="student.guardian_name" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.guardian_name.$touched && formHolder.student.guardian_name.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.guardian_occupation.$touched && formHolder.student.guardian_occupation.$invalid}">
+						<label>Occupation </label>
+						<input type="text" class="form-control" name="guardian_occupation" ng-model="student.guardian_occupation" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.guardian_occupation.$touched && formHolder.student.guardian_occupation.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.guardian_number.$touched && formHolder.student.guardian_number.$invalid}">
+						<label>Phone Number </label>
+						<input type="text" class="form-control" name="guardian_number" ng-model="student.guardian_number" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.guardian_number.$touched && formHolder.student.guardian_number.$invalid">This field is required</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8 form-group" ng-class="{'has-error': formHolder.student.guardian_address.$touched && formHolder.student.guardian_address.$invalid}">
+						<label>Address </label>
+						<input type="text" class="form-control" name="guardian_address" ng-model="student.guardian_address" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.guardian_address.$touched && formHolder.student.guardian_address.$invalid">This field is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.guardian_relationship.$touched && formHolder.student.guardian_relationship.$invalid}">
+						<label>Relationship </label>
+						<input type="text" class="form-control" name="guardian_relationship" ng-model="student.guardian_relationship" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.student.guardian_relationship.$touched && formHolder.student.guardian_relationship.$invalid">This field is required</span>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

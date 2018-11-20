@@ -1,6 +1,17 @@
 angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal) {
 
 	function app() {
+		
+		function getAge(dateString) { //Autocompute birthday to age
+			var today = new Date();
+			var birthDate = new Date(dateString);
+			var age = today.getFullYear() - birthDate.getFullYear();
+			var m = today.getMonth() - birthDate.getMonth();
+			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+				age--;
+			}
+			return age;
+		};
 
 		var self = this;
 
@@ -91,6 +102,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.student = function(scope,row) {			
 			
+			scope.student = {};
+			scope.student.id = 0;
+			
 			bui.show();
 			
 			mode(scope,row);
@@ -109,7 +123,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						}).then(function success(response) {
 							
 							scope.student = angular.copy(response.data);
-							// if (scope.employee.employee_dob) scope.employee.employee_dob = new Date(scope.employee.employee_dob);
+							scope.student.dob = new Date(response.data.dob);
 							bui.hide();							
 							
 						}, function error(response) {
@@ -193,6 +207,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this profile?',onOk,function() {});			
 			
+		};
+		
+		self.dob = function(scope) {
+			
+			if (scope.student.dob == null) return;
+			scope.student.age = getAge(scope.student.dob); //for birthday autocompute
+
 		};
 		
 	};
