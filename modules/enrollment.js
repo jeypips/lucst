@@ -1,4 +1,4 @@
-angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal) {
+angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl','snapshot-module']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal,snapshot) {
 
 	function app() {
 		
@@ -18,14 +18,20 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		var loading = '<div class="col-sm-offset-4 col-sm-8"><button type="button" class="btn btn-dark" title="Loading" disabled><i class="fa fa-spinner fa-spin"></i>&nbsp; Please wait...</button></div>';		
 
 		self.data = function(scope) {
-
+			
+			scope.snapshot = snapshot;
+			
+			scope.pictures = {
+				front: null
+			};
+			
 			scope.formHolder = {};
 			
 			scope.btns = {
 				ok: { btn: false, label: 'Save'},
 				cancel: { btn: false, label: 'Cancel'},
 			};
-
+			
 			scope.student = {};
 			scope.student.id = 0;			
 			
@@ -101,12 +107,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		};
 		
 		self.student = function(scope,row) {			
-			
+
 			scope.student = {};
 			scope.student.id = 0;
-			
+
 			bui.show();
-			
+
 			mode(scope,row);
 			
 			$('#content').load('forms/enrollment.html',function() {
@@ -121,10 +127,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						  url: 'handlers/enrollment/view.php',
 						  data: {id: row.id}
 						}).then(function success(response) {
-							
+
 							scope.student = angular.copy(response.data);
 							scope.student.dob = new Date(response.data.dob);
-							bui.hide();							
+							
+							angular.forEach(scope.pictures, function(item,i) { console.log(i);
+								var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
+								var view = document.getElementById(i+'_picture');
+								if (imageExists(photo)) view.setAttribute('src', photo);
+								else view.setAttribute('src', 'pictures/avatar.png');
+							});
+							bui.hide();
 							
 						}, function error(response) {
 							
@@ -175,9 +188,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.student.id == 0) growl.show('success',{from: 'top', amount: 55},'New student info successfully added');				
-				else growl.show('success',{from: 'top', amount: 55},'Student info successfully updated');				
+				if (scope.student.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student info successfully added');				
+				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student info successfully updated');				
 				mode(scope,scope.student);								
+				snapshot.upload(scope);
 				
 			}, function error(response) {
 				
