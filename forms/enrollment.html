@@ -1,72 +1,3 @@
-<style>
-.checkB {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 15px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Hide the browser's default checkbox */
-.checkB input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-/* Create a custom checkbox */
-.checkmark {
-	border-radius: 8px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #bfbfbf;
-}
-
-/* On mouse-over, add a grey background color */
-.checkB:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-.checkB input:checked ~ .checkmark {
-    background-color: #096;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-/* Show the checkmark when checked */
-.checkB input:checked ~ .checkmark:after {
-    display: block;
-}
-
-/* Style the checkmark/indicator */
-.checkB .checkmark:after {
-    left: 11px;
-    top: 5px;
-    width: 5px;
-    height: 14px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-</style>
 <div class="col-lg-8">
 	<div class="card-box">
 		<div class="row">
@@ -145,19 +76,29 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4 form-group">
-						<label class="checkB"> (if married)
-						  <input type="checkbox" checked="checked" ng-model="ifmarried">
-						  <span class="checkmark"></span>
-						</label>
-					</div>
-					<div class="col-lg-8 form-group" ng-show="ifmarried" ng-class="{'has-error': formHolder.student.name_of_spouse.$touched && formHolder.student.name_of_spouse.$invalid}">
-						<label>Name of Spouse</label>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.name_of_spouse.$touched && formHolder.student.name_of_spouse.$invalid}">
+						<label>Name of Spouse (if married)</label>
 						<input type="text" class="form-control" name="name_of_spouse" ng-model="student.name_of_spouse" ng-disabled="btns.ok.btn" required>
 						<span class="help-block" ng-show="formHolder.student.name_of_spouse.$touched && formHolder.student.name_of_spouse.$invalid">Name of Spouse is required</span>
 					</div>
 				</div>
 				<hr>
+				<div class="row">
+					<div class="col-lg-8 form-group" ng-class="{'has-error': formHolder.student.course.$touched && formHolder.student.course.$invalid}">
+						<label>Course</label>
+						  <select class="form-control" name="course" ng-model="student.course" ng-disabled="btns.ok.btn" ng-options="course.course_name for course in courses track by course.id" required>
+						  </select>
+						<span class="help-block" ng-show="formHolder.student.course.$touched && formHolder.student.course.$invalid">Course is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.student.semester.$touched && formHolder.student.semester.$invalid}">
+						<label>Semester</label>
+						  <select class="form-control" name="semester" ng-model="student.semester" ng-disabled="btns.ok.btn" required>
+							<option value="First Semester">First Semester</option>
+							<option value="Second Semester">Second Semester</option>
+						 </select>
+						<span class="help-block" ng-show="formHolder.student.semester.$touched && formHolder.student.semester.$invalid">Semester is required</span>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -166,16 +107,22 @@
 	<div class="card-box">
 		<div class="row">
 			<div class="col-lg-12">		
-				<img src="pictures/avatar.png" id="front_picture" alt="image" class="img-responsive img-rounded" width="300">
+				<img id="front_picture" src="pictures/avatar.png" alt="image" class="img-responsive img-rounded" width="300">
 				<h5><button class="btn btn-inverse" ng-click="snapshot.start(this,'front')"><i class="icon-camera"></i></button></h5>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 form-group">
+			<label>Date of Enrollment</label>
+			<input type="date" class="form-control" name="date_of_enrollment" ng-model="student.date_of_enrollment" readonly>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
 			<button class="btn btn-primary btn-lg pull-right" ng-click="app.cancel(this)">{{btns.cancel.label}}</button>
 			<button class="btn btn-primary btn-lg pull-right" style="margin-right: 5px;" ng-click="app.edit(this)">Edit</button>
-			<button class="btn btn-success btn-lg pull-right" style="margin-right: 5px;" ng-click="app.save(this)">{{btns.ok.label}}</button>
+			<button class="btn btn-success btn-lg pull-right" ng-disabled="btns.ok.btn" style="margin-right: 5px;" ng-click="app.save(this)">{{btns.ok.label}}</button>
 		</div>
 	</div>
 </div>

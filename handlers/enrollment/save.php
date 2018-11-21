@@ -8,14 +8,15 @@ header("Content-Type: application/json");
 $con = new pdo_db("enrollment");
 
 $_POST['student']['dob'] = (isset($_POST['student']['dob']))?date("Y-m-d",strtotime($_POST['student']['dob'])):"1970-01-01";
+$_POST['student']['date_of_enrollment'] = (isset($_POST['student']['date_of_enrollment']))?date("Y-m-d",strtotime($_POST['student']['date_of_enrollment'])):"1970-01-01";
 
 if ($_POST['student']['id']) {
 	
-	$student = $con->updateData($_POST['student'],'id');
+	$student = $con->updateObj($_POST['student'],'id');
 	
 } else {
 	
-	$student = $con->insertData($_POST['student']);
+	$student = $con->insertObj($_POST['student']);
 	echo $con->insertId;
 
 }
