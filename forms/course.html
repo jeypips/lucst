@@ -1,0 +1,38 @@
+<div class="col-lg-8">
+	<div class="card-box">
+		<div class="row">
+			<h4 class="m-t-0 header-title"><b>Course Information</b></h4><hr>
+			<form name="formHolder.course" name="formHolder.course" novalidate autocomplete="off">				
+				<div class="row">
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.course.course_name.$touched && formHolder.course.course_name.$invalid}">
+						<label>Course Name</label>
+						<input type="text" class="form-control" name="course_name" ng-model="course.course_name" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.course.course_name.$touched && formHolder.course.course_name.$invalid">Course Name is required</span>
+					</div>
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.course.course_short_name.$touched && formHolder.course.course_short_name.$invalid}">
+						<label>Course Short Name</label>
+						<input type="text" class="form-control" name="course_short_name" ng-model="course.course_short_name" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.course.course_short_name.$touched && formHolder.course.course_short_name.$invalid">Course Short Name is required</span>
+					</div>
+				</div>
+				<hr>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="col-lg-4">
+	<div class="card-box">
+		<div class="row">
+			<h4 class="m-t-0 header-title"><b>Actions</b></h4><hr>
+			<div class="col-lg-12">
+				<div class="list-group mail-list  m-t-20">
+					<a href="#" class="list-group-item b-0 btn btn-primary" ng-click="app.edit(this)" style="margin-bottom: 4px;"><i class="fa fa-edit m-r-10"></i>Edit</a>
+					<a href="#" class="list-group-item b-0 btn btn-success" ng-click="app.save(this)" style="margin-bottom: 4px;"><i class="fa fa-check m-r-10"></i>{{btns.ok.label}}</a>
+					<a href="#" class="list-group-item b-0 btn btn-danger" ng-click="app.cancel(this)"><i class="fa fa-sign-out"></i>  {{btns.cancel.label}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
