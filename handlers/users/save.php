@@ -9,11 +9,11 @@ $con = new pdo_db("users");
 
 if ($_POST['user']['id']) {
 	
-	$user = $con->updateData($_POST['user'],'id');
+	$user = $con->updateObj($_POST['user'],'id');
 	
 } else {
 	
-	$user = $con->insertData($_POST['user']);
+	$user = $con->insertObj($_POST['user']);
 	echo $con->insertId;
 
 }
