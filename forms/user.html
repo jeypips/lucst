@@ -1,0 +1,55 @@
+<div class="col-lg-8">
+	<div class="card-box">
+		<div class="row">
+			<h4 class="m-t-0 header-title"><b>Account Information</b></h4><hr>
+			<form name="formHolder.user" name="formHolder.user" novalidate autocomplete="off">				
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.user.firstname.$touched && formHolder.user.firstname.$invalid}">
+						<label>First Name</label>
+						<input type="text" class="form-control" name="firstname" ng-model="user.firstname" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.user.firstname.$touched && formHolder.user.firstname.$invalid">Firstname is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.user.lastname.$touched && formHolder.user.lastname.$invalid}">
+						<label>Last Name</label>
+						<input type="text" class="form-control" name="lastname" ng-model="user.lastname" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.user.lastname.$touched && formHolder.user.lastname.$invalid">Lastname is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.user.middlename.$touched && formHolder.user.middlename.$invalid}">
+						<label>Middle Name</label>
+						<input type="text" class="form-control" name="middlename" ng-model="user.middlename" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.user.middlename.$touched && formHolder.user.middlename.$invalid">Middlename is required</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.user.username.$touched && formHolder.user.username.$invalid}">
+						<label>Username</label>
+						<input type="text" class="form-control" name="username" ng-model="user.username" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.user.username.$touched && formHolder.user.username.$invalid">Username is required</span>
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.user.password.$touched && formHolder.user.password.$invalid}">
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" ng-model="user.password" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.user.password.$touched && formHolder.user.password.$invalid">Password is required</span>
+					</div>
+				</div>
+				<hr>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="col-lg-4">
+	<div class="card-box">
+		<div class="row">
+			<h4 class="m-t-0 header-title"><b>Actions</b></h4><hr>
+			<div class="col-lg-12">
+				<div class="list-group mail-list  m-t-20">
+					<a href="#" class="list-group-item b-0 btn btn-primary" ng-click="app.edit(this)" style="margin-bottom: 4px;"><i class="fa fa-edit m-r-10"></i>Edit</a>
+					<a href="#" class="list-group-item b-0 btn btn-success" ng-click="app.save(this)" style="margin-bottom: 4px;"><i class="fa fa-check m-r-10"></i>{{btns.ok.label}}</a>
+					<a href="#" class="list-group-item b-0 btn btn-danger" ng-click="app.cancel(this)"><i class="fa fa-sign-out"></i>  {{btns.cancel.label}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
