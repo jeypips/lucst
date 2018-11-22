@@ -32,7 +32,7 @@
 
 	</head>
 
-	 <body class="fixed-left" ng-app="enrollment" ng-controller="enrollmentCtrl" account-profile>
+	 <body class="fixed-left" ng-app="courses" ng-controller="coursesCtrl" account-profile>
 
 		<!-- Begin page -->
 		<div id="wrapper">
@@ -90,16 +90,16 @@
                                 <li><a href="index.html" class="waves-effect"><i class="ti-home"></i><span> Dashboard </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <li><a href="students.html" class="waves-effect active"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
+                                <li><a href="students.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
                             </li>
 							<li class="has_sub">
                                 <li><a href="students.html" class="waves-effect"><i class="ti-user"></i><span> Students </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ti-settings"></i><span class="label label-danger pull-right">2</span><span> Maintenance </span> </a>
-                                <ul class="list-unstyled" style="display: none;">
-                                    <li><a href="accounts.html">Accounts</a></li>
-                                    <li><a href="courses.html">Courses</a></li>
+                                <a href="#" class="waves-effect active"><i class="ti-settings"></i> <span> Maintenance </span> </a>
+                                <ul class="list-unstyled">
+                                	<li><a href="accounts.html">Accounts</a></li>
+                                    <li class="active"><a href="courses.html">Courses</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -121,7 +121,7 @@
 						<!-- Page-Title -->
 						<div class="row">
 							<div class="col-sm-12">
-								<h4 class="page-title">Enrollment</h4>
+								<h4 class="page-title">Maintenance > Courses</h4>
 							</div>
 						</div><br>
                         <div class="row">
@@ -294,12 +294,11 @@
 		<script src="angular/modules/blockui/blockui.js"></script>
 		<script src="angular/modules/account/account.js"></script>
 		<script src="angular/modules/validation/validate.js"></script>
-		<script src="angular/modules/post/window-open-post.js"></script>
-		<script src="modules/snapshot.js"></script>		
-		<script src="modules/enrollment.js"></script>
+		<script src="angular/modules/post/window-open-post.js"></script>	
+		<script src="modules/courses.js"></script>
 
 		<!-- controller -->
-		<script src="controllers/enrollment.js"></script>
+		<script src="controllers/courses.js"></script>
 	
 	</body>
 </html>
