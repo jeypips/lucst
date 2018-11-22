@@ -54,19 +54,19 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		self.list = function(scope) {
 			
 			bui.show();
-			
+
 			if (scope.$id > 2) scope = scope.$parent;			
-			
+
 			scope.user = {};
 			scope.user.id = 0;						
-			
+
 			$http({
 			  method: 'POST',
 			  url: 'handlers/users/list.php'
 			}).then(function success(response) {
 				
 				scope.users = angular.copy(response.data);
-				
+
 				bui.hide();
 				
 			}, function error(response) {
@@ -78,13 +78,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			$('#content').html(loading);
 			$('#content').load('lists/users.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
-				// instantiate datable
-				$timeout(function() {
-					$('#users').DataTable({
-						"ordering": false
-					});	
-				},200);
-				
 			});		
 			
 		};
@@ -202,7 +195,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
 				
-		};
+		};	
 		
 	};
 	
