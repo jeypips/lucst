@@ -94,7 +94,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/enrollment/list.php'
+			  url: 'handlers/students/list.php'
 			}).then(function success(response) {
 				
 				scope.students = angular.copy(response.data);
@@ -108,7 +108,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			});			
 			
 			$('#content').html(loading);
-			$('#content').load('lists/enrollment.html', function() {
+			$('#content').load('lists/students.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
 				// instantiate datable
 				$timeout(function() {
@@ -133,7 +133,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			courses(scope);
 			scope.student.date_of_enrollment = new Date();
 			
-			$('#content').load('forms/enrollment.html',function() {
+			$('#content').load('forms/student.html',function() {
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -142,7 +142,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 						$http({
 						  method: 'POST',
-						  url: 'handlers/enrollment/view.php',
+						  url: 'handlers/students/view.php',
 						  data: {id: row.id}
 						}).then(function success(response) {
 
@@ -204,7 +204,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			$http({
 			  method: 'POST',
-			  url: 'handlers/enrollment/save.php',
+			  url: 'handlers/students/save.php',
 			  data: {student: scope.student}
 			}).then(function success(response) {
 				
@@ -230,7 +230,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/enrollment/delete.php',
+				  url: 'handlers/students/delete.php',
 				  data: {id: [row.id]}
 				}).then(function mySucces(response) {
 
@@ -254,6 +254,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			if (scope.student.dob == null) return;
 			scope.student.age = getAge(scope.student.dob); //for birthday autocompute
+
+		};
+		
+		function imageExists(image_url){
+
+			var http = new XMLHttpRequest();
+
+			http.open('HEAD', image_url, false);
+			http.send();
+
+			return http.status != 404;
 
 		};
 		

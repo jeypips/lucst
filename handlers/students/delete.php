@@ -7,7 +7,7 @@ require_once '../../db.php';
 session_start();
 
 header("Content-Type: application/json");
-$con = new pdo_db("enrollment");
+$con = new pdo_db("students");
 
 $delete = $con->deleteData(array("id"=>implode(",",$_POST['id'])));	
 
