@@ -51,7 +51,7 @@ angular.module('snapshot-module',['bootstrap-modal']).factory('snapshot',functio
 
 			$.ajax({
 				type: "POST",
-				url: "handlers/enrollment/upload-photos.php",
+				url: "handlers/students/upload-photos.php",
 				data: {id: scope.student.id, pictures: scope.pictures}
 			}).done(function(reponse) {
 				
