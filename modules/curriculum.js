@@ -15,16 +15,31 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
-			scope.course = {};
-			scope.course.id = 0;			
+			scope.curriculum = {};
+			scope.curriculum.id = 0;			
 			
-			scope.courses = []; //list
+			scope.curriculums = []; //list
+			
+		};
+		
+		function courses(scope) {
+			
+			$http({
+				method: 'POST',
+				url: 'api/suggestions/courses.php'
+			}).then(function mySucces(response) {
+				
+				scope.courses = response.data;
+				
+			},function myError(response) {
+				
+			});	
 			
 		};
 		
 		function validate(scope) {
 			
-			var controls = scope.formHolder.course.$$controls;
+			var controls = scope.formHolder.curriculum.$$controls;
 			
 			angular.forEach(controls,function(elem,i) {
 				
@@ -32,7 +47,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 									
 			});
 
-			return scope.formHolder.course.$invalid;
+			return scope.formHolder.curriculum.$invalid;
 			
 		};
 		
@@ -57,15 +72,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			if (scope.$id > 2) scope = scope.$parent;			
 			
-			scope.course = {};
-			scope.course.id = 0;						
+			scope.curriculum = {};
+			scope.curriculum.id = 0;						
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/courses/list.php'
+			  url: 'handlers/curriculum/list.php'
 			}).then(function success(response) {
 				
-				scope.courses = angular.copy(response.data);
+				scope.curriculums = angular.copy(response.data);
 				
 				bui.hide();
 				
@@ -76,11 +91,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			});			
 			
 			$('#content').html(loading);
-			$('#content').load('lists/courses.html', function() {
+			$('#content').load('lists/curriculums.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
 				// instantiate datable
 				$timeout(function() {
-					$('#courses').DataTable({
+					$('#curriculums').DataTable({
 						"ordering": false
 					});	
 				},200);
@@ -89,16 +104,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.course = function(scope,row) {			
+		self.curriculum = function(scope,row) {			
 
-			scope.course = {};
-			scope.course.id = 0;
-
+			scope.curriculum = {};
+			scope.curriculum.id = 0;
+			courses(scope);
+			
 			bui.show();
 
 			mode(scope,row);
 			
-			$('#content').load('forms/course.html',function() {
+			$('#content').load('forms/curriculum.html',function() {
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -107,11 +123,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 						$http({
 						  method: 'POST',
-						  url: 'handlers/courses/view.php',
+						  url: 'handlers/curriculum/view.php',
 						  data: {id: row.id}
 						}).then(function success(response) {
 
-							scope.course = angular.copy(response.data);
+							scope.curriculum = angular.copy(response.data);
 							
 							bui.hide();
 							
@@ -123,8 +139,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 					} else {
 						
-						scope.course = {};
-						scope.course.id = 0;
+						scope.curriculum = {};
+						scope.curriculum.id = 0;
 						
 					};
 					
@@ -137,8 +153,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			scope.course = {};
-			scope.course.id = 0;			
+			scope.curriculum = {};
+			scope.curriculum.id = 0;			
 			
 			self.list(scope);
 			
@@ -159,14 +175,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			$http({
 			  method: 'POST',
-			  url: 'handlers/courses/save.php',
-			  data: {course: scope.course}
+			  url: 'handlers/curriculum/save.php',
+			  data: {curriculum: scope.curriculum}
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.course.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New course info successfully added');				
-				else growl.show('btn btn-success',{from: 'top', amount: 55},'Course Info successfully updated');				
-				mode(scope,scope.course);		
+				if (scope.curriculum.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New curriculum info successfully added');				
+				else growl.show('btn btn-success',{from: 'top', amount: 55},'Curriculum Info successfully updated');				
+				mode(scope,scope.curriculum);		
 				
 			}, function error(response) {
 				
@@ -184,13 +200,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/courses/delete.php',
+				  url: 'handlers/curriculum/delete.php',
 				  data: {id: [row.id]}
 				}).then(function mySucces(response) {
 
 					self.list(scope);
 					
-					growl.show('btn btn-danger',{from: 'top', amount: 55},'Course Info successfully deleted.');
+					growl.show('btn btn-danger',{from: 'top', amount: 55},'Curriculum Info successfully deleted.');
 					
 				}, function myError(response) {
 					 

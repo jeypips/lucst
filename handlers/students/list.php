@@ -15,6 +15,7 @@ foreach($students as $key => $student){
 	$course = $con->getData("SELECT id, course_name FROM courses WHERE id = ".$student['course']);
 	$students[$key]['course'] = $course[0];	
 };
+
 header("Content-Type: application/json");
 echo json_encode($students);
 
