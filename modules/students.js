@@ -131,9 +131,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			mode(scope,row);
 			
 			courses(scope);
-			scope.student.date_of_enrollment = new Date();
+			// scope.student.date_of_enrollment = new Date();
 			
 			$('#content').load('forms/student.html',function() {
+				
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -148,7 +149,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 							scope.student = angular.copy(response.data);
 							scope.student.dob = new Date(response.data.dob);
-							scope.student.date_of_enrollment = new Date(response.data.date_of_enrollment);
 							
 							angular.forEach(scope.pictures, function(item,i) { console.log(i);
 								var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
