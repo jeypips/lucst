@@ -32,6 +32,40 @@
 				</div>
 				<hr>
 				<div class="row">
+					<button class="btn btn-primary pull-right" style="margin-right: 10px;" ng-click="app.curriculum_data.add(this)">Add</button>
+				</div>
+				<br>
+				<div class="" ng-repeat="cc in curriculum.curriculum_datas">
+					<div class="row">
+						<button class="btn btn-danger pull-right" style="margin-right: 10px;" ng-click="app.curriculum_data.delete(this,cc)"><i class="fa fa-remove"></i></button>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 form-group">
+							<label>Grade</label>
+							<input class="form-control" name="grade{{index}}" ng-model="cc.grade" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-6 form-group">
+							<label>Subject Code</label>
+							<input class="form-control" name="subject_code{{index}}" ng-model="cc.subject_code" ng-disabled="btns.ok.btn">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 form-group">
+							<label>Descriptive Title</label>
+							<input class="form-control" name="descriptive_title{{index}}" ng-model="cc.descriptive_title" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-3 form-group">
+							<label>Units</label>
+							<input class="form-control" name="units{{index}}" ng-model="cc.units" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-3 form-group">
+							<label>Pre-Req</label>
+							<input class="form-control" name="pre_req{{index}}" ng-model="cc.pre_req" ng-disabled="btns.ok.btn">
+						</div>
+					</div>
+				</div>
+				
+				<!-- <div class="row">
 					<table class="table table-striped table-bordered">
 						<thead>
 							<th>Grade</th>
@@ -39,16 +73,18 @@
 							<th>Descriptive Title</th>
 							<th>Units</th>
 							<th>Pre-Req</th>
+							<th>Action</th>
 						</thead>
-						<tr>
-							<td><input type="text" class="form-control" name="grade"></td>
-							<td><input type="text" class="form-control" name="subject_code"></td>
-							<td><input type="text" class="form-control" name="descriptive_title"></td>
-							<td><input type="text" class="form-control" name="units"></td>
-							<td><input type="text" class="form-control" name="pre_req"></td>
+						<tr ng-repeat="cc in curriculum.curriculum_datas">
+							<td><input type="text" class="form-control" name="grade{{$index}}" ng-model="cc.grade"></td>
+							<td><input type="text" class="form-control" name="subject_code{{$index}}" ng-model="cc.subject_code"></td>
+							<td><input type="text" class="form-control" name="descriptive_title{{$index}}" ng-model="cc.descriptive_title"></td>
+							<td><input type="text" class="form-control" name="units{{$index}}" ng-model="cc.units"></td>
+							<td><input type="text" class="form-control" name="pre_req{{$index}}" ng-model="cc.pre_req"></td>
+							<td><button class="btn btn-danger" ng-click="app.curriculum_data.delete(this,cc)"><i class="fa fa-remove"></i></button></td>
 						</tr>
 					</table>
-				</div>
+				</div> -->
 			</form>
 		</div>
 	</div>
