@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2018 at 09:08 AM
+-- Generation Time: Dec 03, 2018 at 10:56 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -23,10 +23,77 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `id` int(11) NOT NULL,
+  `course_name` varchar(255) DEFAULT NULL,
+  `course_short_name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `course_name`, `course_short_name`) VALUES
+(1, 'Bachelor of Science in Information Technology', 'BSIT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `curriculum`
+--
+
+CREATE TABLE `curriculum` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `year_name` varchar(500) DEFAULT NULL,
+  `semester` varchar(50) DEFAULT NULL,
+  `date_added` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `curriculum`
+--
+
+INSERT INTO `curriculum` (`id`, `course_id`, `year_name`, `semester`, `date_added`) VALUES
+(1, 1, 'Second Year', '2nd Semester', '2018-12-02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `curriculum_data`
+--
+
+CREATE TABLE `curriculum_data` (
+  `id` int(11) NOT NULL,
+  `curriculum_id` int(11) DEFAULT NULL,
+  `grade` varchar(50) DEFAULT NULL,
+  `subject_code` varchar(50) DEFAULT NULL,
+  `descriptive_title` varchar(200) DEFAULT NULL,
+  `units` varchar(50) DEFAULT NULL,
+  `pre_req` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `enrollment`
 --
 
 CREATE TABLE `enrollment` (
+  `id` int(11) NOT NULL,
+  `students_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
   `id` int(11) NOT NULL,
   `firstname` varchar(100) DEFAULT NULL,
   `lastname` varchar(100) DEFAULT NULL,
@@ -42,7 +109,7 @@ CREATE TABLE `enrollment` (
   `name_of_spouse` varchar(100) DEFAULT NULL,
   `father_name` varchar(100) DEFAULT NULL,
   `father_occupation` varchar(100) DEFAULT NULL,
-  `father_number` varchar(100) DEFAULT NULL,
+  `father_number` varchar(50) DEFAULT NULL,
   `mother_name` varchar(100) DEFAULT NULL,
   `mother_occupation` varchar(100) DEFAULT NULL,
   `mother_number` varchar(50) DEFAULT NULL,
@@ -54,16 +121,23 @@ CREATE TABLE `enrollment` (
   `guardian_number` varchar(50) DEFAULT NULL,
   `course` varchar(255) DEFAULT NULL,
   `date_of_enrollment` date DEFAULT NULL,
-  `semester` varchar(50) DEFAULT NULL
+  `semester` varchar(50) DEFAULT NULL,
+  `elem_school_name` varchar(255) DEFAULT NULL,
+  `elem_school_address` varchar(255) DEFAULT NULL,
+  `secon_school_name` varchar(255) DEFAULT NULL,
+  `secon_school_address` varchar(255) DEFAULT NULL,
+  `techvoc_school_name` varchar(255) DEFAULT NULL,
+  `techvoc_school_address` varchar(255) DEFAULT NULL,
+  `tertiary_school_name` varchar(255) DEFAULT NULL,
+  `tertiary_school_address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `enrollment`
+-- Dumping data for table `students`
 --
 
-INSERT INTO `enrollment` (`id`, `firstname`, `lastname`, `middlename`, `home_address`, `dob`, `pob`, `age`, `sex`, `religion`, `status`, `phone_number`, `name_of_spouse`, `father_name`, `father_occupation`, `father_number`, `mother_name`, `mother_occupation`, `mother_number`, `address_of_parents`, `guardian_name`, `guardian_occupation`, `guardian_relationship`, `guardian_address`, `guardian_number`, `course`, `date_of_enrollment`, `semester`) VALUES
-(1, 'Juan', 'Dela Cruz', 'Bravo', 'Catbangen, San Fernando City La Union', '1998-03-02', 'Catbangen, San Fernando City La Union', '18', 'Male', 'Catholic', 'Single', '09485956662', NULL, 'Juanito Dela Cruz', 'OFW', '09565856565', 'Juanita Dela Cruz', 'Housekeeper', '09456626598', 'Catbangen, San Fernando City La Union', 'Juanita Dela Cruz', 'Housekeeper', 'Mother', 'Catbangen, San Fernando City La Union', '09456626598', 'Bachelor of Science in Information Technology', '2018-11-19', 'First Semester'),
-(2, 'asd', 'as', 'dasd', 'asdad', '1997-06-01', 'asd', '21', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `students` (`id`, `firstname`, `lastname`, `middlename`, `home_address`, `dob`, `pob`, `age`, `sex`, `religion`, `status`, `phone_number`, `name_of_spouse`, `father_name`, `father_occupation`, `father_number`, `mother_name`, `mother_occupation`, `mother_number`, `address_of_parents`, `guardian_name`, `guardian_occupation`, `guardian_relationship`, `guardian_address`, `guardian_number`, `course`, `date_of_enrollment`, `semester`, `elem_school_name`, `elem_school_address`, `secon_school_name`, `secon_school_address`, `techvoc_school_name`, `techvoc_school_address`, `tertiary_school_name`, `tertiary_school_address`) VALUES
+(1, 'Juan', 'Lee', 'Loo', 'Bauang, La Union', '1997-02-04', 'Bauang, La Union', '21', 'Male', 'Catholic', 'Single', '09586598336', NULL, 'Jaunito Lee', 'OFW', '09586525445', 'Juanita Lee', 'Housekeeper', '09586525448', 'Bauang, La Union', 'Juanita Lee', 'Housekeeper', 'Mother', 'Bauang, La Union', '09586525448', '1', '2018-11-28', 'First Semester', 'Catbangen Elementary School', 'Catbangen  San Fernando City La Union', 'LUNHS', 'Catbangen  San Fernando City La Union', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -91,9 +165,33 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `password`) VALU
 --
 
 --
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `curriculum`
+--
+ALTER TABLE `curriculum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `curriculum_data`
+--
+ALTER TABLE `curriculum_data`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `enrollment`
 --
 ALTER TABLE `enrollment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -107,10 +205,30 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `curriculum`
+--
+ALTER TABLE `curriculum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `curriculum_data`
+--
+ALTER TABLE `curriculum_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `enrollment`
 --
 ALTER TABLE `enrollment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --

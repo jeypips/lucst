@@ -190,7 +190,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 					self.list(scope);
 					
-					growl.show('btn btn-danger',{from: 'top', amount: 55},'Account Info successfully deleted.');
+					growl.show('btn btn-danger',{from: 'top', amount: 55},'Course Info successfully deleted.');
 					
 				}, function myError(response) {
 					 

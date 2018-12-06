@@ -1,4 +1,4 @@
-<?php include_once 'authentication.php'; ?>
+<?php include_once 'authentication.php'; ?> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,9 +7,9 @@
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
 
-		<link rel="shortcut icon" href="pictures/logo.png">
+        <link rel="shortcut icon" href="assets/images/favicon_1.ico">
 
-		<title>LUCST</title>
+        <title>Ubold - Responsive Admin Dashboard Template</title>
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
@@ -26,8 +26,88 @@
         <![endif]-->
 
         <script src="assets/js/modernizr.min.js"></script>
+		<style>
+		.canv {
+		  position: relative;
+		  width: 100%;
+		}
+
+		.image {
+		  display: block;
+		  width: 100%;
+		  height: auto;
+		}
+		
+		.image2 {
+		  display: block;
+		  width: 100%;
+		  height: 50px;
+		}
+
+		.overlay {
+		  position: absolute;
+		  top: 0;
+		  bottom: 0;
+		  left: 10px;
+		  right: 0;
+		  height: 94%;
+		  width: 97%;
+		  opacity: 0;
+		  transition: .5s ease;
+		  background-color: #096;
+		}
+		
+		.overlay2 {
+		  position: absolute;
+		  top: 0;
+		  bottom: 0;
+		  left: 10.5px;
+		  right: 0;
+		  height: 95%;
+		  width: 98%;
+		  opacity: 0;
+		  transition: .5s ease;
+		  background-color: #096;
+		}
+
+		.canv:hover .overlay2 {
+		  opacity: 1;
+		}
+		
+		.canv:hover .overlay {
+		  opacity: 1;
+		}
+
+		.text {
+		  color: white;
+		  font-size: 20px;
+		  position: absolute;
+		  top: 45%;
+		  left: 50%;
+		  right: -20%;
+		  -webkit-transform: translate(-50%, -50%);
+		  -ms-transform: translate(-50%, -50%);
+		  transform: translate(-50%, -50%);
+		}
+		
+		.text2 {
+		  color: white;
+		  font-size: 20px;
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  right: -20%;
+		  -webkit-transform: translate(-50%, -50%);
+		  -ms-transform: translate(-50%, -50%);
+		  transform: translate(-50%, -50%);
+		}
+		
+		</style>
+		
     </head>
 
+	
+	
     <body class="fixed-left" ng-app="dashboard" ng-controller="dashboardCtrl" account-profile>
 
         <!-- Begin page -->
@@ -39,7 +119,7 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="index.html" class="logo"><img alt="user-img" class="img-circle icon-c-logo" style="margin-left: 10px; margin-top: 10px; height: 45px;" src="pictures/logo.png"><span><img alt="user-img" class="img-circle" style="height: 45px;" src="pictures/logo.png"> LUCST</span></a>
+                        <a href="index.php" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>
                     </div>
                 </div>
 
@@ -52,12 +132,7 @@
                                     <i class="ion-navicon"></i>
                                 </button>
                                 <span class="clearfix"></span>
-                            </div>
-
-                            <form role="search" class="navbar-left app-search pull-left hidden-xs">
-			                     <input type="text" placeholder="Search..." class="form-control">
-			                     <a href=""><i class="fa fa-search"></i></a>
-			                </form>
+                            </div>	
 
                             <ul class="nav navbar-nav navbar-right pull-right">
                                 <li class="hidden-xs">
@@ -91,17 +166,10 @@
                                 <li><a href="index.html" class="waves-effect active"><i class="ti-home"></i><span> Dashboard </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <li><a href="enrollment.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
-                            </li>
-							<li class="has_sub">
                                 <li><a href="students.html" class="waves-effect"><i class="ti-user"></i><span> Students </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ti-settings"></i><span class="label label-danger pull-right">2</span><span> Maintenance </span> </a>
-                                <ul class="list-unstyled" style="display: none;">
-                                    <li><a href="accounts.html">Accounts</a></li>
-                                    <li><a href="courses.html">Courses</a></li>
-                                </ul>
+                                <li><a href="enrollment.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
@@ -116,26 +184,69 @@
                 <!-- Start content -->
                 <div class="content">
                     <div class="container">
-
+					
                         <!-- Page-Title -->
                         <div class="row">
                             <div class="col-sm-12">
-                                <h4 class="page-title">Dashboard</h4>
-                                <p class="text-muted page-title-alt">Welcome to System</p>
+                                <!-- <h4 class="page-title">Dashboard</h4> -->
+                                <p class="text-muted page-title-alt"></p>
                             </div>
                         </div>
-						
 						<div class="row">
-							<div class="col-sm-12">
-								<div class="card-box">
-									<div class="row">
-										<div class="col-md-6">
-											
+							<div class="canv">
+							<div class="col-lg-6">
+								<div class="panel panel-border panel-custom">
+									<div class="panel-heading">
+										<h3 class="panel-title" style="text-align:center;">VISION</h3>
+									</div>
+									<div class="panel-body">
+										<img src="images/lucst.jpg" style="" alt="Avatar" class="image">
+										<div class="overlay">
+										<div class="text2" style="text-align:justify;">La Union Colleges of Science and Technology, Inc., envisions itself to be a learning community characterized by academic excellence, creative activity, social responsibility and intergrity.</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div><!-- row -->
+							</div>
+							<div class="canv">
+							<div class="col-lg-6">
+								<div class="panel panel-border panel-custom">
+									<div class="panel-heading">
+										<h3 class="panel-title" style="text-align:center;">MISSION</h3>
+									</div>
+									<div class="panel-body">
+										<img src="images/lucst.jpg" alt="Avatar" class="image">
+										<div class="overlay">
+										<div class="text2" style="text-align:justify;">La Union Colleges of Science and Technology, Inc. commits itself to provide well-rounded educational trainings and experiences to students whose knowledge, skills and value system will enable them to adjust to an ever changing society, be competitive in the global market and contribute to the improvement of the quality of life.</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="row">
+						<div class="canv">
+							<div class="col-lg-12">
+								<div class="panel panel-border panel-custom">
+									<div class="panel-heading">
+										<h3 class="panel-title" style="text-align:center;">EDUCATIONAL PHILOSOPHY</h3>
+									</div>
+									<div class="panel-body" style="height:357px;">
+										<!-- <p style="font-size:22px; text-align:justify;"> -->
+											<!-- The La Union Colleges of Science and Technology, Inc. adheres to the fulfillment of improving the quality of the people by giving direction to individual's basic potentialities text text; producing high caliber manpower that jives with the requirement text services area and the industries; inculcating values conforming text text standards of society; accelerating active quest for information text text new ideas needed to adjust to an ever-changing society. -->
+										<!-- </p> -->
+										<div class="panel-body">
+										<img src="images/lucst.jpg" alt="Avatar" class="image2" style="height:300px;">
+										<div class="overlay2">
+										<div class="text" style="text-align:justify;">The La Union Colleges of Science and Technology, Inc. adheres to the fulfillment of improving the quality of life of the people by giving direction to individual’s basic potentialities and talents; producing high caliber manpower that jibes with the requirements, of the services area and the industries; inculcating values conforming to the ethical standards of society; accelerating active quest for information and producing new ideas needed to adjust to an ever-changing society.</div>
+										</div>
+									</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						
                     </div> <!-- container -->
                 </div> <!-- content -->
 
