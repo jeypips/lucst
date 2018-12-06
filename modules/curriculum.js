@@ -113,7 +113,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.curriculum.id = 0;
 			scope.curriculum.curriculum_datas = [];
 			scope.curriculum.curriculum_dels = [];
-			
+			// console.log(scope.curriculum.curriculum_datas);
 			courses(scope);
 			
 			bui.show();
@@ -142,11 +142,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 							bui.hide();				
 							
 						});
-						
-					} else {
-						
-						scope.curriculum = {};
-						scope.curriculum.id = 0;
 						
 					};
 					
