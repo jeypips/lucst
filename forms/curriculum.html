@@ -32,12 +32,12 @@
 				</div>
 				<hr>
 				<div class="row">
-					<button class="btn btn-primary pull-right" style="margin-right: 10px;" ng-click="app.curriculum_data.add(this)">Add</button>
+					<button class="btn btn-primary pull-right" style="margin-right: 10px;" ng-disabled="btns.ok.btn" ng-click="app.curriculum_data.add(this)">Add</button>
 				</div>
 				<br>
 				<div class="" ng-repeat="cc in curriculum.curriculum_datas">
 					<div class="row">
-						<button class="btn btn-danger pull-right" style="margin-right: 10px;" ng-click="app.curriculum_data.delete(this,cc)"><i class="fa fa-remove"></i></button>
+						<button class="btn btn-danger pull-right" style="margin-right: 10px;" ng-click="app.curriculum_data.delete(this,cc)" ng-disabled="btns.ok.btn"><i class="fa fa-remove"></i></button>
 					</div>
 					<div class="row">
 						<div class="col-lg-6 form-group">

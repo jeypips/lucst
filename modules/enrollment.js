@@ -1,17 +1,6 @@
 angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl','snapshot-module']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal,snapshot) {
 
 	function app() {
-		
-		function getAge(dateString) { //Autocompute birthday to age
-			var today = new Date();
-			var birthDate = new Date(dateString);
-			var age = today.getFullYear() - birthDate.getFullYear();
-			var m = today.getMonth() - birthDate.getMonth();
-			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-				age--;
-			}
-			return age;
-		};
 
 		var self = this;
 
@@ -32,10 +21,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
-			scope.student = {};
-			scope.student.id = 0;			
+			scope.enrollment = {};
+			scope.enrollment.id = 0;			
 			
-			scope.students = []; //list
+			scope.enrollments = []; //list
 			
 		};
 		
@@ -56,7 +45,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		function validate(scope) {
 			
-			var controls = scope.formHolder.student.$$controls;
+			var controls = scope.formHolder.enrollment.$$controls;
 			
 			angular.forEach(controls,function(elem,i) {
 				
@@ -64,7 +53,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 									
 			});
 
-			return scope.formHolder.student.$invalid;
+			return scope.formHolder.enrollment.$invalid;
 			
 		};
 		
@@ -89,15 +78,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			if (scope.$id > 2) scope = scope.$parent;			
 			
-			scope.student = {};
-			scope.student.id = 0;						
+			scope.enrollment = {};
+			scope.enrollment.id = 0;						
 			
 			$http({
 			  method: 'POST',
 			  url: 'handlers/enrollment/list.php'
 			}).then(function success(response) {
 				
-				scope.students = angular.copy(response.data);
+				scope.enrollments = angular.copy(response.data);
 				
 				bui.hide();
 				
@@ -112,7 +101,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
 				// instantiate datable
 				$timeout(function() {
-					$('#students').DataTable({
+					$('#enrollment').DataTable({
 						"ordering": false
 					});	
 				},200);
@@ -121,17 +110,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.student = function(scope,row) {			
+		self.enrollment = function(scope,row) {			
 
-			scope.student = {};
-			scope.student.id = 0;
+			scope.enrollment = {};
+			scope.enrollment.id = 0;
 
 			bui.show();
 
 			mode(scope,row);
 			
 			courses(scope);
-			scope.student.date_of_enrollment = new Date();
+			// scope.student.date_of_enrollment = new Date();
 			
 			$('#content').load('forms/enrollment.html',function() {
 				$timeout(function() {
@@ -146,8 +135,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						  data: {id: row.id}
 						}).then(function success(response) {
 
-							scope.student = angular.copy(response.data);
-							scope.student.dob = new Date(response.data.dob);
+							scope.enrollment = angular.copy(response.data);
+						/* 	scope.student.dob = new Date(response.data.dob);
 							scope.student.date_of_enrollment = new Date(response.data.date_of_enrollment);
 							
 							angular.forEach(scope.pictures, function(item,i) { console.log(i);
@@ -156,7 +145,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 								console.log(photo);
 								if (imageExists(photo)) view.setAttribute('src', photo);
 								else view.setAttribute('src', 'pictures/avatar.png');
-							});
+							}); */
 							
 							bui.hide();
 							
@@ -168,8 +157,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 					} else {
 						
-						scope.student = {};
-						scope.student.id = 0;
+						scope.enrollment = {};
+						scope.enrollment.id = 0;
 						
 					};
 					
@@ -182,8 +171,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			scope.student = {};
-			scope.student.id = 0;			
+			scope.enrollment = {};
+			scope.enrollment.id = 0;			
 			
 			self.list(scope);
 			
@@ -205,13 +194,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			$http({
 			  method: 'POST',
 			  url: 'handlers/enrollment/save.php',
-			  data: {student: scope.student}
+			  data: {enrollment: scope.enrollment}
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.student.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student info successfully added');				
+				if (scope.enrollment.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student info successfully added');				
 				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student info successfully updated');				
-				mode(scope,scope.student);								
+				mode(scope,scope.enrollment);								
 				snapshot.upload(scope);
 				
 			}, function error(response) {
@@ -250,14 +239,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 		};
 		
-		self.dob = function(scope) {
-			
-			if (scope.student.dob == null) return;
-			scope.student.age = getAge(scope.student.dob); //for birthday autocompute
-
-		};
-		
-		function imageExists(image_url){
+/* 		function imageExists(image_url){
 
 			var http = new XMLHttpRequest();
 
@@ -266,7 +248,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			return http.status != 404;
 
-		};
+		}; */
 		
 	};
 	
