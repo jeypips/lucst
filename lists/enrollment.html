@@ -1,0 +1,34 @@
+<div class="col-lg-12">
+	<div class="panel">
+		<div class="panel-heading">
+			<h4><i class="icon-layers"></i> List
+			<button class="btn btn-primary pull-right" ng-click="app.enrollment(this)">Add</button>
+			</h4>
+		</div>
+		<div class="panel-body">
+			<table id="enrollment" class="table table-striped table-bordered">
+			  <thead>
+				<tr>
+				  <th>No.</th>
+				  <th>Name</th>
+				  <th>Course</th>
+				  <th>Date of Enrollment</th>
+				  <th>Actions</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr ng-repeat="e in enrollments">
+				  <td>{{e.id}}</td>
+				  <td>{{e.students_id.fullname}}</td>
+				  <td>{{e.students_id.course.course_name}}</td>
+				  <td>{{e.date_of_enrollment}}</td>
+				  <td>
+				  <button class="btn btn-sm btn-primary" ng-click="app.enrollment(this,e)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
+				  <button class="btn btn-sm btn-googleplus" ng-click="app.delete(this,e)"><i class="fa fa-close" style="cursor: pointer;"></i></button>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>

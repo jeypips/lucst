@@ -16,7 +16,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			};
 			
 			scope.curriculum = {};
-			scope.curriculum.id = 0;			
+			scope.curriculum.id = 0;
+
+			scope.curriculum.curriculum_datas = [];
+			scope.curriculum.curriculum_dels = [];			
 			
 			scope.curriculums = []; //list
 			
@@ -108,6 +111,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			scope.curriculum = {};
 			scope.curriculum.id = 0;
+			scope.curriculum.curriculum_datas = [];
+			scope.curriculum.curriculum_dels = [];
+			// console.log(scope.curriculum.curriculum_datas);
 			courses(scope);
 			
 			bui.show();
@@ -136,11 +142,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 							bui.hide();				
 							
 						});
-						
-					} else {
-						
-						scope.curriculum = {};
-						scope.curriculum.id = 0;
 						
 					};
 					
@@ -218,6 +219,47 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
 				
+		};
+		
+		self.curriculum_data = {
+			
+			add: function(scope) {
+
+				scope.curriculum.curriculum_datas.push({
+					id: 0,
+					curriculum_id: 0,
+					grade: '',
+					subject_code: '',
+					descriptive_title: '',
+					units: '',
+					pre_req: ''
+				});
+
+			},			
+			
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					scope.curriculum.curriculum_dels.push(row.id);
+				};
+				
+				var curriculum_datas = scope.curriculum.curriculum_datas;
+				var index = scope.curriculum.curriculum_datas.indexOf(row);
+				scope.curriculum.curriculum_datas = [];			
+				
+				angular.forEach(curriculum_datas, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						scope.curriculum.curriculum_datas.push(d);
+						
+					};
+					
+				});
+
+			}			
+			
 		};
 		
 	};

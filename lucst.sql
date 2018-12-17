@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 03, 2018 at 10:56 PM
+-- Generation Time: Dec 12, 2018 at 01:21 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -37,7 +37,8 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `course_name`, `course_short_name`) VALUES
-(1, 'Bachelor of Science in Information Technology', 'BSIT');
+(1, 'Bachelor of Science in Information Technology', 'BSIT'),
+(2, 'BACHELOR OF SCIENCE IN HOTEL AND RESTAURANT MANAGEMENT', 'BSHRM');
 
 -- --------------------------------------------------------
 
@@ -58,7 +59,7 @@ CREATE TABLE `curriculum` (
 --
 
 INSERT INTO `curriculum` (`id`, `course_id`, `year_name`, `semester`, `date_added`) VALUES
-(1, 1, 'Second Year', '2nd Semester', '2018-12-02');
+(1, 2, 'First Year', '1st Semester', '2018-12-02');
 
 -- --------------------------------------------------------
 
@@ -76,6 +77,22 @@ CREATE TABLE `curriculum_data` (
   `pre_req` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `curriculum_data`
+--
+
+INSERT INTO `curriculum_data` (`id`, `curriculum_id`, `grade`, `subject_code`, `descriptive_title`, `units`, `pre_req`) VALUES
+(1, 1, '', 'Engl 1', 'Study and Thinking Skills', '3', ''),
+(2, 1, '', 'Fil 1', 'Sining ng Pakikipagtalastasan', '3', ''),
+(3, 1, '', 'CS 1', 'Intro to Information Technology with Key Boarding', '3', ''),
+(4, 1, '', 'PD', 'Personality Development & Human Relations', '3', ''),
+(5, 1, '', 'HRMS 1', 'Intro to Hotel & Restaurant Management', '3', ''),
+(6, 1, '', 'TC 1', 'Culinary Science – Commercial Cooking', '3/3', ''),
+(7, 1, '', 'HRMR 1', 'Housekeeping Operations & Procedures', '3/2', ''),
+(8, 1, '', 'TC 2', 'Principles of Tourism I', '3', ''),
+(9, 1, '', 'PE 1', 'Self Testing Activities', '2', ''),
+(10, 1, '', 'FTS 1', 'Industry Immersion', '1', '');
+
 -- --------------------------------------------------------
 
 --
@@ -84,8 +101,17 @@ CREATE TABLE `curriculum_data` (
 
 CREATE TABLE `enrollment` (
   `id` int(11) NOT NULL,
-  `students_id` int(11) NOT NULL
+  `students_id` int(11) NOT NULL,
+  `date_of_enrollment` date DEFAULT NULL,
+  `semester` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `enrollment`
+--
+
+INSERT INTO `enrollment` (`id`, `students_id`, `date_of_enrollment`, `semester`) VALUES
+(1, 1, '2018-12-12', 'First Semester');
 
 -- --------------------------------------------------------
 
@@ -180,13 +206,15 @@ ALTER TABLE `curriculum`
 -- Indexes for table `curriculum_data`
 --
 ALTER TABLE `curriculum_data`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `curriculum_id` (`curriculum_id`);
 
 --
 -- Indexes for table `enrollment`
 --
 ALTER TABLE `enrollment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `students_id` (`students_id`);
 
 --
 -- Indexes for table `students`
@@ -208,7 +236,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `curriculum`
 --
@@ -218,12 +246,12 @@ ALTER TABLE `curriculum`
 -- AUTO_INCREMENT for table `curriculum_data`
 --
 ALTER TABLE `curriculum_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `enrollment`
 --
 ALTER TABLE `enrollment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `students`
 --
@@ -234,6 +262,22 @@ ALTER TABLE `students`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `curriculum_data`
+--
+ALTER TABLE `curriculum_data`
+  ADD CONSTRAINT `curriculum_data_ibfk_1` FOREIGN KEY (`curriculum_id`) REFERENCES `curriculum` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  ADD CONSTRAINT `enrollment_ibfk_1` FOREIGN KEY (`students_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
