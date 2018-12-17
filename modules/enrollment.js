@@ -22,7 +22,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			};
 			
 			scope.enrollment = {};
-			scope.enrollment.id = 0;			
+			scope.enrollment.id = 0;
+
+			studentAsyncSuggest(scope);			
 			
 			scope.enrollments = []; //list
 			
@@ -41,6 +43,77 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 			});	
 			
+		};
+		
+		self.selectStudent = function(scope,item) {
+			
+			studentSync(scope,item);
+			
+			scope.enrollment.id = item.id;
+
+		};
+		
+		function studentAsyncSuggest(scope) { //filter
+
+			scope.studentAsyncSuggest = function(f) {
+				
+				return $http({
+				  method: 'POST',
+				  url: 'handlers/enrollment/student-async-suggest.php',
+				  data: {filter: f}
+				}).then(function mySucces(response) {
+					
+					return response.data;
+					
+				},
+				function myError(response) {
+
+				});					
+				
+			};
+
+			scope.studentAsyncSuggest('');
+
+		};
+		
+		function studentSync(scope,student) {
+			
+			scope.search = '';
+
+			bui.show();
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/enrollment/student-sync.php',
+			  data: {id: student.id}
+			}).then(function mySucces(response) {
+				
+				scope.student = angular.copy(response.data);
+				angular.forEach(scope.pictures, function(item,i) { console.log(i);
+					var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
+					var view = document.getElementById(i+'_picture');
+					if (imageExists(photo)) view.setAttribute('src', photo);
+					else view.setAttribute('src', 'pictures/avatar.png');
+					});
+				bui.hide();
+				
+			}, function myError(response) {
+				
+				bui.hide();
+				
+			});						
+		
+		};	
+		
+		function imageExists(image_url){
+
+			var http = new XMLHttpRequest();
+
+			http.open('HEAD', image_url, false);
+			http.send();
+
+			return http.status != 404;
+
 		};
 		
 		function validate(scope) {
@@ -120,6 +193,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			mode(scope,row);
 			
 			courses(scope);
+			// students(scope);
 			// scope.student.date_of_enrollment = new Date();
 			
 			$('#content').load('forms/enrollment.html',function() {
