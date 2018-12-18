@@ -78,8 +78,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			$('#content').html(loading);
 			$('#content').load('lists/users.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
-			});		
-			
+				// instantiate datable
+				$timeout(function() {
+					$('#users').DataTable({
+						"ordering": false
+					});	
+				},200);
+				
+			});	
 		};
 		
 		self.user = function(scope,row) {			

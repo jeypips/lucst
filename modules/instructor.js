@@ -15,34 +15,16 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
-			scope.curriculum = {};
-			scope.curriculum.id = 0;
-
-			scope.curriculum.curriculum_datas = [];
-			scope.curriculum.curriculum_dels = [];			
+			scope.instructor = {};
+			scope.instructor.id = 0;			
 			
-			scope.curriculums = []; //list
-			
-		};
-		
-		function courses(scope) {
-			
-			$http({
-				method: 'POST',
-				url: 'api/suggestions/courses.php'
-			}).then(function mySucces(response) {
-				
-				scope.courses = response.data;
-				
-			},function myError(response) {
-				
-			});	
+			scope.instructors = []; //list
 			
 		};
 		
 		function validate(scope) {
 			
-			var controls = scope.formHolder.curriculum.$$controls;
+			var controls = scope.formHolder.instructor.$$controls;
 			
 			angular.forEach(controls,function(elem,i) {
 				
@@ -50,7 +32,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 									
 			});
 
-			return scope.formHolder.curriculum.$invalid;
+			return scope.formHolder.instructor.$invalid;
 			
 		};
 		
@@ -72,19 +54,19 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		self.list = function(scope) {
 			
 			bui.show();
-			
+
 			if (scope.$id > 2) scope = scope.$parent;			
-			
-			scope.curriculum = {};
-			scope.curriculum.id = 0;						
-			
+
+			scope.user = {};
+			scope.user.id = 0;						
+
 			$http({
 			  method: 'POST',
-			  url: 'handlers/curriculum/list.php'
+			  url: 'handlers/instructors/list.php'
 			}).then(function success(response) {
 				
-				scope.curriculums = angular.copy(response.data);
-				
+				scope.instructors = angular.copy(response.data);
+
 				bui.hide();
 				
 			}, function error(response) {
@@ -94,11 +76,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			});			
 			
 			$('#content').html(loading);
-			$('#content').load('lists/curriculums.html', function() {
+			$('#content').load('lists/instructors.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
 				// instantiate datable
 				$timeout(function() {
-					$('#curriculums').DataTable({
+					$('#instructors').DataTable({
 						"ordering": false
 					});	
 				},200);
@@ -107,20 +89,16 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.curriculum = function(scope,row) {			
+		self.instructor = function(scope,row) {			
 
-			scope.curriculum = {};
-			scope.curriculum.id = 0;
-			scope.curriculum.curriculum_datas = [];
-			scope.curriculum.curriculum_dels = [];
-			// console.log(scope.curriculum.curriculum_datas);
-			courses(scope);
-			
+			scope.instructor = {};
+			scope.instructor.id = 0;
+
 			bui.show();
 
 			mode(scope,row);
 			
-			$('#content').load('forms/curriculum.html',function() {
+			$('#content').load('forms/instructor.html',function() {
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -129,11 +107,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 						$http({
 						  method: 'POST',
-						  url: 'handlers/curriculum/view.php',
+						  url: 'handlers/instructors/view.php',
 						  data: {id: row.id}
 						}).then(function success(response) {
 
-							scope.curriculum = angular.copy(response.data);
+							scope.instructor = angular.copy(response.data);
 							
 							bui.hide();
 							
@@ -142,6 +120,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 							bui.hide();				
 							
 						});
+						
+					} else {
+						
+						scope.instructor = {};
+						scope.instructor.id = 0;
 						
 					};
 					
@@ -154,8 +137,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			scope.curriculum = {};
-			scope.curriculum.id = 0;			
+			scope.instructor = {};
+			scope.instructor.id = 0;			
 			
 			self.list(scope);
 			
@@ -176,14 +159,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			$http({
 			  method: 'POST',
-			  url: 'handlers/curriculum/save.php',
-			  data: {curriculum: scope.curriculum}
+			  url: 'handlers/instructors/save.php',
+			  data: {instructor: scope.instructor}
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.curriculum.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New curriculum info successfully added');				
-				else growl.show('btn btn-success',{from: 'top', amount: 55},'Curriculum Info successfully updated');				
-				mode(scope,scope.curriculum);		
+				if (scope.instructor.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New instructor info successfully added');				
+				else growl.show('btn btn-success',{from: 'top', amount: 55},'Instructor Info successfully updated');				
+				mode(scope,scope.instructor);		
 				
 			}, function error(response) {
 				
@@ -201,13 +184,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/curriculum/delete.php',
+				  url: 'handlers/instructors/delete.php',
 				  data: {id: [row.id]}
 				}).then(function mySucces(response) {
 
 					self.list(scope);
 					
-					growl.show('btn btn-danger',{from: 'top', amount: 55},'Curriculum Info successfully deleted.');
+					growl.show('btn btn-danger',{from: 'top', amount: 55},'Instructor Info successfully deleted.');
 					
 				}, function myError(response) {
 					 
@@ -219,51 +202,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
 				
-		};
-		
-		self.curriculum_data = {
-			
-			add: function(scope) {
-
-				scope.curriculum.curriculum_datas.push({
-					id: 0,
-					curriculum_id: 0,
-					grade: '',
-					subject_code: '',
-					descriptive_title: '',
-					units: '',
-					lec: '',
-					lab: '',
-					total: '',
-					pre_req: ''
-				});
-
-			},			
-			
-			delete: function(scope,row) {
-				
-				if (row.id > 0) {
-					scope.curriculum.curriculum_dels.push(row.id);
-				};
-				
-				var curriculum_datas = scope.curriculum.curriculum_datas;
-				var index = scope.curriculum.curriculum_datas.indexOf(row);
-				scope.curriculum.curriculum_datas = [];			
-				
-				angular.forEach(curriculum_datas, function(d,i) {
-					
-					if (index != i) {
-						
-						delete d['$$hashKey'];
-						scope.curriculum.curriculum_datas.push(d);
-						
-					};
-					
-				});
-
-			}			
-			
-		};
+		};	
 		
 	};
 	

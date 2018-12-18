@@ -5,58 +5,20 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 include_once '../../db.php';
 
 header("Content-Type: application/json");
-$con = new pdo_db("curriculum");
+$con = new pdo_db("enrollment");
 
-$curriculum_datas = $_POST['curriculum']['curriculum_datas'];
-unset($_POST['curriculum']['curriculum_datas']);
+$_POST['enrollment']['dob'] = (isset($_POST['enrollment']['dob']))?date("Y-m-d",strtotime($_POST['enrollment']['dob'])):"1970-01-01";
+$_POST['enrollment']['date_of_enrollment'] = (isset($_POST['enrollment']['date_of_enrollment']))?date("Y-m-d",strtotime($_POST['enrollment']['date_of_enrollment'])):date("Y-m-d");
 
-$curriculum_dels = $_POST['curriculum']['curriculum_dels'];
-unset($_POST['curriculum']['curriculum_dels']);
-
-if ($_POST['curriculum']['id']) {
+if ($_POST['enrollment']['id']) {
 	
-	$curriculum = $con->updateObj($_POST['curriculum'],'id');
-	$curriculum_id = $_POST['curriculum']['id'];
+	$enrollment = $con->updateObj($_POST['enrollment'],'id');
 	
 } else {
 	
-	$curriculum = $con->insertObj($_POST['curriculum']);
-	$curriculum_id = $con->insertId;
+	$enrollment = $con->insertObj($_POST['enrollment']);
 	echo $con->insertId;
 
-};
+}
 
-if (count($curriculum_dels)) {
-
-	$con->table = "curriculum_data";
-	$delete = $con->deleteData(array("id"=>implode(",",$curriculum_dels)));		
-	
-};
-                                    
-if (count($curriculum_datas)) {
-
-	$con->table = "curriculum_data";
-	
-	foreach ($curriculum_datas as $index => $value) {
-		
-		$curriculum_datas[$index]['curriculum_id'] = $curriculum_id;		
-		
-	}
-	
-	foreach ($curriculum_datas as $index => $value) {
-
-		if ($value['id']) {
-			
-			$curriculum_row = $con->updateData($curriculum_datas[$index],'id');
-			
-		} else {
-			
-			unset($curriculum_datas[$index]['id']);
-			$curriculum_row = $con->insertData($curriculum_datas[$index]);
-			
-		}
-	
-	}
-	
-};
 ?>

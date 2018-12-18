@@ -1,6 +1,17 @@
 angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl','snapshot-module']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal,snapshot) {
 
 	function app() {
+		
+		function getAge(dateString) { //Autocompute birthday to age
+			var today = new Date();
+			var birthDate = new Date(dateString);
+			var age = today.getFullYear() - birthDate.getFullYear();
+			var m = today.getMonth() - birthDate.getMonth();
+			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+				age--;
+			}
+			return age;
+		};
 
 		var self = this;
 
@@ -22,9 +33,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			};
 			
 			scope.enrollment = {};
-			scope.enrollment.id = 0;
-
-			studentAsyncSuggest(scope);			
+			scope.enrollment.id = 0;			
 			
 			scope.enrollments = []; //list
 			
@@ -43,77 +52,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 			});	
 			
-		};
-		
-		self.selectStudent = function(scope,item) {
-			
-			studentSync(scope,item);
-			
-			scope.enrollment.id = item.id;
-
-		};
-		
-		function studentAsyncSuggest(scope) { //filter
-
-			scope.studentAsyncSuggest = function(f) {
-				
-				return $http({
-				  method: 'POST',
-				  url: 'handlers/enrollment/student-async-suggest.php',
-				  data: {filter: f}
-				}).then(function mySucces(response) {
-					
-					return response.data;
-					
-				},
-				function myError(response) {
-
-				});					
-				
-			};
-
-			scope.studentAsyncSuggest('');
-
-		};
-		
-		function studentSync(scope,student) {
-			
-			scope.search = '';
-
-			bui.show();
-			
-			$http({
-			  method: 'POST',
-			  url: 'handlers/enrollment/student-sync.php',
-			  data: {id: student.id}
-			}).then(function mySucces(response) {
-				
-				scope.student = angular.copy(response.data);
-				angular.forEach(scope.pictures, function(item,i) { console.log(i);
-					var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
-					var view = document.getElementById(i+'_picture');
-					if (imageExists(photo)) view.setAttribute('src', photo);
-					else view.setAttribute('src', 'pictures/avatar.png');
-					});
-				bui.hide();
-				
-			}, function myError(response) {
-				
-				bui.hide();
-				
-			});						
-		
-		};	
-		
-		function imageExists(image_url){
-
-			var http = new XMLHttpRequest();
-
-			http.open('HEAD', image_url, false);
-			http.send();
-
-			return http.status != 404;
-
 		};
 		
 		function validate(scope) {
@@ -193,10 +131,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			mode(scope,row);
 			
 			courses(scope);
-			// students(scope);
-			// scope.student.date_of_enrollment = new Date();
+			// scope.enrollment.date_of_enrollment = new Date();
 			
 			$('#content').load('forms/enrollment.html',function() {
+				
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -210,16 +148,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						}).then(function success(response) {
 
 							scope.enrollment = angular.copy(response.data);
-						/* 	scope.student.dob = new Date(response.data.dob);
-							scope.student.date_of_enrollment = new Date(response.data.date_of_enrollment);
+							scope.enrollment.dob = new Date(response.data.dob);
 							
 							angular.forEach(scope.pictures, function(item,i) { console.log(i);
-								var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
+								var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
 								var view = document.getElementById(i+'_picture');
 								console.log(photo);
 								if (imageExists(photo)) view.setAttribute('src', photo);
 								else view.setAttribute('src', 'pictures/avatar.png');
-							}); */
+							});
 							
 							bui.hide();
 							
@@ -313,7 +250,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 		};
 		
-/* 		function imageExists(image_url){
+		self.dob = function(scope) {
+			
+			if (scope.enrollment.dob == null) return;
+			scope.enrollment.age = getAge(scope.enrollment.dob); //for birthday autocompute
+
+		};
+		
+		function imageExists(image_url){
 
 			var http = new XMLHttpRequest();
 
@@ -322,7 +266,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			return http.status != 404;
 
-		}; */
+		};
 		
 	};
 	
