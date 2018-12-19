@@ -81,23 +81,6 @@
 						<input type="text" class="form-control" name="name_of_spouse" ng-model="enrollment.name_of_spouse" ng-disabled="btns.ok.btn">
 					</div>
 				</div>
-				<hr>
-				<div class="row">
-					<div class="col-lg-8 form-group" ng-class="{'has-error': formHolder.enrollment.course.$touched && formHolder.enrollment.course.$invalid}">
-						<label>Course</label>
-						  <select class="form-control" name="course" ng-model="enrollment.course" ng-disabled="btns.ok.btn" ng-options="course.course_name for course in courses track by course.id" required>
-						  </select>
-						<span class="help-block" ng-show="formHolder.enrollment.course.$touched && formHolder.enrollment.course.$invalid">Course is required</span>
-					</div>
-					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.semester.$touched && formHolder.enrollment.semester.$invalid}">
-						<label>Semester</label>
-						  <select class="form-control" name="semester" ng-model="enrollment.semester" ng-disabled="btns.ok.btn" required>
-							<option value="First Semester">First Semester</option>
-							<option value="Second Semester">Second Semester</option>
-						 </select>
-						<span class="help-block" ng-show="formHolder.enrollment.semester.$touched && formHolder.enrollment.semester.$invalid">Semester is required</span>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -255,6 +238,35 @@
 					<div class="col-lg-6 form-group">
 						<label>Tertiary School Addres </label>
 						<input type="text" class="form-control" name="tertiary_school_address" ng-model="enrollment.tertiary_school_address" ng-disabled="btns.ok.btn">
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-lg-12 form-group" ng-class="{'has-error': formHolder.enrollment.course.$touched && formHolder.enrollment.course.$invalid}">
+						<label>Course</label>
+						  <select class="form-control" name="course" ng-model="enrollment.course" ng-disabled="btns.ok.btn" ng-options="course.course_name for course in courses track by course.id" required>
+						  </select>
+						<span class="help-block" ng-show="formHolder.enrollment.course.$touched && formHolder.enrollment.course.$invalid">Course is required</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.enrollment.year_level.$touched && formHolder.enrollment.year_level.$invalid}">
+						<label>Year Level:</label>
+						  <select class="form-control" name="year_level" ng-model="enrollment.year_level" ng-disabled="btns.ok.btn" required>
+							<option value="First Year">First Year</option>
+							<option value="Second Year">Second Year</option>
+							<option value="Third Year">Third Year</option>
+							<option value="Fourt Year">Fourt Year</option>
+						 </select>
+						<span class="help-block" ng-show="formHolder.enrollment.year_level.$touched && formHolder.enrollment.year_level.$invalid">Year Level is required</span>
+					</div>
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.enrollment.semester.$touched && formHolder.enrollment.semester.$invalid}">
+						<label>Semester</label>
+						  <select class="form-control" name="semester" ng-model="enrollment.semester" ng-disabled="btns.ok.btn" required>
+							<option value="First Semester">First Semester</option>
+							<option value="Second Semester">Second Semester</option>
+						 </select>
+						<span class="help-block" ng-show="formHolder.enrollment.semester.$touched && formHolder.enrollment.semester.$invalid">Semester is required</span>
 					</div>
 				</div>
 			</div>
