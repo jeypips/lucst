@@ -5,18 +5,18 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 include_once '../../db.php';
 
 header("Content-Type: application/json");
-$con = new pdo_db("students");
+$con = new pdo_db("enrollment");
 
-$_POST['student']['dob'] = (isset($_POST['student']['dob']))?date("Y-m-d",strtotime($_POST['student']['dob'])):"1970-01-01";
-$_POST['student']['date_of_enrollment'] = (isset($_POST['student']['date_of_enrollment']))?date("Y-m-d",strtotime($_POST['student']['date_of_enrollment'])):date("Y-m-d");
+$_POST['enrollment']['dob'] = (isset($_POST['enrollment']['dob']))?date("Y-m-d",strtotime($_POST['enrollment']['dob'])):"1970-01-01";
+$_POST['enrollment']['date_of_enrollment'] = (isset($_POST['enrollment']['date_of_enrollment']))?date("Y-m-d",strtotime($_POST['enrollment']['date_of_enrollment'])):date("Y-m-d");
 
-if ($_POST['student']['id']) {
+if ($_POST['enrollment']['id']) {
 	
-	$student = $con->updateObj($_POST['student'],'id');
+	$enrollment = $con->updateObj($_POST['enrollment'],'id');
 	
 } else {
 	
-	$student = $con->insertObj($_POST['student']);
+	$enrollment = $con->insertObj($_POST['enrollment']);
 	echo $con->insertId;
 
 }

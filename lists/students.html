@@ -2,7 +2,7 @@
 	<div class="panel">
 		<div class="panel-heading">
 			<h4><i class="icon-layers"></i> List
-			<button class="btn btn-primary pull-right" ng-click="app.student(this)">Add</button>
+			<button class="btn btn-primary pull-right" ng-click="app.enrollment(this)">Add</button>
 			</h4>
 		</div>
 		<div class="panel-body">
@@ -11,22 +11,20 @@
 				<tr>
 				  <th>No.</th>
 				  <th>Name</th>
-				  <th>Sex</th>
-				  <th>Home Address</th>
 				  <th>Course</th>
-				  <th>&nbsp;</th>
+				  <th>Year of First Enrollment</th>
+				  <th>Actions</th>
 				</tr>
 			  </thead>
 			  <tbody>
-				<tr ng-repeat="s in students">
-				  <td>{{s.id}}</td>
-				  <td>{{s.fullname}}</td>
-				  <td>{{s.sex}}</td>
-				  <td>{{s.home_address}}</td>
-				  <td>{{s.course.course_name}}</td>
+				<tr ng-repeat="e in enrollments">
+				  <td>{{e.id}}</td>
+				  <td>{{e.fullname}}</td>
+				  <td>{{e.course.course_name}}</td>
+				  <td>{{e.date_of_enrollment}}</td>
 				  <td>
-				  <button class="btn btn-sm btn-primary" ng-click="app.student(this,s)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
-				  <button class="btn btn-sm btn-googleplus" ng-click="app.delete(this,s)"><i class="fa fa-close" style="cursor: pointer;"></i></button>
+				  <button class="btn btn-sm btn-primary" ng-click="app.enrollment(this,e)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
+				  <button class="btn btn-sm btn-googleplus" ng-click="app.delete(this,e)"><i class="fa fa-close" style="cursor: pointer;"></i></button>
 				  </td>
 				</tr>
 			  </tbody>

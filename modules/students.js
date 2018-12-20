@@ -32,10 +32,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
-			scope.student = {};
-			scope.student.id = 0;			
+			scope.enrollment = {};
+			scope.enrollment.id = 0;			
 			
-			scope.students = []; //list
+			scope.enrollments = []; //list
 			
 		};
 		
@@ -56,7 +56,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		function validate(scope) {
 			
-			var controls = scope.formHolder.student.$$controls;
+			var controls = scope.formHolder.enrollment.$$controls;
 			
 			angular.forEach(controls,function(elem,i) {
 				
@@ -64,7 +64,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 									
 			});
 
-			return scope.formHolder.student.$invalid;
+			return scope.formHolder.enrollment.$invalid;
 			
 		};
 		
@@ -89,15 +89,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			if (scope.$id > 2) scope = scope.$parent;			
 			
-			scope.student = {};
-			scope.student.id = 0;						
+			scope.enrollment = {};
+			scope.enrollment.id = 0;						
 			
 			$http({
 			  method: 'POST',
 			  url: 'handlers/students/list.php'
 			}).then(function success(response) {
 				
-				scope.students = angular.copy(response.data);
+				scope.enrollments = angular.copy(response.data);
 				
 				bui.hide();
 				
@@ -121,17 +121,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.student = function(scope,row) {			
+		self.enrollment = function(scope,row) {			
 
-			scope.student = {};
-			scope.student.id = 0;
+			scope.enrollment = {};
+			scope.enrollment.id = 0;
 
 			bui.show();
 
 			mode(scope,row);
 			
 			courses(scope);
-			// scope.student.date_of_enrollment = new Date();
+			// scope.enrollment.date_of_enrollment = new Date();
 			
 			$('#content').load('forms/student.html',function() {
 				
@@ -147,11 +147,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						  data: {id: row.id}
 						}).then(function success(response) {
 
-							scope.student = angular.copy(response.data);
-							scope.student.dob = new Date(response.data.dob);
+							scope.enrollment = angular.copy(response.data);
+							scope.enrollment.dob = new Date(response.data.dob);
 							
 							angular.forEach(scope.pictures, function(item,i) { console.log(i);
-								var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
+								var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
 								var view = document.getElementById(i+'_picture');
 								console.log(photo);
 								if (imageExists(photo)) view.setAttribute('src', photo);
@@ -168,8 +168,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						
 					} else {
 						
-						scope.student = {};
-						scope.student.id = 0;
+						scope.enrollment = {};
+						scope.enrollment.id = 0;
 						
 					};
 					
@@ -182,8 +182,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			scope.student = {};
-			scope.student.id = 0;			
+			scope.enrollment = {};
+			scope.enrollment.id = 0;			
 			
 			self.list(scope);
 			
@@ -205,13 +205,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			$http({
 			  method: 'POST',
 			  url: 'handlers/students/save.php',
-			  data: {student: scope.student}
+			  data: {enrollment: scope.enrollment}
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.student.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student info successfully added');				
+				if (scope.enrollment.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student info successfully added');				
 				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student info successfully updated');				
-				mode(scope,scope.student);								
+				mode(scope,scope.enrollment);								
 				snapshot.upload(scope);
 				
 			}, function error(response) {
@@ -252,8 +252,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.dob = function(scope) {
 			
-			if (scope.student.dob == null) return;
-			scope.student.age = getAge(scope.student.dob); //for birthday autocompute
+			if (scope.enrollment.dob == null) return;
+			scope.enrollment.age = getAge(scope.enrollment.dob); //for birthday autocompute
 
 		};
 		
