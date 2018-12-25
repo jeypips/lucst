@@ -37,6 +37,23 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			scope.enrollments = []; //list
 			
+			//provinces
+			$timeout(function() {
+				$http({ 
+					method: 'POST',
+					url: 'api/suggestions/courses-check.php'
+				}).then(function mySucces(response) {
+					
+					scope.courses = response.data;
+					scope.curriculum = [];
+					scope.curriculum_data = [];
+					
+				},function myError(response) {
+					
+				});
+				
+			}, 200);
+			
 		};
 		
 		function courses(scope) {
@@ -149,6 +166,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 							scope.enrollment = angular.copy(response.data);
 							scope.enrollment.dob = new Date(response.data.dob);
+							scope.curriculum = response.data.semester.curriculum;
+							// scope.barangays = response.data.detainee_city_address.barangays;
 							
 							angular.forEach(scope.pictures, function(item,i) { console.log(i);
 								var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
@@ -166,7 +185,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 							
 						});
 						
-					} else {
+					}; else {
 						
 						scope.enrollment = {};
 						scope.enrollment.id = 0;
@@ -266,6 +285,23 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			return http.status != 404;
 
+		};
+		
+		self.checkCourse = function(scope,course) {
+			
+			scope.curriculum = scope.enrollment.course.curriculum;
+			console.log(scope.curriculum);
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/enrollment/check-course.php',
+			  data: course
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
 		};
 		
 	};
