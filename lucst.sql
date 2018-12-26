@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 19, 2018 at 02:00 PM
+-- Generation Time: Dec 26, 2018 at 04:10 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -95,7 +95,8 @@ INSERT INTO `curriculum_data` (`id`, `curriculum_id`, `grade`, `subject_code`, `
 (7, 2, '', 'HRMR 1', 'Housekeeping Operations & Procedures', '3/2', NULL, NULL, NULL, ''),
 (8, 2, '', 'TC 2', 'Principles of Tourism I', '3', NULL, NULL, NULL, ''),
 (9, 2, '', 'PE 1', 'Self Testing Activities', '2', NULL, NULL, NULL, ''),
-(10, 2, '', 'FTS 1', 'Industry Immersion', '1', NULL, NULL, NULL, '');
+(10, 2, '', 'FTS 1', 'Industry Immersion', '1', NULL, NULL, NULL, ''),
+(11, 1, '', 'sample', 'sample', '1', '2', '3', '4', '5');
 
 -- --------------------------------------------------------
 
@@ -174,6 +175,18 @@ INSERT INTO `instructor` (`id`, `firstname`, `middlename`, `lastname`, `office`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `students_curriculum_data`
+--
+
+CREATE TABLE `students_curriculum_data` (
+  `id` int(11) NOT NULL,
+  `enrollment_id` int(11) DEFAULT NULL,
+  `curriculum_data_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -229,6 +242,13 @@ ALTER TABLE `instructor`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `students_curriculum_data`
+--
+ALTER TABLE `students_curriculum_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrollment_id` (`enrollment_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -252,7 +272,7 @@ ALTER TABLE `curriculum`
 -- AUTO_INCREMENT for table `curriculum_data`
 --
 ALTER TABLE `curriculum_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `enrollment`
 --
@@ -263,6 +283,11 @@ ALTER TABLE `enrollment`
 --
 ALTER TABLE `instructor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `students_curriculum_data`
+--
+ALTER TABLE `students_curriculum_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -283,6 +308,12 @@ ALTER TABLE `curriculum`
 --
 ALTER TABLE `curriculum_data`
   ADD CONSTRAINT `curriculum_data_ibfk_1` FOREIGN KEY (`curriculum_id`) REFERENCES `curriculum` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `students_curriculum_data`
+--
+ALTER TABLE `students_curriculum_data`
+  ADD CONSTRAINT `students_curriculum_data_ibfk_1` FOREIGN KEY (`enrollment_id`) REFERENCES `enrollment` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
