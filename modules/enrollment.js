@@ -49,13 +49,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					
 					scope.courses = response.data;
 					scope.curriculum = [];
-					scope.curriculum_data = [];
+					scope.students_curriculum_datas = [];
 					
 				},function myError(response) {
 					
 				});
 				
 			}, 200);
+			
+			
 			
 		};
 		
@@ -226,7 +228,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				  url: 'handlers/enrollment/view.php',
 				  data: {id: row.id}
 				}).then(function success(response) {
-
+					
 					scope.enrollment = angular.copy(response.data);
 					scope.enrollment.dob = new Date(response.data.dob);
 					scope.curriculum = response.data.semester.curriculum;
@@ -342,7 +344,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		self.checkCourse = function(scope,course) {
 			
 			scope.curriculum = scope.enrollment.course.curriculum;
-			console.log(scope.curriculum);
+			// console.log(scope.curriculum);
 			
 			$http({
 			  method: 'POST',
@@ -358,8 +360,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.checkSemester = function(scope,semester) {
 			
-			scope.curriculum_data = scope.enrollment.semester.curriculum_data;
-			console.log(scope.curriculum_data);
+			scope.students_curriculum_datas = scope.enrollment.semester.students_curriculum_datas;
+			console.log(scope.students_curriculum_datas);
 			
 			$http({
 			  method: 'POST',

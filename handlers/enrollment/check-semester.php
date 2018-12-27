@@ -6,8 +6,8 @@ require_once '../../db.php';
 
 $con = new pdo_db();
 
-$curriculum_data = $con->getData("SELECT * FROM curriculum_data WHERE curriculum_id = ".$_POST['id']);
+$students_curriculum_datas = $con->getData("SELECT * FROM curriculum_data WHERE curriculum_id = ".$_POST['id']);
 
-echo json_encode($curriculum_data);
+echo json_encode($students_curriculum_datas);
 
 ?>
