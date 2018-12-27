@@ -283,7 +283,7 @@
 						<tbody ng-repeat="es in enrollment.students_curriculum_datas">
 							<td>
 								<div class="col-lg-12 form-group">
-								  <select class="form-control" name="curriculum_data_id" ng-model="enrollment.curriculum_data_id" ng-options="cd.descriptive_title for cd in curriculum_data track by cd.id" ng-disabled="btns.ok.btn"></select>
+								  <select class="form-control" name="curriculum_data_id{{index}}" ng-model="es.curriculum_data_id" ng-options="cd.descriptive_title for cd in curriculum_data track by cd.id" ng-disabled="btns.ok.btn"></select>
 								</div>
 							</td>
 							<td></td>
