@@ -33,9 +33,31 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			};
 			
 			scope.enrollment = {};
-			scope.enrollment.id = 0;			
+			scope.enrollment.id = 0;
+
+			scope.enrollment.students_curriculum_datas = [];
+			scope.enrollment.students_curriculum_dels = [];			
 			
 			scope.enrollments = []; //list
+			
+			//provinces
+			$timeout(function() {
+				$http({ 
+					method: 'POST',
+					url: 'api/suggestions/courses-check.php'
+				}).then(function mySucces(response) {
+					
+					scope.courses = response.data;
+					scope.curriculum = [];
+					scope.students_curriculum_datas = [];
+					
+				},function myError(response) {
+					
+				});
+				
+			}, 200);
+			
+			
 			
 		};
 		
@@ -79,7 +101,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				scope.btns.ok.label = 'Update';
 				scope.btns.cancel.label = 'Close';
 				scope.btns.ok.btn = true;
-			}
+			};
 			
 		};
 		
@@ -121,69 +143,59 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.enrollment = function(scope,row) {			
-
+		self.enrollment = function(scope,row) { //add
+			
 			scope.enrollment = {};
 			scope.enrollment.id = 0;
-
-			bui.show();
-
+			
+			scope.enrollment.students_curriculum_datas = [];
+			scope.enrollment.students_curriculum_dels = [];
+			
 			mode(scope,row);
 			
-			courses(scope);
-			// scope.enrollment.date_of_enrollment = new Date();
-			
+			$('#content').html(loading);
 			$('#content').load('forms/student.html',function() {
+				$timeout(function() { $compile($('#content')[0])(scope); },200);
+			});
+			
+			if (row != null) {
 				
-				$timeout(function() {
+				if (scope.$id > 2) scope = scope.$parent;	
+				
+				$http({
+				  method: 'POST',
+				  url: 'handlers/students/view.php',
+				  data: {id: row.id}
+				}).then(function success(response) {
 					
-					$compile($('#content')[0])(scope);
+					scope.enrollment = angular.copy(response.data);
+					scope.enrollment.dob = new Date(response.data.dob);
+					scope.curriculum = response.data.course.curriculum;
+					scope.students_curriculum_datas = response.data.semester.students_curriculum_datas;
 					
-					if (row != null) {
-						
-						$http({
-						  method: 'POST',
-						  url: 'handlers/students/view.php',
-						  data: {id: row.id}
-						}).then(function success(response) {
-
-							scope.enrollment = angular.copy(response.data);
-							scope.enrollment.dob = new Date(response.data.dob);
-							
-							angular.forEach(scope.pictures, function(item,i) { console.log(i);
-								var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
-								var view = document.getElementById(i+'_picture');
-								console.log(photo);
-								if (imageExists(photo)) view.setAttribute('src', photo);
-								else view.setAttribute('src', 'pictures/avatar.png');
-							});
-							
-							bui.hide();
-							
-						}, function error(response) {
-							
-							bui.hide();				
-							
-						});
-						
-					} else {
-						
-						scope.enrollment = {};
-						scope.enrollment.id = 0;
-						
-					};
+					angular.forEach(scope.pictures, function(item,i) { console.log(i);
+						var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
+						var view = document.getElementById(i+'_picture');
+						console.log(photo);
+						if (imageExists(photo)) view.setAttribute('src', photo);
+						else view.setAttribute('src', 'pictures/avatar.png');
+					});
 					
 					bui.hide();
 					
-				}, 500);
-			});						
+				}, function error(response) {
+					
+					bui.hide();				
+					
+				});
+			};
 			
 		};
 		
 		self.cancel = function(scope) {			
 			
-			scope.enrollment = {};
-			scope.enrollment.id = 0;			
+			/* scope.enrollment = {};
+			scope.enrollment.id = 0; */
 			
 			self.list(scope);
 			
@@ -268,6 +280,76 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 		};
 		
+		self.checkCourse = function(scope,course) {
+			
+			scope.curriculum = scope.enrollment.course.curriculum;
+			// console.log(scope.curriculum);
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/students/check-course.php',
+			  data: course
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
+		};
+		
+		self.checkSemester = function(scope,semester) {
+			
+			scope.students_curriculum_datas = scope.enrollment.semester.students_curriculum_datas;
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/students/check-semester.php',
+			  data: semester
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
+		};
+		
+		self.curriculum_data = {
+			
+			add: function(scope) {
+
+				scope.enrollment.students_curriculum_datas.push({
+					id: 0,
+					enrollment_id: 0,
+					curriculum_data_id: 0
+				});
+
+			},			
+			
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					scope.enrollment.students_curriculum_dels.push(row.id);
+				};
+				
+				var students_curriculum_datas = scope.enrollment.students_curriculum_datas;
+				var index = scope.enrollment.students_curriculum_datas.indexOf(row);
+				scope.enrollment.students_curriculum_datas = [];			
+				
+				angular.forEach(students_curriculum_datas, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						scope.enrollment.students_curriculum_datas.push(d);
+						
+					};
+					
+				});
+
+			}			
+			
+		};
+		
 		self.print = function(scope,enrollment) {
 			
 			$http({
@@ -331,7 +413,133 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setLineWidth(.2)
 			doc.line(205, 30, 5, 30); // horizontal line 
 			doc.setLineWidth(.5)
-			doc.line(205, 31, 5, 31); // horizontal line 
+			doc.line(205, 31, 5, 31); // horizontal line
+				
+				
+			doc.setFontSize(12)
+			doc.setFont('times');
+			doc.setFontType('bold');
+			doc.text(70, 40, 'STUDENT'+"'"+'S PERSONAL INFORMATION');
+			
+			doc.setFontSize(13)
+			doc.setFont('default');
+			doc.setFontType('normal');
+			doc.setFont('times');
+			//x y
+			doc.text(10, 50, 'Name: ');
+			doc.text(40, 50, enrollment.firstname+' '+enrollment.lastname+' '+enrollment.middlename);
+
+			doc.text(10, 58, 'Home Address: ');
+			doc.text(40, 58, enrollment.home_address);	
+			
+			doc.text(10, 66, 'Date of Birth: ');
+			doc.text(40, 66, enrollment.dob);
+			
+			doc.text(90, 66, 'Age: ');
+			doc.text(100, 66, enrollment.age);
+			
+			doc.text(120, 66, 'Sex: ');
+			doc.text(130, 66, enrollment.sex);
+			
+			doc.text(10, 74, 'Place of Birth: ');
+			doc.text(40, 74, enrollment.pob);
+			
+			doc.text(10, 82, 'Religion: ');
+			doc.text(40, 82, enrollment.religion);
+			
+			doc.text(90, 82, 'Status: ');
+			doc.text(110, 82, enrollment.status);
+			
+			doc.text(10, 90, 'Phone Number: ');
+			doc.text(40, 90, ''+enrollment.phone_number);
+			
+			doc.text(10, 98, 'Name of Spouse (if married): ');
+			doc.text(65, 98, ''+enrollment.name_of_spouse);
+			
+			doc.text(10, 106, 'Parents:');
+			doc.text(20, 114, 'Name of Father:');
+			doc.text(52, 114, ''+enrollment.father_name);
+			doc.text(100, 114, 'Occupation:');
+			doc.text(123, 114, ''+enrollment.father_occupation);
+			doc.text(100, 122, 'Phone Number:');
+			doc.text(130, 122, ''+enrollment.father_number);
+			
+			doc.text(20, 130, 'Name of Mother:');
+			doc.text(52, 130, ''+enrollment.mother_name);
+			doc.text(100, 130, 'Occupation:');
+			doc.text(123, 130, ''+enrollment.mother_occupation);
+			doc.text(100, 138, 'Phone Number:');
+			doc.text(130, 138, ''+enrollment.mother_number);
+			doc.text(20, 146, 'Address of Parents:');
+			doc.text(100, 146, ''+enrollment.address_of_parents);
+			
+			doc.text(10, 154, 'Guardian:');
+			doc.text(20, 162, 'Name of Guardian:');
+			doc.text(57, 162, ''+enrollment.guardian_name);
+			doc.text(100, 162, 'Occupation');
+			doc.text(123, 162, ''+enrollment.guardian_occupation);
+			
+			doc.text(20, 170, 'Relationship:');
+			doc.text(50, 170, ''+enrollment.guardian_relationship);
+			doc.text(100, 170, 'Phone Number');
+			doc.text(130, 170, ''+enrollment.guardian_number);
+			
+			doc.text(20, 178, 'Address of Guardian:');
+			doc.text(100, 178, ''+enrollment.guardian_address);
+			
+			doc.text(10, 186, 'Educational Background');
+			
+			var header = [
+				{title: "Level", dataKey: "1"},
+				{title: "School", dataKey: "2"},
+				{title: "Address", dataKey: "3"},
+			];
+			
+			var rows = [
+				// no
+				{"1": "Elementary","2": enrollment.elem_school_name,"3": enrollment.elem_school_address,},
+				{"1": "Secondary","2": enrollment.secon_school_name,"3": enrollment.secon_school_address},
+				{"1": "Tech-Voc","2": enrollment.techvoc_school_name,"3": enrollment.techvoc_school_address},
+				{"1": "Tertiary","2": enrollment.tertiary_school_name,"3": enrollment.tertiary_school_address},
+				
+			];	
+							
+			
+			doc.autoTable(header, rows,{
+				theme: 'striped',
+				margin: {
+					top: 190, 
+					left: 20 
+				},
+				tableWidth: 500,
+				styles: {
+					lineColor: [75, 75, 75],
+					lineWidth: 0.02,
+					cellPadding: 3,
+					overflow: 'linebreak',
+					columnWidth: 'wrap',
+					
+				},
+				columnStyles: {
+					6: {columnWidth: 30},
+				},
+				headerStyles: {
+					halign: 'center',
+					fillColor: [191, 191, 191],
+					textColor: 50,
+					fontSize: 9.5
+				},
+				bodyStyles: {
+					halign: 'left',
+					fillColor: [255, 255, 255],
+					textColor: 50,
+					fontSize: 9.5
+				},
+				alternateRowStyles: {
+					fillColor: [255, 255, 255]
+				}
+			});
+			
 		
 			var blob = doc.output('blob');
 			window.open(URL.createObjectURL(blob));

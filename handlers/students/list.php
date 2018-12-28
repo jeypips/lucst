@@ -8,7 +8,7 @@ session_start();
 
 $con = new pdo_db();
 
-$enrollments = $con->getData("SELECT id, DATE_FORMAT(date_of_enrollment, '%Y') date_of_enrollment, course, CONCAT(firstname,' ',lastname) fullname FROM enrollment");
+$enrollments = $con->getData("SELECT id, DATE_FORMAT(date_of_enrollment, '%M %d, %Y') date_of_enrollment, course, CONCAT(firstname,' ',lastname) fullname FROM enrollment");
 
 
 foreach($enrollments as $i => $s){

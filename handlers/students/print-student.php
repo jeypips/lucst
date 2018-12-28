@@ -8,7 +8,7 @@ $con = new pdo_db();
 
 $id = $_POST['id'];
 
-$enrollment = $con->getData("SELECT *, DATE_FORMAT(dob, '%M %d, %Y') dob FROM enrollment WHERE id = $_POST[id]");
+$enrollment = $con->getData("SELECT *, DATE_FORMAT(dob, '%M %d, %Y') dob, DATE_FORMAT(date_of_enrollment, '%Y') date_of_enrollment FROM enrollment WHERE id = $_POST[id]");
 
 foreach ($enrollment[0] as $i => $p) {
 	
