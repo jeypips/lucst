@@ -101,7 +101,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				scope.btns.ok.label = 'Update';
 				scope.btns.cancel.label = 'Close';
 				scope.btns.ok.btn = true;
-			}
+			};
 			
 		};
 		
@@ -231,8 +231,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					
 					scope.enrollment = angular.copy(response.data);
 					scope.enrollment.dob = new Date(response.data.dob);
-					scope.curriculum = response.data.semester.curriculum;
-					// scope.barangays = response.data.detainee_city_address.barangays;
+					scope.curriculum = response.data.course.curriculum;
+					scope.students_curriculum_datas = response.data.semester.students_curriculum_datas;
 					
 					angular.forEach(scope.pictures, function(item,i) { console.log(i);
 						var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
@@ -255,8 +255,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			scope.enrollment = {};
-			scope.enrollment.id = 0;			
+			/* scope.enrollment = {};
+			scope.enrollment.id = 0; */
 			
 			self.list(scope);
 			
@@ -361,7 +361,6 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		self.checkSemester = function(scope,semester) {
 			
 			scope.students_curriculum_datas = scope.enrollment.semester.students_curriculum_datas;
-			console.log(scope.students_curriculum_datas);
 			
 			$http({
 			  method: 'POST',

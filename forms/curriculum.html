@@ -11,7 +11,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.curriculum.year_name.$touched && formHolder.curriculum.year_name.$invalid}">
+					<!--<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.curriculum.year_name.$touched && formHolder.curriculum.year_name.$invalid}">
 						<label>Year</label>
 						<select type="text" class="form-control" name="year_name" ng-model="curriculum.year_name" ng-disabled="btns.ok.btn" required>
 							<option value="First Year">First Year</option>
@@ -20,12 +20,18 @@
 							<option value="Fourth Year">Fourth Year</option>
 						</select>
 						<span class="help-block" ng-show="formHolder.curriculum.year_name.$touched && formHolder.curriculum.year_name.$invalid">Year is required</span>
-					</div>
-					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.curriculum.semester.$touched && formHolder.curriculum.semester.$invalid}">
-						<label>Semester</label>
+					</div> -->
+					<div class="col-lg-12 form-group" ng-class="{'has-error': formHolder.curriculum.semester.$touched && formHolder.curriculum.semester.$invalid}">
+						<label>Year & Semester</label>
 						<select type="text" class="form-control" name="semester" ng-model="curriculum.semester" ng-disabled="btns.ok.btn" required>
-							<option value="1st Semester">1st Semester</option>
-							<option value="2nd Semester">2nd Semester</option>
+							<option value="1st year & 1st Semester">1st year & 1st Semester</option>
+							<option value="1st year & 2nd Semester">1st year & 2nd Semester</option>
+							<option value="2nd year & 1st Semester">2nd year & 1st Semester</option>
+							<option value="2nd year & 2nd Semester">2nd year & 2nd Semester</option>
+							<option value="3rd year & 1st Semester">3rd year & 1st Semester</option>
+							<option value="3rd year & 2nd Semester">3rd year & 2nd Semester</option>
+							<option value="4th year & 1st Semester">4th year & 1st Semester</option>
+							<option value="4th year & 2nd Semester">4th year & 2nd Semester</option>
 						</select>
 						<span class="help-block" ng-show="formHolder.curriculum.semester.$touched && formHolder.curriculum.semester.$invalid">Semester is required</span>
 					</div>

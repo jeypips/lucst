@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 26, 2018 at 04:10 AM
+-- Generation Time: Dec 28, 2018 at 05:21 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -49,7 +49,6 @@ INSERT INTO `courses` (`id`, `course_name`, `course_short_name`) VALUES
 CREATE TABLE `curriculum` (
   `id` int(11) NOT NULL,
   `course_id` int(11) DEFAULT NULL,
-  `year_name` varchar(500) DEFAULT NULL,
   `semester` varchar(50) DEFAULT NULL,
   `date_added` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -58,9 +57,9 @@ CREATE TABLE `curriculum` (
 -- Dumping data for table `curriculum`
 --
 
-INSERT INTO `curriculum` (`id`, `course_id`, `year_name`, `semester`, `date_added`) VALUES
-(1, 1, 'Second Year', '2nd Semester', '2018-12-02 00:00:00'),
-(2, 2, 'First Year', '1st Semester', '2018-12-19 00:00:00');
+INSERT INTO `curriculum` (`id`, `course_id`, `semester`, `date_added`) VALUES
+(1, 1, '1st year & 1st Semester', '2018-12-02 00:00:00'),
+(2, 2, '1st year & 2nd Semester', '2018-12-19 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -149,7 +148,7 @@ CREATE TABLE `enrollment` (
 --
 
 INSERT INTO `enrollment` (`id`, `firstname`, `lastname`, `middlename`, `home_address`, `dob`, `pob`, `age`, `sex`, `religion`, `status`, `phone_number`, `name_of_spouse`, `father_name`, `father_occupation`, `father_number`, `mother_name`, `mother_occupation`, `mother_number`, `address_of_parents`, `guardian_name`, `guardian_occupation`, `guardian_relationship`, `guardian_address`, `guardian_number`, `course`, `date_of_enrollment`, `year_level`, `semester`, `elem_school_name`, `elem_school_address`, `secon_school_name`, `secon_school_address`, `techvoc_school_name`, `techvoc_school_address`, `tertiary_school_name`, `tertiary_school_address`) VALUES
-(1, 'Juan', 'Lee', 'Loo', 'Bauang, La Union', '1997-02-04', 'Bauang, La Union', '21', 'Male', 'Catholic', 'Single', '09586598336', NULL, 'Jaunito Lee', 'OFW', '09586525445', 'Juanita Lee', 'Housekeeper', '09586525448', 'Bauang, La Union', 'Juanita Lee', 'Housekeeper', 'Mother', 'Bauang, La Union', '09586525448', '1', '2018-11-28', 'First Year', 'First Semester', 'Catbangen Elementary School', 'Catbangen  San Fernando City La Union', 'LUNHS', 'Catbangen  San Fernando City La Union', '', '', '', '');
+(1, 'Juan', 'Lee', 'Loo', 'Bauang, La Union', '1997-02-04', 'Bauang, La Union', '21', 'Male', 'Catholic', 'Single', '09586598336', NULL, 'Jaunito Lee', 'OFW', '09586525445', 'Juanita Lee', 'Housekeeper', '09586525448', 'Bauang, La Union', 'Juanita Lee', 'Housekeeper', 'Mother', 'Bauang, La Union', '09586525448', '2', '2018-11-28', 'First Year', '2', 'Catbangen Elementary School', 'Catbangen  San Fernando City La Union', 'LUNHS', 'Catbangen  San Fernando City La Union', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -183,6 +182,17 @@ CREATE TABLE `students_curriculum_data` (
   `enrollment_id` int(11) DEFAULT NULL,
   `curriculum_data_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `students_curriculum_data`
+--
+
+INSERT INTO `students_curriculum_data` (`id`, `enrollment_id`, `curriculum_data_id`) VALUES
+(1, 1, 1),
+(2, 1, 10),
+(3, 1, 10),
+(4, 1, 9),
+(5, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -287,7 +297,7 @@ ALTER TABLE `instructor`
 -- AUTO_INCREMENT for table `students_curriculum_data`
 --
 ALTER TABLE `students_curriculum_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users`
 --

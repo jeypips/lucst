@@ -14,16 +14,19 @@ $enrollment = $con->getData("SELECT *, DATE_FORMAT(date_of_enrollment, '%M %d, %
 $course = $con->getData("SELECT * FROM courses WHERE id = ".$enrollment[0]['course']);
 $enrollment[0]['course'] = $course[0];
 
-$curriculum = $con->getData("SELECT id, course_id, semester FROM curriculum WHERE course_id = ".$enrollment[0]['semester']);
+$curriculum = $con->getData("SELECT * FROM curriculum WHERE course_id = ".$enrollment[0]['semester']);
 $enrollment[0]['course']['curriculum'] = $curriculum;
 //
 
 //
 $semester = $con->getData("SELECT id, semester FROM curriculum WHERE id = ".$enrollment[0]['semester']);
 $enrollment[0]['semester'] = $semester[0];
+
+$curriculum_datas = $con->getData("SELECT * FROM curriculum_data WHERE curriculum_id = ".$semester[0]['id']);
+$enrollment[0]['semester']['students_curriculum_datas'] = $curriculum_datas;
 //
 
-/* $students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE enrollment_id = ".$enrollment[0]['id']);
+$students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE enrollment_id = ".$enrollment[0]['id']);
 foreach($students_curriculum_datas as $key => $scd){
 	
 	$curriculum_data = $con->getData("SELECT id, descriptive_title FROM curriculum_data WHERE id  = ".$scd['curriculum_data_id']);
@@ -31,7 +34,7 @@ foreach($students_curriculum_datas as $key => $scd){
 	
 };
 $enrollment[0]['students_curriculum_datas'] = $students_curriculum_datas;
-$enrollment[0]['students_curriculum_dels'] = [];	 */
+$enrollment[0]['students_curriculum_dels'] = [];
 	
 
 
