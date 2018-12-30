@@ -540,6 +540,76 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				}
 			});
 			
+			doc.addPage(); // add
+		
+			doc.setFontSize(12)
+			doc.setFont('helvetica');
+			doc.setFontType('normal');
+			doc.text(10, 20, 'Course:');
+			doc.text(35, 20, ''+enrollment.course.course_name);
+			
+			doc.text(10, 25, 'Year Level and Semester:');
+			doc.text(65, 25, enrollment.semester.semester);
+			
+			doc.text(150, 25, 'School Year:');
+			// doc.text(65, 25, enrollment.semester.semester);
+			
+			var header = ["CODE","PRE-REQ","DESCRIPTIVE TITLE","NO. OF UNITS","",""];
+			
+			angular.forEach(enrollment.students_curriculum_datas, function(economy_h,i) {
+
+				
+				
+			});
+			
+			var rows = [
+			{"3": "Lab","4": "Lec","5": "Total",},
+			];
+			angular.forEach(enrollment.students_curriculum_datas, function(data,i) {
+				
+				var row = [];
+				row.push(data.curriculum_data_id.subject_code);
+				row.push(data.curriculum_data_id.pre_req);
+				row.push(data.curriculum_data_id.descriptive_title);
+				row.push(data.curriculum_data_id.lab);
+				row.push(data.curriculum_data_id.lec);
+				row.push(data.curriculum_data_id.total);
+				
+				rows.push(row);
+				
+			});		
+	
+			doc.autoTable(header, rows,{
+				theme: 'striped',
+				margin: {
+					top: 30, 
+					left: 10 
+				},
+				tableWidth: 500,
+				styles: {
+					lineColor: [75, 75, 75],
+					lineWidth: 0.02,
+					cellPadding: 3,
+					overflow: 'linebreak',
+					columnWidth: 'wrap'
+				},
+				headerStyles: {
+					halign: 'center',
+					fillColor: [191, 191, 191],
+					textColor: 50,
+					fontSize: 10
+				},
+				bodyStyles: {
+					halign: 'left',
+					fillColor: [255, 255, 255],
+					textColor: 50,
+					fontSize: 10
+				},
+				alternateRowStyles: {
+					fillColor: [255, 255, 255]
+				}
+			});
+			
 		
 			var blob = doc.output('blob');
 			window.open(URL.createObjectURL(blob));
