@@ -19,8 +19,8 @@
 			  <tbody>
 				<tr ng-repeat="e in enrollments">
 				  <td>{{e.id}}</td>
-				  <td>{{e.students_id.fullname}}</td>
-				  <td>{{e.students_id.course.course_name}}</td>
+				  <td>{{e.fullname}}</td>
+				  <td>{{e.course.course_name}}</td>
 				  <td>{{e.date_of_enrollment}}</td>
 				  <td>
 				  <button class="btn btn-sm btn-primary" ng-click="app.enrollment(this,e)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>

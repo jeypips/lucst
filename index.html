@@ -7,9 +7,9 @@
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
         <meta name="author" content="Coderthemes">
 
-        <link rel="shortcut icon" href="assets/images/favicon_1.ico">
+        <link rel="shortcut icon" href="pictures/logo.png">
 
-        <title>Ubold - Responsive Admin Dashboard Template</title>
+        <title>LUCST</title>
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
@@ -26,83 +26,6 @@
         <![endif]-->
 
         <script src="assets/js/modernizr.min.js"></script>
-		<style>
-		.canv {
-		  position: relative;
-		  width: 100%;
-		}
-
-		.image {
-		  display: block;
-		  width: 100%;
-		  height: auto;
-		}
-		
-		.image2 {
-		  display: block;
-		  width: 100%;
-		  height: 50px;
-		}
-
-		.overlay {
-		  position: absolute;
-		  top: 0;
-		  bottom: 0;
-		  left: 10px;
-		  right: 0;
-		  height: 94%;
-		  width: 97%;
-		  opacity: 0;
-		  transition: .5s ease;
-		  background-color: #096;
-		}
-		
-		.overlay2 {
-		  position: absolute;
-		  top: 0;
-		  bottom: 0;
-		  left: 10.5px;
-		  right: 0;
-		  height: 95%;
-		  width: 98%;
-		  opacity: 0;
-		  transition: .5s ease;
-		  background-color: #096;
-		}
-
-		.canv:hover .overlay2 {
-		  opacity: 1;
-		}
-		
-		.canv:hover .overlay {
-		  opacity: 1;
-		}
-
-		.text {
-		  color: white;
-		  font-size: 20px;
-		  position: absolute;
-		  top: 45%;
-		  left: 50%;
-		  right: -20%;
-		  -webkit-transform: translate(-50%, -50%);
-		  -ms-transform: translate(-50%, -50%);
-		  transform: translate(-50%, -50%);
-		}
-		
-		.text2 {
-		  color: white;
-		  font-size: 20px;
-		  position: absolute;
-		  top: 50%;
-		  left: 50%;
-		  right: -20%;
-		  -webkit-transform: translate(-50%, -50%);
-		  -ms-transform: translate(-50%, -50%);
-		  transform: translate(-50%, -50%);
-		}
-		
-		</style>
 		
     </head>
 
@@ -119,7 +42,7 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="index.php" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>
+                        <a href="index.html" class="logo"><img alt="user-img" class="img-circle icon-c-logo" style="margin-left: 10px; margin-top: 10px; height: 45px;" src="pictures/logo.png"><span><img alt="user-img" class="img-circle" style="height: 45px;" src="pictures/logo.png"> LUCST</span></a>
                     </div>
                 </div>
 
@@ -135,7 +58,7 @@
                             </div>	
 
                             <ul class="nav navbar-nav navbar-right pull-right">
-                                <li class="hidden-xs">
+								<li class="hidden-xs">
                                     <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
                                 </li>
                                 <li class="dropdown">
@@ -163,13 +86,22 @@
                         <ul>
                         	<li class="text-muted menu-title">Navigation</li>
 							<li class="has_sub">
-                                <li><a href="index.html" class="waves-effect active"><i class="ti-home"></i><span> Dashboard </span></a></li>
+                                <li><a href="index.html" class="waves-effect active"><i class="ti-home"></i><span> Home </span></a></li>
+                            </li>
+							<li class="has_sub">
+                                <li><a href="enrollment.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
                             </li>
 							<li class="has_sub">
                                 <li><a href="students.html" class="waves-effect"><i class="ti-user"></i><span> Students </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <li><a href="enrollment.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
+                                <a href="#" class="waves-effect"><i class="ti-settings"></i><span class="label label-primary pull-right">4</span><span> Maintenance </span> </a>
+                                <ul class="list-unstyled" style="display: none;">
+                                    <li><a href="accounts.html">Accounts</a></li>
+                                    <li><a href="instructor.html">Instructor</a></li>
+                                    <li><a href="courses.html">Courses</a></li>
+									<li><a href="curriculum.html">Curriculum</a></li>
+                                </ul>
                             </li>
                         </ul>
                         <div class="clearfix"></div>
@@ -185,67 +117,124 @@
                 <div class="content">
                     <div class="container">
 					
-                        <!-- Page-Title -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <!-- <h4 class="page-title">Dashboard</h4> -->
-                                <p class="text-muted page-title-alt"></p>
-                            </div>
-                        </div>
-						<div class="row">
-							<div class="canv">
-							<div class="col-lg-6">
-								<div class="panel panel-border panel-custom">
-									<div class="panel-heading">
-										<h3 class="panel-title" style="text-align:center;">VISION</h3>
-									</div>
-									<div class="panel-body">
-										<img src="images/lucst.jpg" style="" alt="Avatar" class="image">
-										<div class="overlay">
-										<div class="text2" style="text-align:justify;">La Union Colleges of Science and Technology, Inc., envisions itself to be a learning community characterized by academic excellence, creative activity, social responsibility and intergrity.</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							</div>
-							<div class="canv">
-							<div class="col-lg-6">
-								<div class="panel panel-border panel-custom">
-									<div class="panel-heading">
-										<h3 class="panel-title" style="text-align:center;">MISSION</h3>
-									</div>
-									<div class="panel-body">
-										<img src="images/lucst.jpg" alt="Avatar" class="image">
-										<div class="overlay">
-										<div class="text2" style="text-align:justify;">La Union Colleges of Science and Technology, Inc. commits itself to provide well-rounded educational trainings and experiences to students whose knowledge, skills and value system will enable them to adjust to an ever changing society, be competitive in the global market and contribute to the improvement of the quality of life.</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							</div>
+						<div class="col-sm-12">
+							<img src="images/banner.jpg" alt="image" class="img-responsive img-rounded" style="width: 100%!important; height: 150px;">
 						</div>
 						<div class="row">
-						<div class="canv">
-							<div class="col-lg-12">
-								<div class="panel panel-border panel-custom">
-									<div class="panel-heading">
-										<h3 class="panel-title" style="text-align:center;">EDUCATIONAL PHILOSOPHY</h3>
-									</div>
-									<div class="panel-body" style="height:357px;">
-										<!-- <p style="font-size:22px; text-align:justify;"> -->
-											<!-- The La Union Colleges of Science and Technology, Inc. adheres to the fulfillment of improving the quality of the people by giving direction to individual's basic potentialities text text; producing high caliber manpower that jives with the requirement text services area and the industries; inculcating values conforming text text standards of society; accelerating active quest for information text text new ideas needed to adjust to an ever-changing society. -->
-										<!-- </p> -->
-										<div class="panel-body">
-										<img src="images/lucst.jpg" alt="Avatar" class="image2" style="height:300px;">
-										<div class="overlay2">
-										<div class="text" style="text-align:justify;">The La Union Colleges of Science and Technology, Inc. adheres to the fulfillment of improving the quality of life of the people by giving direction to individual’s basic potentialities and talents; producing high caliber manpower that jibes with the requirements, of the services area and the industries; inculcating values conforming to the ethical standards of society; accelerating active quest for information and producing new ideas needed to adjust to an ever-changing society.</div>
+                            <div class="col-lg-12"> 
+                                <ul class="nav nav-tabs tabs" style="width: 100%;">
+                                    <li class="active tab" style="width: 25%;">
+                                        <a href="#home-2" data-toggle="tab" aria-expanded="false" class="active"> 
+                                            <span class="visible-xs"><i class="ion-information"></i></span> 
+                                            <span class="hidden-xs">Vision, Mission & Educational Philosophy</span> 
+                                        </a> 
+                                    </li> 
+                                    <li class="tab" style="width: 25%;"> 
+                                        <a href="#profile-2" data-toggle="tab" aria-expanded="false"> 
+                                            <span class="visible-xs"><i class="fa fa-dashboard"></i></span> 
+                                            <span class="hidden-xs">Dashboard</span> 
+                                        </a> 
+                                    </li>
+                                <div class="indicator" style="right: 392px; left: 0px;"></div></ul> 
+                                <div class="tab-content"> 
+                                    <div class="tab-pane active" id="home-2"> 
+									<h4 class="text-danger"><center>Welcome to LUCST Offline Students  Affairs  Record  System!</center></h4>
+									<h4 class="text-primary">VISION</h4>
+									<p>La Union Colleges of Science and Technology, Inc., envisions itself to be a learning community characterized by academic excellence, creative activity, social responsibility and intergrity.</p>
+									
+									<h4 class="text-primary">MISSION</h4>
+									<p>La Union Colleges of Science and Technology, Inc. commits itself to provide well-rounded educational trainings and experiences to students whose knowledge, skills and value system will enable them to adjust to an ever changing society, be competitive in the global market and contribute to the improvement of the quality of life.</p>
+									
+									<h4 class="text-primary">EDUCATIONAL PHILOSOPHY</h4>
+									<p>The La Union Colleges of Science and Technology, Inc. adheres to the fulfillment of improving the quality of life of the people by giving direction to individual’s basic potentialities and talents; producing high caliber manpower that jibes with the requirements, of the services area and the industries; inculcating values conforming to the ethical standards of society; accelerating active quest for information and producing new ideas needed to adjust to an ever-changing society.</p>
+									
+                                    </div> 
+                                    <div class="tab-pane" id="profile-2" style="display: none;">
+                                       <div class="row">
+											<div class="col-md-6 col-lg-3">
+												<div class="widget-bg-color-icon card-box fadeInDown animated">
+													<div class="bg-icon bg-icon-info pull-left">
+														<i class="fa fa-users text-info"></i>
+													</div>
+													<div class="text-right">
+														<h3 class="text-dark"><b class="counter">{{dashboard.no_users}}</b></h3>
+														<p class="text-muted">Total Accounts</p>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+
+											<div class="col-md-6 col-lg-3">
+												<div class="widget-bg-color-icon card-box">
+													<div class="bg-icon bg-icon-success pull-left">
+														<i class="ion-android-friends text-success"></i>
+													</div>
+													<div class="text-right">
+														<h3 class="text-dark"><b class="counter">{{dashboard.no_students}}</b></h3>
+														<p class="text-muted">Total Students</p>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+
+											<div class="col-md-6 col-lg-3">
+												<div class="widget-bg-color-icon card-box">
+													<div class="bg-icon bg-icon-purple pull-left">
+														<i class="ion-android-social text-purple"></i>
+													</div>
+													<div class="text-right">
+														<h3 class="text-dark"><b class="counter">{{dashboard.no_instructor}}</b></h3>
+														<p class="text-muted">Total Instructor</p>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+
+											<!-- <div class="col-md-6 col-lg-3">
+												<div class="widget-bg-color-icon card-box">
+													<div class="bg-icon bg-icon-success pull-left">
+														<i class="md md-remove-red-eye text-success"></i>
+													</div>
+													<div class="text-right">
+														<h3 class="text-dark"><b class="counter">{{dashboard.no_courses}}</b></h3>
+														<p class="text-muted">Today's Visits</p>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+											</div> -->
 										</div>
-									</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						</div>
+										
+										 <div class="row">
+											<div class="col-md-6 col-lg-3">
+												<div class="widget-bg-color-icon card-box fadeInDown animated">
+													<div class="bg-icon bg-icon-pink pull-left">
+														<i class="ion-woman text-pink"></i>
+													</div>
+													<div class="text-right">
+														<h3 class="text-dark"><b class="counter">{{dashboard.no_female}}</b></h3>
+														<p class="text-muted">Total Female Student</p>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+											<div class="col-md-6 col-lg-3">
+												<div class="widget-bg-color-icon card-box fadeInDown animated">
+													<div class="bg-icon bg-icon-inverse pull-left">
+														<i class="ion-man text-inverse"></i>
+													</div>
+													<div class="text-right">
+														<h3 class="text-dark"><b class="counter">{{dashboard.no_male}}</b></h3>
+														<p class="text-muted">Total Male Student</p>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+											</div>
+										</div>
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div> 
+
 						
                     </div> <!-- container -->
                 </div> <!-- content -->

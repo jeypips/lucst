@@ -39,7 +39,7 @@ if (count($curriculum_datas)) {
 	
 	foreach ($curriculum_datas as $index => $value) {
 		
-		$curriculum_datas[$index]['curriculum_id'] = $curriculum_id;		
+		$curriculum_datas[$index]['curriculum_id'] = $curriculum_id;
 		
 	}
 	

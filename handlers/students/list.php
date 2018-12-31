@@ -8,15 +8,18 @@ session_start();
 
 $con = new pdo_db();
 
-$students = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname, sex, home_address, course FROM students");
+$enrollments = $con->getData("SELECT id, DATE_FORMAT(date_of_enrollment, '%M %d, %Y') date_of_enrollment, course, CONCAT(firstname,' ',lastname) fullname FROM enrollment");
 
-foreach($students as $key => $student){
+
+foreach($enrollments as $i => $s){
 	
-	$course = $con->getData("SELECT id, course_name FROM courses WHERE id = ".$student['course']);
-	$students[$key]['course'] = $course[0];	
+	$course = $con->getData("SELECT * FROM courses WHERE id = ".$s['course']);
+	
+	$enrollments[$i]['course'] = $course[0];	
 };
 
+
 header("Content-Type: application/json");
-echo json_encode($students);
+echo json_encode($enrollments);
 
 ?>

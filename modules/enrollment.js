@@ -1,6 +1,17 @@
 angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl','snapshot-module']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal,snapshot) {
 
 	function app() {
+		
+		function getAge(dateString) { //Autocompute birthday to age
+			var today = new Date();
+			var birthDate = new Date(dateString);
+			var age = today.getFullYear() - birthDate.getFullYear();
+			var m = today.getMonth() - birthDate.getMonth();
+			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+				age--;
+			}
+			return age;
+		};
 
 		var self = this;
 
@@ -22,9 +33,31 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			};
 			
 			scope.enrollment = {};
-			scope.enrollment.id = 0;			
+			scope.enrollment.id = 0;
+
+			scope.enrollment.students_curriculum_datas = [];
+			scope.enrollment.students_curriculum_dels = [];			
 			
 			scope.enrollments = []; //list
+			
+			//provinces
+			$timeout(function() {
+				$http({ 
+					method: 'POST',
+					url: 'api/suggestions/courses-check.php'
+				}).then(function mySucces(response) {
+					
+					scope.courses = response.data;
+					scope.curriculum = [];
+					scope.students_curriculum_datas = [];
+					
+				},function myError(response) {
+					
+				});
+				
+			}, 200);
+			
+			
 			
 		};
 		
@@ -68,7 +101,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				scope.btns.ok.label = 'Update';
 				scope.btns.cancel.label = 'Close';
 				scope.btns.ok.btn = true;
-			}
+			};
 			
 		};
 		
@@ -110,7 +143,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.enrollment = function(scope,row) {			
+		/* self.enrollment = function(scope,row) {			
 
 			scope.enrollment = {};
 			scope.enrollment.id = 0;
@@ -120,9 +153,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			mode(scope,row);
 			
 			courses(scope);
-			// scope.student.date_of_enrollment = new Date();
+			// scope.enrollment.date_of_enrollment = new Date();
 			
 			$('#content').load('forms/enrollment.html',function() {
+				
 				$timeout(function() {
 					
 					$compile($('#content')[0])(scope);
@@ -136,16 +170,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 						}).then(function success(response) {
 
 							scope.enrollment = angular.copy(response.data);
-						/* 	scope.student.dob = new Date(response.data.dob);
-							scope.student.date_of_enrollment = new Date(response.data.date_of_enrollment);
+							scope.enrollment.dob = new Date(response.data.dob);
+							scope.curriculum = response.data.semester.curriculum;
+							// scope.barangays = response.data.detainee_city_address.barangays;
 							
 							angular.forEach(scope.pictures, function(item,i) { console.log(i);
-								var photo = 'pictures/'+scope.student.id+'_'+i+'.png';
+								var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
 								var view = document.getElementById(i+'_picture');
 								console.log(photo);
 								if (imageExists(photo)) view.setAttribute('src', photo);
 								else view.setAttribute('src', 'pictures/avatar.png');
-							}); */
+							});
 							
 							bui.hide();
 							
@@ -167,12 +202,61 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				}, 500);
 			});						
 			
+		}; */
+		
+		self.enrollment = function(scope,row) { //add
+			
+			scope.enrollment = {};
+			scope.enrollment.id = 0;
+			
+			scope.enrollment.students_curriculum_datas = [];
+			scope.enrollment.students_curriculum_dels = [];
+			
+			mode(scope,row);
+			
+			$('#content').html(loading);
+			$('#content').load('forms/enrollment.html',function() {
+				$timeout(function() { $compile($('#content')[0])(scope); },200);
+			});
+			
+			if (row != null) {
+				
+				if (scope.$id > 2) scope = scope.$parent;	
+				
+				$http({
+				  method: 'POST',
+				  url: 'handlers/enrollment/view.php',
+				  data: {id: row.id}
+				}).then(function success(response) {
+					
+					scope.enrollment = angular.copy(response.data);
+					scope.enrollment.dob = new Date(response.data.dob);
+					scope.curriculum = response.data.course.curriculum;
+					scope.students_curriculum_datas = response.data.semester.students_curriculum_datas;
+					
+					angular.forEach(scope.pictures, function(item,i) { console.log(i);
+						var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
+						var view = document.getElementById(i+'_picture');
+						console.log(photo);
+						if (imageExists(photo)) view.setAttribute('src', photo);
+						else view.setAttribute('src', 'pictures/avatar.png');
+					});
+					
+					bui.hide();
+					
+				}, function error(response) {
+					
+					bui.hide();				
+					
+				});
+			};
+			
 		};
 		
 		self.cancel = function(scope) {			
 			
-			scope.enrollment = {};
-			scope.enrollment.id = 0;			
+			/* scope.enrollment = {};
+			scope.enrollment.id = 0; */
 			
 			self.list(scope);
 			
@@ -239,7 +323,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 		};
 		
-/* 		function imageExists(image_url){
+		self.dob = function(scope) {
+			
+			if (scope.enrollment.dob == null) return;
+			scope.enrollment.age = getAge(scope.enrollment.dob); //for birthday autocompute
+
+		};
+		
+		function imageExists(image_url){
 
 			var http = new XMLHttpRequest();
 
@@ -248,7 +339,77 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			return http.status != 404;
 
-		}; */
+		};
+		
+		self.checkCourse = function(scope,course) {
+			
+			scope.curriculum = scope.enrollment.course.curriculum;
+			// console.log(scope.curriculum);
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/enrollment/check-course.php',
+			  data: course
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
+		};
+		
+		self.checkSemester = function(scope,semester) {
+			
+			scope.students_curriculum_datas = scope.enrollment.semester.students_curriculum_datas;
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/enrollment/check-semester.php',
+			  data: semester
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
+		};
+		
+		self.curriculum_data = {
+			
+			add: function(scope) {
+
+				scope.enrollment.students_curriculum_datas.push({
+					id: 0,
+					enrollment_id: 0,
+					curriculum_data_id: 0
+				});
+
+			},			
+			
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					scope.enrollment.students_curriculum_dels.push(row.id);
+				};
+				
+				var students_curriculum_datas = scope.enrollment.students_curriculum_datas;
+				var index = scope.enrollment.students_curriculum_datas.indexOf(row);
+				scope.enrollment.students_curriculum_datas = [];			
+				
+				angular.forEach(students_curriculum_datas, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						scope.enrollment.students_curriculum_datas.push(d);
+						
+					};
+					
+				});
+
+			}			
+			
+		};
 		
 	};
 	

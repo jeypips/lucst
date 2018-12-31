@@ -232,6 +232,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					subject_code: '',
 					descriptive_title: '',
 					units: '',
+					lec: '',
+					lab: '',
+					total: '',
 					pre_req: ''
 				});
 

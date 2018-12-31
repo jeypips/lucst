@@ -11,8 +11,7 @@
 				<tr>
 				  <th>No.</th>
 				  <th>Course</th>
-				  <th>Year</th>
-				  <th>Semester</th>
+				  <th>Year & Semester</th>
 				  <th>Actions</th>
 				</tr>
 			  </thead>
@@ -20,7 +19,6 @@
 				<tr ng-repeat="c in curriculums">
 				  <td>{{c.id}}</td>
 				  <td>{{c.course_id.course_name}}</td>
-				  <td>{{c.year_name}}</td>
 				  <td>{{c.semester}}</td>
 				  <td>
 				  <button class="btn btn-sm btn-primary" ng-click="app.curriculum(this,c)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
