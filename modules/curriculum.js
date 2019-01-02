@@ -222,7 +222,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		};
 		
 		self.curriculum_data = {
-			
+
 			add: function(scope) {
 
 				scope.curriculum.curriculum_datas.push({
