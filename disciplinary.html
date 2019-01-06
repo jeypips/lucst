@@ -32,7 +32,7 @@
 
 	</head>
 
-	 <body class="fixed-left" ng-app="enrollment" ng-controller="enrollmentCtrl" account-profile>
+	 <body class="fixed-left" ng-app="disciplinary" ng-controller="disciplinaryCtrl" account-profile>
 
 		<!-- Begin page -->
 		<div id="wrapper">
@@ -90,13 +90,13 @@
                                 <li><a href="index.html" class="waves-effect"><i class="ti-home"></i><span> Home </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <li><a href="enrollment.html" class="waves-effect active"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
+                                <li><a href="enrollment.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
                             </li>
 							<li class="has_sub">
                                 <li><a href="students.html" class="waves-effect"><i class="ti-user"></i><span> Students </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <li><a href="disciplinary.html" class="waves-effect"><i class="ti-pencil-alt"></i><span> Disciplinary Records </span></a></li>
+                                <li><a href="disciplinary.html" class="waves-effect active"><i class="ti-pencil-alt"></i><span> Disciplinary Records </span></a></li>
                             </li>
 							<li class="has_sub">
                                 <a href="#" class="waves-effect"><i class="ti-settings"></i><span class="label label-primary pull-right">4</span><span> Maintenance </span> </a>
@@ -104,7 +104,7 @@
                                     <li><a href="accounts.html">Accounts</a></li>
 									<li><a href="instructor.html">Instructor</a></li>
                                     <li><a href="courses.html">Courses</a></li>
-									<li><a href="curriculum.html">Curriculum</a></li>
+                                    <li><a href="curriculum.html">Curriculum</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -126,7 +126,7 @@
 						<!-- Page-Title -->
 						<div class="row">
 							<div class="col-sm-12">
-								<h4 class="page-title">Enrollment</h4>
+								<h4 class="page-title">Students</h4>
 							</div>
 						</div><br>
                         <div class="row">
@@ -137,15 +137,15 @@
                                
                 </div> <!-- content -->
 
-                <footer class="footer">
+               <!--  <footer class="footer">
                    Copyright &copy;  <strong><?php echo date("Y"); ?></strong> LUCST.
-                </footer>
+                </footer> -->
 
             </div>
             <!-- ============================================================== -->
             <!-- End Right content here -->
             <!-- ============================================================== -->
-			
+
         </div>
         <!-- END wrapper -->
 
@@ -166,6 +166,13 @@
         <script src="assets/js/jquery.scrollTo.min.js"></script>
 		<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
         <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+		<script src="assets/pdfmake/build/pdfmake.min.js"></script>
+		<script src="assets/pdfmake/build/vfs_fonts.js"></script>
+		
+		<!-- jQuery  -->
+		<script src="dist/jspdf.min.js"></script>
+		<script src="dist/jspdf.debug.js"></script>
+		<script src="dist/jspdf.plugin.autotable.js"></script>	
 
         <script src="assets/js/jquery.core.js"></script>
         <script src="assets/js/jquery.app.js"></script>
@@ -189,10 +196,10 @@
 		<script src="angular/modules/validation/validate.js"></script>
 		<script src="angular/modules/post/window-open-post.js"></script>
 		<script src="modules/snapshot.js"></script>		
-		<script src="modules/enrollment.js"></script>
+		<script src="modules/disciplinary.js"></script>
 
 		<!-- controller -->
-		<script src="controllers/enrollment.js"></script>
+		<script src="controllers/disciplinary.js"></script>
 	
 	</body>
 </html>
