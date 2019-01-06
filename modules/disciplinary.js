@@ -46,6 +46,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
+		function codes(scope) {
+			
+			$http({
+				method: 'POST',
+				url: 'api/suggestions/codes.php'
+			}).then(function mySucces(response) {
+				
+				scope.codes = response.data;
+				
+			},function myError(response) {
+				
+			});	
+			
+		};
+		
 		function validate(scope) {
 			
 			var controls = scope.formHolder.disciplinary.$$controls;
@@ -119,6 +134,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.disciplinary.id = 0;
 			
 			$timeout(function() { students(scope); },200);
+			$timeout(function() { codes(scope); },200);
 			
 			scope.disciplinary.disciplinary_datas = [];
 			scope.disciplinary.disciplinary_dels = [];
