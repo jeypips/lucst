@@ -40,6 +40,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
+		function instructor(scope) {
+			
+			$http({
+				method: 'POST',
+				url: 'api/suggestions/instructor.php'
+			}).then(function mySucces(response) {
+				
+				scope.instructor = response.data;
+				
+			},function myError(response) {
+				
+			});	
+			
+		};
+		
 		function validate(scope) {
 			
 			var controls = scope.formHolder.curriculum.$$controls;
@@ -115,6 +130,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.curriculum.curriculum_dels = [];
 			// console.log(scope.curriculum.curriculum_datas);
 			courses(scope);
+			instructor(scope);
 			
 			bui.show();
 
@@ -235,7 +251,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					lec: '',
 					lab: '',
 					total: '',
-					pre_req: ''
+					pre_req: '',
+					day: '',
+					time: '',
+					room: '',
+					instructor: 0
 				});
 
 			},			

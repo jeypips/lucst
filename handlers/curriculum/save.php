@@ -47,12 +47,12 @@ if (count($curriculum_datas)) {
 
 		if ($value['id']) {
 			
-			$curriculum_row = $con->updateData($curriculum_datas[$index],'id');
+			$curriculum_row = $con->updateObj($curriculum_datas[$index],'id');
 			
 		} else {
 			
 			unset($curriculum_datas[$index]['id']);
-			$curriculum_row = $con->insertData($curriculum_datas[$index]);
+			$curriculum_row = $con->insertObj($curriculum_datas[$index]);
 			
 		}
 	

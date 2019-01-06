@@ -48,37 +48,55 @@
 					<div class="row">
 						<div class="col-lg-6 form-group">
 							<label>Descriptive Title</label>
-							<input class="form-control" name="descriptive_title{{index}}" ng-model="cc.descriptive_title" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="descriptive_title{{index}}" ng-model="cc.descriptive_title" ng-disabled="btns.ok.btn">
 						</div>
 						<div class="col-lg-3 form-group">
 							<label>Grade</label>
-							<input class="form-control" name="grade{{index}}" ng-model="cc.grade" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="grade{{index}}" ng-model="cc.grade" ng-disabled="btns.ok.btn">
 						</div>
 						<div class="col-lg-3 form-group">
 							<label>Subject Code</label>
-							<input class="form-control" name="subject_code{{index}}" ng-model="cc.subject_code" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="subject_code{{index}}" ng-model="cc.subject_code" ng-disabled="btns.ok.btn">
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-2 form-group">
+						<div class="col-lg-3 form-group">
+							<label>Pre-Req</label>
+							<input type="text" class="form-control" name="pre_req{{index}}" ng-model="cc.pre_req" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-3 form-group">
 							<label>Units</label>
-							<input class="form-control" name="units{{index}}" ng-model="cc.units" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="units{{index}}" ng-model="cc.units" ng-disabled="btns.ok.btn">
 						</div>
 						<div class="col-lg-2 form-group">
 							<label>Lec</label>
-							<input class="form-control" name="lec{{index}}" ng-model="cc.lec" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="lec{{index}}" ng-model="cc.lec" ng-disabled="btns.ok.btn">
 						</div>
 						<div class="col-lg-2 form-group">
 							<label>Lab</label>
-							<input class="form-control" name="lab{{index}}" ng-model="cc.lab" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="lab{{index}}" ng-model="cc.lab" ng-disabled="btns.ok.btn">
 						</div>
 						<div class="col-lg-2 form-group">
 							<label>Total</label>
-							<input class="form-control" name="total{{index}}" ng-model="cc.total" ng-disabled="btns.ok.btn">
+							<input type="text" class="form-control" name="total{{index}}" ng-model="cc.total" ng-disabled="btns.ok.btn">
 						</div>
-						<div class="col-lg-4 form-group">
-							<label>Pre-Req</label>
-							<input class="form-control" name="pre_req{{index}}" ng-model="cc.pre_req" ng-disabled="btns.ok.btn">
+					</div>
+					<div class="row">
+						<div class="col-lg-3 form-group">
+							<label>Day</label>
+							<input type="text" class="form-control" name="day{{index}}" ng-model="cc.day" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-3 form-group">
+							<label>Time</label>
+							<input type="text" class="form-control" name="time{{index}}" ng-model="cc.time" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-3 form-group">
+							<label>Room</label>
+							<input type="text" class="form-control" name="room{{index}}" ng-model="cc.room" ng-disabled="btns.ok.btn">
+						</div>
+						<div class="col-lg-12 form-group">
+							<label>Instructor</label>
+							<select class="form-control" name="instructor{{index}}" ng-model="cc.instructor" ng-options="ins.fullname for ins in instructor track by ins.id" ng-disabled="btns.ok.btn"></select>
 						</div>
 					</div>
 				</div>

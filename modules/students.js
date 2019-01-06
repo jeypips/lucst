@@ -551,19 +551,18 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.text(10, 25, 'Year Level and Semester:');
 			doc.text(65, 25, enrollment.semester.semester);
 			
-			doc.text(150, 25, 'School Year:');
+			doc.text(150, 25, 'School Year: '+enrollment.date_of_enrollment);
 			// doc.text(65, 25, enrollment.semester.semester);
 			
-			var header = ["CODE","PRE-REQ","DESCRIPTIVE TITLE","NO. OF UNITS","",""];
+			var header = ["Code","Pre-req","Descriptive Title","No. of units","","","Schedule","","","Instructor"];
 			
 			angular.forEach(enrollment.students_curriculum_datas, function(economy_h,i) {
 
 				
-				
 			});
 			
 			var rows = [
-			{"3": "Lab","4": "Lec","5": "Total",},
+			{"3": "Lab","4": "Lec","5": "Total","6": "Day","7": "Time","8": "Room"},
 			];
 			angular.forEach(enrollment.students_curriculum_datas, function(data,i) {
 				
@@ -574,6 +573,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				row.push(data.curriculum_data_id.lab);
 				row.push(data.curriculum_data_id.lec);
 				row.push(data.curriculum_data_id.total);
+				row.push(data.curriculum_data_id.day);
+				row.push(data.curriculum_data_id.time);
+				row.push(data.curriculum_data_id.room);
+				row.push(data.curriculum_data_id.instructor.fullname);
 				
 				rows.push(row);
 				
@@ -597,7 +600,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					halign: 'center',
 					fillColor: [191, 191, 191],
 					textColor: 50,
-					fontSize: 10
+					fontSize: 8
 				},
 				bodyStyles: {
 					halign: 'left',
