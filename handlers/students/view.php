@@ -29,7 +29,13 @@ $enrollment[0]['semester']['students_curriculum_datas'] = $curriculum_datas;
 $students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE enrollment_id = ".$enrollment[0]['id']);
 foreach($students_curriculum_datas as $key => $scd){
 	
-	$curriculum_data = $con->getData("SELECT id, descriptive_title FROM curriculum_data WHERE id  = ".$scd['curriculum_data_id']);
+	$curriculum_data = $con->getData("SELECT * FROM curriculum_data WHERE id  = ".$scd['curriculum_data_id']);
+		foreach($curriculum_data as $i => $scd){
+			
+			$instructor = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname FROM instructor WHERE id  = ".$scd['instructor']);
+			$curriculum_data[$i]['instructor'] = $instructor[0];
+			
+		};
 	$students_curriculum_datas[$key]['curriculum_data_id'] = $curriculum_data[0];
 	
 };
