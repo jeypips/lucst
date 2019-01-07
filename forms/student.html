@@ -4,6 +4,17 @@
 			<div class="row">
 				<h4 class="m-t-0 header-title"><b>Personal Information</b></h4><hr>
 				<div class="row">
+					<div class="col-lg-4">
+					</div>
+					<div class="col-lg-4">
+					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.id_number.$touched && formHolder.enrollment.id_number.$invalid}">
+						<label>ID Number</label>
+						<input type="text" class="form-control" name="id_number" ng-model="enrollment.id_number" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.enrollment.id_number.$touched && formHolder.enrollment.id_number.$invalid">ID number is required</span>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.firstname.$touched && formHolder.enrollment.firstname.$invalid}">
 						<label>First Name</label>
 						<input type="text" class="form-control" name="firstname" ng-model="enrollment.firstname" ng-disabled="btns.ok.btn" required>
