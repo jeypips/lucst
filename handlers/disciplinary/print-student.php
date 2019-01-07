@@ -8,30 +8,39 @@ $con = new pdo_db();
 
 $id = $_POST['id'];
 
-$enrollment = $con->getData("SELECT *, DATE_FORMAT(dob, '%M %d, %Y') dob, DATE_FORMAT(date_of_enrollment, '%Y') date_of_enrollment FROM enrollment WHERE id = $_POST[id]");
+$disciplinary = $con->getData("SELECT * FROM disciplinary WHERE id = $_POST[id]");
 
-$course = $con->getData("SELECT * FROM courses WHERE id = ".$enrollment[0]['course']);
-$enrollment[0]['course'] = $course[0];
-
-$semester = $con->getData("SELECT id, semester FROM curriculum WHERE id = ".$enrollment[0]['semester']);
-$enrollment[0]['semester'] = $semester[0];
-
-$students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE enrollment_id = ".$enrollment[0]['id']);
-foreach($students_curriculum_datas as $key => $scd){
+$disciplinary_datas = $con->getData("SELECT * FROM disciplinary_data WHERE disciplinary_id = ".$disciplinary[0]['id']);
+foreach($disciplinary_datas as $key => $disciplinary_data){
 	
-	$curriculum_data = $con->getData("SELECT * FROM curriculum_data WHERE id  = ".$scd['curriculum_data_id']);
-	$students_curriculum_datas[$key]['curriculum_data_id'] = $curriculum_data[0];
+	$code_n = $con->getData("SELECT * FROM codes WHERE id  = ".$disciplinary_data['code_number']);
+	$disciplinary_datas[$key]['code_number'] = $code_n[0];
+	
+	$code_t = $con->getData("SELECT * FROM codes WHERE id  = ".$disciplinary_data['code_title']);
+	$disciplinary_datas[$key]['code_title'] = $code_t[0];
+	
+};
+$disciplinary[0]['datas'] = $disciplinary_datas;
+
+$student = $con->getData("SELECT *, DATE_FORMAT(dob, '%M %d, %Y') dob, DATE_FORMAT(date_of_enrollment, '%Y') date_of_enrollment FROM enrollment WHERE id = ".$disciplinary[0]['enrollment_id']);
+$disciplinary[0]['student'] = $student[0];
+
+$course = $con->getData("SELECT * FROM courses WHERE id = ".$student[0]['course']);
+$disciplinary[0]['student']['course'] = $course[0];
+
+foreach ($disciplinary[0] as $i => $p) {
+	
+	if ($p == null) $disciplinary[0][$i] = "n/a"; // pdf equals null
 	
 };
 
-$enrollment[0]['students_curriculum_datas'] = $students_curriculum_datas;
-foreach ($enrollment[0] as $i => $p) {
+foreach ($disciplinary[0]['student'] as $i => $p) {
 	
-	if ($p == null) $enrollment[0][$i] = "n/a"; // pdf equals null
+	if ($p == null) $disciplinary[0]['student'][$i] = "n/a"; // pdf equals null
 	
 };
 
 header("Content-Type: application/json");
-echo json_encode($enrollment[0]);
+echo json_encode($disciplinary[0]);
 
 ?>
