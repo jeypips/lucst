@@ -534,9 +534,18 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.text(10, 50, 'Course:');
 			doc.text(35, 50, ''+disciplinary.student.course.course_name);
 			
-			var header = ["School Year","Semester","Violation","","Action Taken","Remarks"];
+			doc.text(10, 55, 'Year:');
+			doc.text(35, 55, ''+disciplinary.student.year_level);
 			
-			/* angular.forEach(disciplinary.datas, function(datas,i) {
+			var header = [
+						  "School Year",
+						  "Semester",
+						  "Violation",
+						  "",
+						  "Action Taken",
+						  "Remarks"
+						  ];
+			 /* angular.forEach(disciplinary.datas, function(datas,i) {
 
 				
 				
@@ -562,7 +571,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.autoTable(header, rows,{
 				theme: 'striped',
 				margin: {
-					top: 55, 
+					top: 60, 
 					left: 10 
 				},
 				tableWidth: 500,
@@ -573,6 +582,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					overflow: 'linebreak',
 					columnWidth: 'wrap'
 				},
+				/* columnStyles: {
+				 signum: {columnWidth: 50}, 
+				 name:{columnWidth:100}, 
+				 role: {columnWidth: 15}, 
+				 location: {columnWidth: 30}
+				}, */
 				headerStyles: {
 					halign: 'center',
 					fillColor: [191, 191, 191],
