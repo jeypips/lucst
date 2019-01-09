@@ -1,0 +1,217 @@
+<?php include_once 'authentication.php'; ?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+		<meta name="author" content="Coderthemes">
+
+		<link rel="shortcut icon" href="pictures/logo.png">
+
+		<title>LUCST</title>
+		
+		<!-- DataTables -->
+        <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="assets/js/modernizr.min.js"></script>
+
+	</head>
+
+	 <body class="fixed-left" ng-app="adds" ng-controller="addsCtrl" account-profile>
+
+		<!-- Begin page -->
+		<div id="wrapper">
+
+            <!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <a href="index.html" class="logo"><img alt="user-img" class="img-circle icon-c-logo" style="margin-left: 10px; margin-top: 10px; height: 45px;" src="pictures/logo.png"><span><img alt="user-img" class="img-circle" style="height: 45px;" src="pictures/logo.png"> LUCST</span></a>
+                    </div>
+                </div>
+
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container" style="background-color: #096;">
+                        <div class="">
+                            <div class="pull-left">
+                                <button class="button-menu-mobile open-left">
+                                    <i class="ion-navicon"></i>
+                                </button>
+                                <span class="clearfix"></span>
+                            </div>
+							
+							<ul class="nav navbar-nav navbar-right pull-right">
+                                <li class="hidden-xs">
+                                    <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="{{profile.picture}}" alt="user-img" class="img-circle"> </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#"><i class="ti-settings m-r-5"></i> Settings</a></li>
+                                        <li><a href="javascript:;" logout-account><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+                    <!--- Divider -->
+                    <div id="sidebar-menu">
+                         <ul>
+                        	<li class="text-muted menu-title">Navigation</li>
+							<li class="has_sub">
+                                <li><a href="index.html" class="waves-effect"><i class="ti-home"></i><span> Home </span></a></li>
+                            </li>
+							<li class="has_sub">
+                                <li><a href="enrollment.html" class="waves-effect"><i class="ti-desktop"></i><span> Enrollment </span></a></li>
+                            </li>
+							<li class="has_sub">
+                                <li><a href="students.html" class="waves-effect"><i class="ti-user"></i><span> Students </span></a></li>
+                            </li>
+							<li class="has_sub">
+                                <li><a href="disciplinary.html" class="waves-effect"><i class="ti-pencil-alt"></i><span> Disciplinary Records </span></a></li>
+                            </li>
+							<li class="has_sub">
+                                <li><a href="semestral.html" class="waves-effect"><i class="ti-layout-cta-center"></i><span> Semestral Grade </span></a></li>
+                            </li>
+							<li class="has_sub">
+                                <a href="#" class="waves-effect active"><i class="ti-files"></i><span class="label label-danger pull-right">3</span><span> <span> Forms </span> </a>
+                                <ul class="list-unstyled">
+                                	<li class="active"><a href="add.html">Adding Form</a></li>
+									<li><a href="drop.html">Dropping Form</a></li>
+                                    <li><a href="completion.html">Completiong Form</a></li>
+                                </ul>
+                            </li>
+							<li class="has_sub">
+                                <a href="#" class="waves-effect"><i class="ti-settings"></i> <span> Maintenance </span> </a>
+                                <ul class="list-unstyled">
+                                	<li><a href="accounts.html">Accounts</a></li>
+									<li><a href="instructor.html">Instructor</a></li>
+                                    <li><a href="courses.html">Courses</a></li>
+									<li><a href="curriculum.html">Curriculum</a></li>
+									<li><a href="code.html">Code of Discipline</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+			<!-- Left Sidebar End -->
+
+			<!-- ============================================================== -->
+			<!-- Start right Content here -->
+			<!-- ============================================================== -->
+			<div class="content-page">
+				<!-- Start content -->
+				<div class="content">
+					<div class="container">
+
+						<!-- Page-Title -->
+						<div class="row">
+							<div class="col-sm-12">
+								<h4 class="page-title">Maintenance > Adding</h4>
+							</div>
+						</div><br>
+                        <div class="row">
+							<div id="content"></div>
+						</div>
+						
+                    </div> <!-- container -->
+                               
+                </div> <!-- content -->
+
+                <footer class="footer">
+                   Copyright &copy;  <strong><?php echo date("Y"); ?></strong> LUCST.
+                </footer>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+			
+        </div>
+        <!-- END wrapper -->
+
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+		<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
+
+        <script src="assets/js/jquery.core.js"></script>
+        <script src="assets/js/jquery.app.js"></script>
+		<!-- dependencies -->
+		<link rel="stylesheet" href="angular/modules/bootbox/bs4-fix.css">	
+		<script src="angular/modules/bootbox/bootbox.min.js"></script>
+		<script src="angular/modules/growl/jquery.bootstrap-growl.min.js"></script>
+		<script src="angular/modules/blockui/jquery.blockUI.js"></script>
+
+		<script src="assets/pdfmake/build/pdfmake.min.js"></script>
+		<script src="assets/pdfmake/build/vfs_fonts.js"></script>
+		
+		<!-- jQuery  -->
+		<script src="dist/jspdf.min.js"></script>
+		<script src="dist/jspdf.debug.js"></script>
+		<script src="dist/jspdf.plugin.autotable.js"></script>	
+		
+		<!-- angular -->	
+		<script src="angular/angular.min.js"></script>
+		<script src="angular/angular-route.min.js"></script>
+		<script src="angular/angular-sanitize.min.js"></script>	
+		<script src="angular/ui-bootstrap-tpls-3.0.2.min.js"></script>
+
+		<!-- modules -->
+		<script src="angular/modules/bootbox/bootstrap-modal.js"></script>
+		<script src="angular/modules/growl/growl.js"></script>
+		<script src="angular/modules/blockui/blockui.js"></script>
+		<script src="angular/modules/account/account.js"></script>
+		<script src="angular/modules/validation/validate.js"></script>
+		<script src="angular/modules/post/window-open-post.js"></script>	
+		<script src="modules/add.js"></script>
+
+		<!-- controller -->
+		<script src="controllers/add.js"></script>
+	
+	</body>
+</html>
