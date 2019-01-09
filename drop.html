@@ -32,7 +32,7 @@
 
 	</head>
 
-	 <body class="fixed-left" ng-app="users" ng-controller="usersCtrl" account-profile>
+	 <body class="fixed-left" ng-app="drops" ng-controller="dropsCtrl" account-profile>
 
 		<!-- Begin page -->
 		<div id="wrapper">
@@ -102,17 +102,17 @@
                                 <li><a href="semestral.html" class="waves-effect"><i class="ti-layout-cta-center"></i><span> Semestral Grade </span></a></li>
                             </li>
 							<li class="has_sub">
-                                <a href="#" class="waves-effect"><i class="ti-files"></i><span class="label label-danger pull-right">3</span><span> <span> Forms </span> </a>
+                                <a href="#" class="waves-effect active"><i class="ti-files"></i><span class="label label-danger pull-right">3</span><span> <span> Forms </span> </a>
                                 <ul class="list-unstyled">
                                 	<li><a href="add.html">Adding Form</a></li>
-									<li><a href="drop.html">Dropping Form</a></li>
+									<li class="active"><a href="drop.html">Dropping Form</a></li>
                                     <li><a href="completion.html">Completion Form</a></li>
                                 </ul>
                             </li>
 							<li class="has_sub">
-                                <a href="#" class="waves-effect active"><i class="ti-settings"></i> <span> Maintenance </span> </a>
+                                <a href="#" class="waves-effect"><i class="ti-settings"></i> <span> Maintenance </span> </a>
                                 <ul class="list-unstyled">
-                                	<li class="active"><a href="accounts.html">Accounts</a></li>
+                                	<li><a href="accounts.html">Accounts</a></li>
 									<li><a href="instructor.html">Instructor</a></li>
                                     <li><a href="courses.html">Courses</a></li>
 									<li><a href="curriculum.html">Curriculum</a></li>
@@ -138,7 +138,7 @@
 						<!-- Page-Title -->
 						<div class="row">
 							<div class="col-sm-12">
-								<h4 class="page-title">Maintenance > Accounts</h4>
+								<h4 class="page-title">Maintenance > Adding</h4>
 							</div>
 						</div><br>
                         <div class="row">
@@ -157,7 +157,7 @@
             <!-- ============================================================== -->
             <!-- End Right content here -->
             <!-- ============================================================== -->
-
+			
         </div>
         <!-- END wrapper -->
 
@@ -187,6 +187,14 @@
 		<script src="angular/modules/growl/jquery.bootstrap-growl.min.js"></script>
 		<script src="angular/modules/blockui/jquery.blockUI.js"></script>
 
+		<script src="assets/pdfmake/build/pdfmake.min.js"></script>
+		<script src="assets/pdfmake/build/vfs_fonts.js"></script>
+		
+		<!-- jQuery  -->
+		<script src="dist/jspdf.min.js"></script>
+		<script src="dist/jspdf.debug.js"></script>
+		<script src="dist/jspdf.plugin.autotable.js"></script>	
+		
 		<!-- angular -->	
 		<script src="angular/angular.min.js"></script>
 		<script src="angular/angular-route.min.js"></script>
@@ -200,10 +208,10 @@
 		<script src="angular/modules/account/account.js"></script>
 		<script src="angular/modules/validation/validate.js"></script>
 		<script src="angular/modules/post/window-open-post.js"></script>	
-		<script src="modules/users.js"></script>
+		<script src="modules/drop.js"></script>
 
 		<!-- controller -->
-		<script src="controllers/users.js"></script>
+		<script src="controllers/drop.js"></script>
 	
 	</body>
 </html>
