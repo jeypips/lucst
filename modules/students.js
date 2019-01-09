@@ -601,13 +601,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					halign: 'center',
 					fillColor: [191, 191, 191],
 					textColor: 50,
-					fontSize: 8
+					fontSize: 9
 				},
 				bodyStyles: {
 					halign: 'left',
 					fillColor: [255, 255, 255],
 					textColor: 50,
-					fontSize: 10
+					fontSize: 9
 				},
 				alternateRowStyles: {
 					fillColor: [255, 255, 255]

@@ -26,7 +26,7 @@ $curriculum_datas = $con->getData("SELECT * FROM curriculum_data WHERE curriculu
 $enrollment[0]['semester']['students_curriculum_datas'] = $curriculum_datas;
 //
 
-$students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE enrollment_id = ".$enrollment[0]['id']);
+$students_curriculum_datas = $con->getData("SELECT *, IF(adding=3,'Dropped','Active') adding FROM students_curriculum_data WHERE enrollment_id = ".$enrollment[0]['id']);
 foreach($students_curriculum_datas as $key => $scd){
 	
 	$curriculum_data = $con->getData("SELECT * FROM curriculum_data WHERE id  = ".$scd['curriculum_data_id']);
