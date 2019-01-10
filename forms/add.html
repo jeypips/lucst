@@ -27,7 +27,7 @@
 				<div class="row">
 					<div class="col-lg-12 form-group" ng-class="{'has-error': formHolder.add.reason.$touched && formHolder.add.reason.$invalid}">
 						<label>Reason for Adding</label>
-						<input type="text" class="form-control" name="reason" ng-model="add.reason" ng-disabled="btns.ok.btn" required>
+						<textarea type="text" class="form-control" name="reason" ng-model="add.reason" ng-disabled="btns.ok.btn" required></textarea>
 						<span class="help-block" ng-show="formHolder.add.reason.$touched && formHolder.add.reason.$invalid">This field is required</span>
 					</div>
 				</div>

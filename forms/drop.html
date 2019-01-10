@@ -27,7 +27,7 @@
 				<div class="row">
 					<div class="col-lg-12 form-group" ng-class="{'has-error': formHolder.drop.reason.$touched && formHolder.drop.reason.$invalid}">
 						<label>Reason for droping</label>
-						<input type="text" class="form-control" name="reason" ng-model="drop.reason" ng-disabled="btns.ok.btn" required>
+						<textarea type="text" class="form-control" name="reason" ng-model="drop.reason" ng-disabled="btns.ok.btn" required></textarea>
 						<span class="help-block" ng-show="formHolder.drop.reason.$touched && formHolder.drop.reason.$invalid">This field is required</span>
 					</div>
 				</div>
