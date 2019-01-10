@@ -16,8 +16,6 @@ $add[0]['enrollment_id'] = $student[0];
 $course = $con->getData("SELECT * FROM courses WHERE id = ".$add[0]['enrollment_id']['course']);
 $add[0]['enrollment_id']['course'] = $course[0];
 
-
-
 $students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE adding = '1' AND enrollment_id = ".$add[0]['enrollment_id']['id']);
 foreach($students_curriculum_datas as $key => $scd){
 	

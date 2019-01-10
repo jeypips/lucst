@@ -8,15 +8,13 @@ $con = new pdo_db();
 
 $id = $_POST['id'];
 
-$drop = $con->getData("SELECT *, DATE_FORMAT(date, '%M %d, %Y') date FROM adds WHERE id = $_POST[id]");
+$drop = $con->getData("SELECT *, DATE_FORMAT(date, '%M %d, %Y') date FROM drops WHERE id = $_POST[id]");
 
 $student = $con->getData("SELECT id, id_number,firstname, lastname, middlename, course, year_level FROM enrollment WHERE id = ".$drop[0]['enrollment_id']);
 $drop[0]['enrollment_id'] = $student[0];
 
 $course = $con->getData("SELECT * FROM courses WHERE id = ".$drop[0]['enrollment_id']['course']);
 $drop[0]['enrollment_id']['course'] = $course[0];
-
-
 
 $students_curriculum_datas = $con->getData("SELECT * FROM students_curriculum_data WHERE adding = '3' AND enrollment_id = ".$drop[0]['enrollment_id']['id']);
 foreach($students_curriculum_datas as $key => $scd){
@@ -34,11 +32,11 @@ foreach($students_curriculum_datas as $key => $scd){
 };
 $drop[0]['students_curriculum_datas'] = $students_curriculum_datas;
 
-foreach ($drop[0] as $i => $p) {
+/* foreach ($drop[0] as $i => $p) {
 	
 	if ($p == null) $drop[0][$i] = "n/a"; // pdf equals null
 	
-};
+}; */
 
 header("Content-Type: application/json");
 echo json_encode($drop[0]);

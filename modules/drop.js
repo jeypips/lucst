@@ -271,6 +271,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.print = function(scope,drop) {
 			
+			/* if (scope.drop.id==null) {
+				growl.show('btn btn-danger',{from: 'top', amount: 55},'Some fields are required');				
+				return;
+			}; */
+			
 			$http({
 			  method: 'POST',
 			  url: 'handlers/drops/print-student.php',
