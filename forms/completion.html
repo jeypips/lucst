@@ -35,7 +35,7 @@
 				</div>
 				<div class="row" style="margin-bottom: 5px;">
 				<div class="col-lg-12">
-					<button class="btn btn-primary pull-right" ng-click="app.curriculum_data.completion(this)" ng-disabled="btns.ok.btn"><i class="fa fa-plus"></i></button>
+					<button class="btn btn-primary pull-right" ng-click="app.curriculum_data.add(this)" ng-disabled="btns.ok.btn"><i class="fa fa-plus"></i></button>
 				</div>
 			</div>
 			<div class="row">
@@ -47,8 +47,8 @@
 							<th>OBE perf 30%</th>
 							<th>Att/Beh 10%</th>
 							<th>Exam 40%</th>
-							<th>Previous Grade 20%</th>
-							<th>Tentative Grade 20%</th>
+							<th>Previous Grade</th>
+							<th>Tentative Grade</th>
 							<th>Action</th>
 						</thead>
 						<tbody ng-repeat="es in completion.students_curriculum_datas">

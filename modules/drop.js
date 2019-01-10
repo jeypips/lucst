@@ -129,6 +129,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			$timeout(function() { students(scope); },200);
 			$timeout(function() { curriculum(scope); },200);
+			
 			scope.drop.students_curriculum_datas = [];
 			scope.drop.students_curriculum_dels = [];
 			

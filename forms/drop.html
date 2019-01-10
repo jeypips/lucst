@@ -34,7 +34,7 @@
 				
 				<div class="row" style="margin-bottom: 5px;">
 				<div class="col-lg-12">
-					<button class="btn btn-primary pull-right" ng-click="app.curriculum_data.drop(this)" ng-disabled="btns.ok.btn"><i class="fa fa-plus"></i></button>
+					<button class="btn btn-primary pull-right" ng-click="app.curriculum_data.add(this)" ng-disabled="btns.ok.btn"><i class="fa fa-plus"></i></button>
 				</div>
 			</div>
 			<div class="row">
@@ -44,20 +44,20 @@
 							<th>Descriptive Title</th>
 							<th>Action</th>
 						</thead>
-						<tbody ng-repeat="es in drop.students_curriculum_datas">
+						<tbody ng-repeat="ds in drop.students_curriculum_datas">
 							<td>
 								<div class="col-lg-12 form-group">
-								  <select class="form-control" name="curriculum_data_id{{index}}" ng-model="es.curriculum_data_id" ng-options="cd.descriptive_title for cd in curriculum track by cd.id" ng-disabled="btns.ok.btn"></select>
+								  <select class="form-control" name="curriculum_data_id{{index}}" ng-model="ds.curriculum_data_id" ng-options="cd.descriptive_title for cd in curriculum track by cd.id" ng-disabled="btns.ok.btn"></select>
 								</div>
 							</td>
 							<td>
-								<button class="btn btn-danger" ng-click="app.curriculum_data.delete(this,es)" ng-disabled="btns.ok.btn"><i class="fa fa-remove"></i></button>
+								<button class="btn btn-danger" ng-click="app.curriculum_data.delete(this,ds)" ng-disabled="btns.ok.btn"><i class="fa fa-remove"></i></button>
 							</td>
 						</tbody>
 					</table>
 				</div>
 			</div>
-				<hr>
+			<hr>
 			</form>
 		</div>
 	</div>

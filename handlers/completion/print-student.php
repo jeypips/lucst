@@ -18,7 +18,7 @@ $completion[0]['enrollment_id']['course'] = $course[0];
 
 
 
-$students_curriculum_datas = $con->getData("SELECT *, IFNULL(written_works, '0') written_works, IFNULL(obe, '0') obe, IFNULL(att, '0') att, IFNULL(exam, '0') exam, IFNULL(previous_grade, '0') previous_grade,  IFNULL(tentative_grade, '0') tentative_grade, IFNULL(remarks, 'n/a') remarks, IFNULL(final_grade, '0') remarks, (written_works + obe + att + exam) final_grade FROM students_curriculum_data WHERE adding = '3' AND enrollment_id = ".$completion[0]['enrollment_id']['id']);
+$students_curriculum_datas = $con->getData("SELECT *, IFNULL(written_works, '0') written_works, IFNULL(obe, '0') obe, IFNULL(att, '0') att, IFNULL(exam, '0') exam, IFNULL(previous_grade, '0') previous_grade,  IFNULL(tentative_grade, '0') tentative_grade, IFNULL(remarks, 'n/a') remarks, IFNULL(final_grade, '0') remarks, (written_works + obe + att + exam) final_grade FROM students_curriculum_data WHERE adding = '4' AND enrollment_id = ".$completion[0]['enrollment_id']['id']);
 foreach($students_curriculum_datas as $key => $scd){
 	
 	$curriculum_data = $con->getData("SELECT *, IFNULL(lec, '0') lec, IFNULL(lab, '0') lab, IFNULL(total, '0') total FROM curriculum_data WHERE id  = ".$scd['curriculum_data_id']);

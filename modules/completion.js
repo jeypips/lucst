@@ -247,7 +247,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					tentative_grade: 0,
 					final_grade: 0,
 					remarks: '',
-					adding: 3
+					adding: 4
 				});
 
 			},			
