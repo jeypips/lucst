@@ -15,13 +15,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
-			scope.drop = {};
-			scope.drop.id = 0;		
+			scope.completion = {};
+			scope.completion.id = 0;		
 
-			scope.drop.students_curriculum_datas = [];
-			scope.drop.students_curriculum_dels = [];				
+			scope.completion.students_curriculum_datas = [];
+			scope.completion.students_curriculum_dels = [];				
 			
-			scope.drops = []; //list
+			scope.completions = []; //list
 			
 		};
 		
@@ -57,7 +57,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		function validate(scope) {
 			
-			var controls = scope.formHolder.drop.$$controls;
+			var controls = scope.formHolder.completion.$$controls;
 			
 			angular.forEach(controls,function(elem,i) {
 				
@@ -65,7 +65,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 									
 			});
 
-			return scope.formHolder.drop.$invalid;
+			return scope.formHolder.completion.$invalid;
 			
 		};
 		
@@ -90,15 +90,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			if (scope.$id > 2) scope = scope.$parent;			
 			
-			scope.drop = {};
-			scope.drop.id = 0;						
+			scope.completion = {};
+			scope.completion.id = 0;						
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/drops/list.php'
+			  url: 'handlers/completion/list.php'
 			}).then(function success(response) {
 				
-				scope.drops = angular.copy(response.data);
+				scope.completions = angular.copy(response.data);
 				
 				bui.hide();
 				
@@ -109,11 +109,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			});			
 			
 			$('#content').html(loading);
-			$('#content').load('lists/drops.html', function() {
+			$('#content').load('lists/completions.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
 				// instantiate datable
 				$timeout(function() {
-					$('#drops').DataTable({
+					$('#completions').DataTable({
 						"ordering": false
 					});	
 				},200);
@@ -122,20 +122,20 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.drop = function(scope,row) { //add
+		self.completion = function(scope,row) { //add
 			
-			scope.drop = {};
-			scope.drop.id = 0;
+			scope.completion = {};
+			scope.completion.id = 0;
 			
 			$timeout(function() { students(scope); },200);
 			$timeout(function() { curriculum(scope); },200);
-			scope.drop.students_curriculum_datas = [];
-			scope.drop.students_curriculum_dels = [];
+			scope.completion.students_curriculum_datas = [];
+			scope.completion.students_curriculum_dels = [];
 			
 			mode(scope,row);
 			
 			$('#content').html(loading);
-			$('#content').load('forms/drop.html',function() {
+			$('#content').load('forms/completion.html',function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },200);
 			});
 			
@@ -145,11 +145,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/drops/view.php',
+				  url: 'handlers/completion/view.php',
 				  data: {id: row.id}
 				}).then(function success(response) {
 					
-					scope.drop = angular.copy(response.data);
+					scope.completion = angular.copy(response.data);
 							
 					bui.hide();
 					
@@ -186,15 +186,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			$http({
 			  method: 'POST',
-			  url: 'handlers/drops/save.php',
-			  data: {drop: scope.drop}
+			  url: 'handlers/completion/save.php',
+			  data: {completion: scope.completion}
 			}).then(function success(response) {
 				
 				bui.hide();
-				if (scope.drop.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student form info successfully added');				
+				if (scope.completion.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student form info successfully added');				
 				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student form info successfully updated');				
-				mode(scope,scope.drop);
-				self.list(scope);
+				mode(scope,scope.completion);		
 				
 			}, function error(response) {
 				
@@ -212,7 +211,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/drops/delete.php',
+				  url: 'handlers/completion/delete.php',
 				  data: {id: [row.id]}
 				}).then(function mySucces(response) {
 
@@ -236,7 +235,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			add: function(scope) {
 
-				scope.drop.students_curriculum_datas.push({
+				scope.completion.students_curriculum_datas.push({
 					id: 0,
 					enrollment_id: 0,
 					curriculum_data_id: 0,
@@ -256,19 +255,19 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			delete: function(scope,row) {
 				
 				if (row.id > 0) {
-					scope.drop.students_curriculum_dels.push(row.id);
+					scope.completion.students_curriculum_dels.push(row.id);
 				};
 				
-				var students_curriculum_datas = scope.drop.students_curriculum_datas;
-				var index = scope.drop.students_curriculum_datas.indexOf(row);
-				scope.drop.students_curriculum_datas = [];			
+				var students_curriculum_datas = scope.completion.students_curriculum_datas;
+				var index = scope.completion.students_curriculum_datas.indexOf(row);
+				scope.completion.students_curriculum_datas = [];			
 				
 				angular.forEach(students_curriculum_datas, function(d,i) {
 					
 					if (index != i) {
 						
 						delete d['$$hashKey'];
-						scope.drop.students_curriculum_datas.push(d);
+						scope.completion.students_curriculum_datas.push(d);
 						
 					};
 					
@@ -278,17 +277,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.print = function(scope,drop) {
-			
-			/* if (scope.drop.id==null) {
-				growl.show('btn btn-danger',{from: 'top', amount: 55},'Some fields are required');				
-				return;
-			}; */
+		self.print = function(scope,completion) {
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/drops/print-student.php',
-			  data: {id: scope.drop.id}
+			  url: 'handlers/completion/print-student.php',
+			  data: {id: scope.completion.id}
 			}).then(function mySucces(response) {
 
 				print(scope,response.data);
@@ -302,7 +296,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		}; 
 		
-		function print(scope,drop) {
+		function print(scope,completion) {
 			
 			var d = new Date();
 			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -360,21 +354,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setFont('times');
 			
 			//x y
-			doc.text(10, 58, 'School Year: '+drop.school_year);
-			doc.text(70, 58, 'Semester: '+drop.semester);
-			doc.text(140, 58, 'Date: '+drop.date);
-			doc.text(10, 65, 'ID Number: '+drop.enrollment_id.id_number);
-			doc.text(10, 72, 'Reason for Dropping: '+drop.reason);
+			doc.text(10, 58, 'School Year: '+completion.school_year);
+			doc.text(70, 58, 'Semester: '+completion.semester);
+			doc.text(140, 58, 'Date: '+completion.date);
+			doc.text(10, 65, 'ID Number: '+completion.enrollment_id.id_number);
+			doc.text(10, 72, 'Reason for completionping: '+completion.reason);
 			doc.text(10, 79, 'Student Name: ');
 			doc.setDrawColor(0, 0, 0) // draw red lines
 			doc.setLineWidth(.2)
 			doc.line(170, 79, 40, 79); // horizontal line 
 			
-			doc.text(55, 78, ''+drop.enrollment_id.lastname);
-			doc.text(95, 78, ''+drop.enrollment_id.firstname);
-			doc.text(135, 78, ''+drop.enrollment_id.middlename);
-			doc.text(10, 91, 'Course: '+drop.enrollment_id.course.course_name);
-			doc.text(10, 98, 'Year Level: '+drop.enrollment_id.year_level);
+			doc.text(55, 78, ''+completion.enrollment_id.lastname);
+			doc.text(95, 78, ''+completion.enrollment_id.firstname);
+			doc.text(135, 78, ''+completion.enrollment_id.middlename);
+			doc.text(10, 91, 'Course: '+completion.enrollment_id.course.course_name);
+			doc.text(10, 98, 'Year Level: '+completion.enrollment_id.year_level);
 			
 			doc.setFontSize(11)
 			doc.setFont('default');
@@ -421,28 +415,28 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.text(133, 235, 'Date: _______________');
 			
 			
-			var header = ["Code","Pre-req","Descriptive Title","No. of units","","","Schedule","","","Instructor"];
+			var header = ["Code","Descriptive Title","Units","Written works 20%","OBE perf 30%","Att/beh 10%","Exam 40%","Previous Grade","Tentative Grade","Final Grade","Remarks"];
 			
-			angular.forEach(drop.students_curriculum_datas, function(economy_h,i) {
+			angular.forEach(completion.students_curriculum_datas, function(economy_h,i) {
 
 				
 			});
 			
-			var rows = [
-			{"3": "Lab","4": "Lec","5": "Total","6": "Day","7": "Time","8": "Room"},
-			];
-			angular.forEach(drop.students_curriculum_datas, function(data,i) {
+			var rows = [];
+			
+			angular.forEach(completion.students_curriculum_datas, function(data,i) {
 				
 				var row = [];
 				row.push(data.curriculum_data_id.subject_code);
-				row.push(data.curriculum_data_id.pre_req);
 				row.push(data.curriculum_data_id.descriptive_title);
-				row.push(data.curriculum_data_id.lab);
-				row.push(data.curriculum_data_id.lec);
-				row.push(data.curriculum_data_id.total);
-				row.push(data.curriculum_data_id.day);
-				row.push(data.curriculum_data_id.time);
-				row.push(data.curriculum_data_id.room);
+				row.push(data.curriculum_data_id.units);
+				row.push(data.written_works);
+				row.push(data.obe);
+				row.push(data.att);
+				row.push(data.exam);
+				row.push(data.previous_grade);
+				row.push(data.tentative_grade);
+				row.push(data.final_grade);
 				row.push(data.curriculum_data_id.instructor.fullname);
 				
 				rows.push(row);
@@ -467,13 +461,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					halign: 'center',
 					fillColor: [191, 191, 191],
 					textColor: 50,
-					fontSize: 7
+					fontSize: 5
 				},
 				bodyStyles: {
 					halign: 'left',
 					fillColor: [255, 255, 255],
 					textColor: 50,
-					fontSize: 10
+					fontSize: 7
 				},
 				alternateRowStyles: {
 					fillColor: [255, 255, 255]

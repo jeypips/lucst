@@ -193,7 +193,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				bui.hide();
 				if (scope.add.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student form info successfully added');				
 				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student form info successfully updated');				
-				mode(scope,scope.add);		
+				mode(scope,scope.add);	
+				self.list(scope);
 				
 			}, function error(response) {
 				
@@ -239,6 +240,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					id: 0,
 					enrollment_id: 0,
 					curriculum_data_id: 0,
+					written_works: 0,
+					obe: 0,
+					att: 0,
+					exam: 0,
+					previous_grade: 0,
+					tentative_grade: 0,
+					final_grade: 0,
+					remarks: '',
 					adding: 1
 				});
 
