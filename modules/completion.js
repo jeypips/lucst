@@ -247,6 +247,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					tentative_grade: 0,
 					final_grade: 0,
 					remarks: '',
+					prelim: 0,
+					midterm: 0,
+					semifinal: 0,
 					adding: 4
 				});
 
@@ -346,7 +349,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setFontSize(15)
 			doc.setFont('times');
 			doc.setFontType('bold');
-			doc.text(90, 40, 'Dropping Form');
+			doc.text(90, 40, 'Completion Form');
 			
 			doc.setFontSize(13)
 			doc.setFont('default');
@@ -356,9 +359,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			//x y
 			doc.text(10, 58, 'School Year: '+completion.school_year);
 			doc.text(70, 58, 'Semester: '+completion.semester);
-			doc.text(140, 58, 'Date: '+completion.date);
+			doc.text(135, 58, 'Date of Completion: '+completion.date);
 			doc.text(10, 65, 'ID Number: '+completion.enrollment_id.id_number);
-			doc.text(10, 72, 'Reason for completionping: '+completion.reason);
+			doc.text(10, 72, 'Type of Completion: '+completion.type);
 			doc.text(10, 79, 'Student Name: ');
 			doc.setDrawColor(0, 0, 0) // draw red lines
 			doc.setLineWidth(.2)

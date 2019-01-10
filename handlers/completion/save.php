@@ -41,7 +41,7 @@ if (count($students_curriculum_datas)) {
 	foreach ($students_curriculum_datas as $index => $value) {
 		
 		$students_curriculum_datas[$index]['enrollment_id'] = $enrollment_id;
-		
+		$students_curriculum_datas[$index]['adding'] = 4;	
 	}
 	
 	foreach ($students_curriculum_datas as $index => $value) {

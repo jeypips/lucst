@@ -1,13 +1,24 @@
 angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','bootstrap-growl','snapshot-module']).factory('app', function($http,$timeout,$compile,bui,growl,bootstrapModal,snapshot) {
 
 	function app() {
+		
+		function getAge(dateString) { //Autocompute birthday to age
+			var today = new Date();
+			var birthDate = new Date(dateString);
+			var age = today.getFullYear() - birthDate.getFullYear();
+			var m = today.getMonth() - birthDate.getMonth();
+			if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+				age--;
+			}
+			return age;
+		};
 
 		var self = this;
 
 		var loading = '<div class="col-sm-offset-4 col-sm-8"><button type="button" class="btn btn-dark" title="Loading" disabled><i class="fa fa-spinner fa-spin"></i>&nbsp; Please wait...</button></div>';		
 
 		self.data = function(scope) {
-				
+			
 			scope.formHolder = {};
 			
 			scope.btns = {
@@ -15,39 +26,43 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
-			scope.disciplinary = {};
-			scope.disciplinary.id = 0;
+			scope.enrollment = {};
+			scope.enrollment.id = 0;
 
-			scope.disciplinary.disciplinary_datas = [];
-			scope.disciplinary.disciplinary_dels = [];		
+			scope.enrollment.students_curriculum_datas = [];
+			scope.enrollment.students_curriculum_dels = [];			
 			
-			scope.disciplinarys = []; //list
+			scope.enrollments = []; //list
+			
+			//provinces
+			$timeout(function() {
+				$http({ 
+					method: 'POST',
+					url: 'api/suggestions/courses-check.php'
+				}).then(function mySucces(response) {
+					
+					scope.courses = response.data;
+					scope.curriculum = [];
+					scope.students_curriculum_datas = [];
+					
+				},function myError(response) {
+					
+				});
+				
+			}, 200);
+			
+			
 			
 		};
 		
-		function students(scope) {
+		function courses(scope) {
 			
 			$http({
 				method: 'POST',
-				url: 'api/suggestions/students.php'
+				url: 'api/suggestions/courses.php'
 			}).then(function mySucces(response) {
 				
-				scope.students = response.data;
-				
-			},function myError(response) {
-				
-			});	
-			
-		};
-		
-		function codes(scope) {
-			
-			$http({
-				method: 'POST',
-				url: 'api/suggestions/codes.php'
-			}).then(function mySucces(response) {
-				
-				scope.codes = response.data;
+				scope.courses = response.data;
 				
 			},function myError(response) {
 				
@@ -57,7 +72,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		function validate(scope) {
 			
-			var controls = scope.formHolder.disciplinary.$$controls;
+			var controls = scope.formHolder.enrollment.$$controls;
 			
 			angular.forEach(controls,function(elem,i) {
 				
@@ -65,7 +80,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 									
 			});
 
-			return scope.formHolder.disciplinary.$invalid;
+			return scope.formHolder.enrollment.$invalid;
 			
 		};
 		
@@ -90,15 +105,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			if (scope.$id > 2) scope = scope.$parent;			
 			
-			scope.disciplinary = {};
-			scope.disciplinary.id = 0;						
+			scope.enrollment = {};
+			scope.enrollment.id = 0;						
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/disciplinary/list.php'
+			  url: 'handlers/semestral/list.php'
 			}).then(function success(response) {
 				
-				scope.disciplinarys = angular.copy(response.data);
+				scope.enrollments = angular.copy(response.data);
 				
 				bui.hide();
 				
@@ -109,11 +124,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			});			
 			
 			$('#content').html(loading);
-			$('#content').load('lists/disciplinarys.html', function() {
+			$('#content').load('lists/semestral.html', function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },100);								
 				// instantiate datable
 				$timeout(function() {
-					$('#disciplinary').DataTable({
+					$('#semestral').DataTable({
 						"ordering": false
 					});	
 				},200);
@@ -122,21 +137,18 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		self.disciplinary = function(scope,row) { //add
+		self.enrollment = function(scope,row) { //add
 			
-			scope.disciplinary = {};
-			scope.disciplinary.id = 0;
+			scope.enrollment = {};
+			scope.enrollment.id = 0;
 			
-			$timeout(function() { students(scope); },200);
-			$timeout(function() { codes(scope); },200);
-			
-			scope.disciplinary.disciplinary_datas = [];
-			scope.disciplinary.disciplinary_dels = [];
+			scope.enrollment.students_curriculum_datas = [];
+			scope.enrollment.students_curriculum_dels = [];
 			
 			mode(scope,row);
 			
 			$('#content').html(loading);
-			$('#content').load('forms/disciplinary.html',function() {
+			$('#content').load('forms/semestral.html',function() {
 				$timeout(function() { $compile($('#content')[0])(scope); },200);
 			});
 			
@@ -146,19 +158,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/disciplinary/view.php',
+				  url: 'handlers/semestral/view.php',
 				  data: {id: row.id}
 				}).then(function success(response) {
 					
-					scope.disciplinary = angular.copy(response.data);
-					// students(scope);
-					/* angular.forEach(scope.pictures, function(item,i) { console.log(i);
-						var photo = 'pictures/'+scope.disciplinary.id+'_'+i+'.png';
-						var view = document.getElementById(i+'_picture');
-						console.log(photo);
-						if (imageExists(photo)) view.setAttribute('src', photo);
-						else view.setAttribute('src', 'pictures/avatar.png');
-					}); */
+					scope.enrollment = angular.copy(response.data);
+					scope.enrollment.dob = new Date(response.data.dob);
+					scope.curriculum = response.data.course.curriculum;
+					scope.students_curriculum_datas = response.data.semester.students_curriculum_datas;
 					
 					bui.hide();
 					
@@ -173,8 +180,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			/* scope.disciplinary = {};
-			scope.disciplinary.id = 0; */
+			/* scope.enrollment = {};
+			scope.enrollment.id = 0; */
 			
 			self.list(scope);
 			
@@ -195,15 +202,15 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			$http({
 			  method: 'POST',
-			  url: 'handlers/disciplinary/save.php',
-			  data: {disciplinary: scope.disciplinary}
+			  url: 'handlers/semestral/save.php',
+			  data: {enrollment: scope.enrollment}
 			}).then(function success(response) {
 				
-				if (scope.disciplinary.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student record successfully added');				
-				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student record successfully updated');				
-				mode(scope,scope.disciplinary);
-				self.list(scope);
 				bui.hide();
+				if (scope.enrollment.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student info successfully added');				
+				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student info successfully updated');				
+				mode(scope,scope.enrollment);								
+				snapshot.upload(scope);
 				
 			}, function error(response) {
 				
@@ -221,13 +228,13 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 				$http({
 				  method: 'POST',
-				  url: 'handlers/disciplinary/delete.php',
+				  url: 'handlers/semestral/delete.php',
 				  data: {id: [row.id]}
 				}).then(function mySucces(response) {
 
 					self.list(scope);
 					
-					growl.show('btn btn-danger',{from: 'top', amount: 55},'Student record successfully deleted.');
+					growl.show('btn btn-danger',{from: 'top', amount: 55},'Student info successfully deleted.');
 					
 				}, function myError(response) {
 					 
@@ -241,29 +248,66 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 		};
 		
-		// function imageExists(image_url){
+		self.dob = function(scope) {
+			
+			if (scope.enrollment.dob == null) return;
+			scope.enrollment.age = getAge(scope.enrollment.dob); //for birthday autocompute
 
-			// var http = new XMLHttpRequest();
-
-			// http.open('HEAD', image_url, false);
-			// http.send();
-
-			// return http.status != 404;
-
-		// };
+		};
 		
-		self.disciplinary_data = {
+		self.checkCourse = function(scope,course) {
+			
+			scope.curriculum = scope.enrollment.course.curriculum;
+			// console.log(scope.curriculum);
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/semestral/check-course.php',
+			  data: course
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
+		};
+		
+		self.checkSemester = function(scope,semester) {
+			
+			scope.students_curriculum_datas = scope.enrollment.semester.students_curriculum_datas;
+			
+			$http({
+			  method: 'POST',
+			  url: 'handlers/semestral/check-semester.php',
+			  data: semester
+			}).then(function mySucces(response) {
+				
+			}, function myError(response) {
+				
+			});
+			
+		};
+		
+		self.curriculum_data = {
 			
 			add: function(scope) {
 
-				scope.disciplinary.disciplinary_datas.push({
+				scope.enrollment.students_curriculum_datas.push({
 					id: 0,
-					disciplinary_id: 0,
-					semester: '',
-					code_number: '',
-					code_title: '',
-					action_taken: '',
-					remarks: ''
+					enrollment_id: 0,
+					curriculum_data_id: 0,
+					written_works: 0,
+					obe: 0,
+					att: 0,
+					exam: 0,
+					previous_grade: 0,
+					tentative_grade: 0,
+					final_grade: 0,
+					remarks: '',
+					prelim: 0,
+					midterm: 0,
+					semifinal: 0,
+					adding: 0
 				});
 
 			},			
@@ -271,19 +315,19 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			delete: function(scope,row) {
 				
 				if (row.id > 0) {
-					scope.disciplinary.disciplinary_dels.push(row.id);
+					scope.enrollment.students_curriculum_dels.push(row.id);
 				};
 				
-				var disciplinary_datas = scope.disciplinary.disciplinary_datas;
-				var index = scope.disciplinary.disciplinary_datas.indexOf(row);
-				scope.disciplinary.disciplinary_datas = [];			
+				var students_curriculum_datas = scope.enrollment.students_curriculum_datas;
+				var index = scope.enrollment.students_curriculum_datas.indexOf(row);
+				scope.enrollment.students_curriculum_datas = [];			
 				
-				angular.forEach(disciplinary_datas, function(d,i) {
+				angular.forEach(students_curriculum_datas, function(d,i) {
 					
 					if (index != i) {
 						
 						delete d['$$hashKey'];
-						scope.disciplinary.disciplinary_datas.push(d);
+						scope.enrollment.students_curriculum_datas.push(d);
 						
 					};
 					
@@ -293,12 +337,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		 self.print = function(scope,disciplinary) {
+		self.print = function(scope,enrollment) {
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/disciplinary/print-student.php',
-			  data: {id: disciplinary.id}
+			  url: 'handlers/semestral/print-student.php',
+			  data: {id: enrollment.id}
 			}).then(function mySucces(response) {
 
 				print(scope,response.data);
@@ -312,7 +356,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		}; 
 		
-		function print(scope,disciplinary) {
+		function print(scope,enrollment) {
 			
 			var d = new Date();
 			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -362,210 +406,75 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setFontSize(12)
 			doc.setFont('times');
 			doc.setFontType('bold');
-			doc.text(70, 40, 'STUDENT'+"'"+'S PERSONAL INFORMATION');
+			doc.text(80, 40, 'SEMESTRAL GRADE');
 			
 			doc.setFontSize(13)
 			doc.setFont('default');
 			doc.setFontType('normal');
 			doc.setFont('times');
 			//x y
-			doc.text(10, 50, 'Name: ');
-			doc.text(40, 50, disciplinary.student.firstname+' '+disciplinary.student.lastname+' '+disciplinary.student.middlename);
+			doc.text(10, 50, 'Name of Student: '+enrollment.firstname+' '+enrollment.lastname+' '+enrollment.middlename);
 
-			doc.text(10, 58, 'Home Address: ');
-			doc.text(40, 58, disciplinary.student.home_address);	
+			doc.text(10, 57, 'Home Address: '+enrollment.home_address);
 			
-			doc.text(10, 66, 'Date of Birth: ');
-			doc.text(40, 66, disciplinary.student.dob);
+			doc.text(10, 64, 'Date of Birth: '+enrollment.dob);
 			
-			doc.text(90, 66, 'Age: ');
-			doc.text(100, 66, disciplinary.student.age);
+			doc.text(90, 64, 'Age: '+enrollment.age);
 			
-			doc.text(120, 66, 'Sex: ');
-			doc.text(130, 66, disciplinary.student.sex);
+			doc.text(120, 64, 'Sex: '+enrollment.sex);
 			
-			doc.text(10, 74, 'Place of Birth: ');
-			doc.text(40, 74, disciplinary.student.pob);
+			doc.text(10, 71, 'Place of Birth: '+enrollment.pob);
 			
-			doc.text(10, 82, 'Religion: ');
-			doc.text(40, 82, disciplinary.student.religion);
+			doc.text(10, 78, 'Religion: '+enrollment.religion);
 			
-			doc.text(90, 82, 'Status: ');
-			doc.text(110, 82, disciplinary.student.status);
+			doc.text(90, 78, 'Status: '+enrollment.status);
 			
-			doc.text(10, 90, 'Phone Number: ');
-			doc.text(40, 90, ''+disciplinary.student.phone_number);
+			doc.text(10, 85, 'Contact Number: '+enrollment.phone_number);
 			
-			doc.text(10, 98, 'Name of Spouse (if married): ');
-			doc.text(65, 98, ''+disciplinary.student.name_of_spouse);
-			
-			doc.text(10, 106, 'Parents:');
-			doc.text(20, 114, 'Name of Father:');
-			doc.text(52, 114, ''+disciplinary.student.father_name);
-			doc.text(100, 114, 'Occupation:');
-			doc.text(123, 114, ''+disciplinary.student.father_occupation);
-			doc.text(100, 122, 'Phone Number:');
-			doc.text(130, 122, ''+disciplinary.student.father_number);
-			
-			doc.text(20, 130, 'Name of Mother:');
-			doc.text(52, 130, ''+disciplinary.student.mother_name);
-			doc.text(100, 130, 'Occupation:');
-			doc.text(123, 130, ''+disciplinary.student.mother_occupation);
-			doc.text(100, 138, 'Phone Number:');
-			doc.text(130, 138, ''+disciplinary.student.mother_number);
-			doc.text(20, 146, 'Address of Parents:');
-			doc.text(100, 146, ''+disciplinary.student.address_of_parents);
-			
-			doc.text(10, 154, 'Guardian:');
-			doc.text(20, 162, 'Name of Guardian:');
-			doc.text(57, 162, ''+disciplinary.student.guardian_name);
-			doc.text(100, 162, 'Occupation');
-			doc.text(123, 162, ''+disciplinary.student.guardian_occupation);
-			
-			doc.text(20, 170, 'Relationship:');
-			doc.text(50, 170, ''+disciplinary.student.guardian_relationship);
-			doc.text(100, 170, 'Phone Number');
-			doc.text(130, 170, ''+disciplinary.student.guardian_number);
-			
-			doc.text(20, 178, 'Address of Guardian:');
-			doc.text(100, 178, ''+disciplinary.student.guardian_address);
-			
-			doc.text(10, 186, 'Educational Background');
-			
-			var header = [
-				{title: "Level", dataKey: "1"},
-				{title: "School", dataKey: "2"},
-				{title: "Address", dataKey: "3"},
-			];
-			
-			var rows = [
-				// no
-				{"1": "Elementary","2": disciplinary.student.elem_school_name,"3": disciplinary.student.elem_school_address,},
-				{"1": "Secondary","2": disciplinary.student.secon_school_name,"3": disciplinary.student.secon_school_address},
-				{"1": "Tech-Voc","2": disciplinary.student.techvoc_school_name,"3": disciplinary.student.techvoc_school_address},
-				{"1": "Tertiary","2": disciplinary.student.tertiary_school_name,"3": disciplinary.student.tertiary_school_address},
-				
-			];	
-							
-			
-			doc.autoTable(header, rows,{
-				theme: 'striped',
-				margin: {
-					top: 190, 
-					left: 20 
-				},
-				tableWidth: 500,
-				styles: {
-					lineColor: [75, 75, 75],
-					lineWidth: 0.02,
-					cellPadding: 3,
-					overflow: 'linebreak',
-					columnWidth: 'wrap',
-					
-				},
-				columnStyles: {
-					6: {columnWidth: 30},
-				},
-				headerStyles: {
-					halign: 'center',
-					fillColor: [191, 191, 191],
-					textColor: 50,
-					fontSize: 9.5
-				},
-				bodyStyles: {
-					halign: 'left',
-					fillColor: [255, 255, 255],
-					textColor: 50,
-					fontSize: 9.5
-				},
-				alternateRowStyles: {
-					fillColor: [255, 255, 255]
-				}
-			});
-			
-			doc.addPage(); // add
-			
-			// X-axis, Y-axis, width, height20
-			doc.addImage(logo_lucst, 'PNG', 15, 8, 20, 20)
-		
-			//X-axis, Y-axis
-			doc.setFontSize(12)
-			doc.setFont('times');
-			doc.setFontType('bold');
-			doc.text(50, 10, 'LA UNION COLLEGES OF SCIENCE AND TECHNOLOGY');
-			
-			doc.setFontSize(12)
-			doc.setFont('times');
-			doc.setFontType('normal');
-			doc.text(60, 15, 'Pezcadores St., Central West, Bauang, La Union 2501');
-			
-			doc.setFontSize(12)
-			doc.setFont('times');
-			doc.setFontType('normal');
-			doc.text(70, 20, 'Offline Students  Affairs  Record  System');
-			
-			doc.setFontSize(12)
-			doc.setFont('times');
-			doc.setFontType('normal');
-			doc.text(65, 25, 'Tel Nos.: (072) 607- 2644 / (072) 607 - 7286 ');
-			
-			// how many length, height left, start, height right
-			doc.setDrawColor(0, 0, 0) // draw red lines
-			doc.setLineWidth(.2)
-			doc.line(205, 30, 5, 30); // horizontal line 
-			doc.setLineWidth(.5)
-			doc.line(205, 31, 5, 31); // horizontal line
-				
-				
-			doc.setFontSize(12)
-			doc.setFont('times');
-			doc.setFontType('bold');
-			doc.text(70, 40, 'DISCIPLINARY RECORDS');
+			doc.text(10, 92, 'Course: '+enrollment.course.course_name);
+			doc.text(10, 99, 'School Year: 2019-2020');
+			doc.text(90, 99, 'Year & Semester: '+enrollment.semester.semester);
 			
 			doc.setFontSize(12)
 			doc.setFont('helvetica');
-			doc.setFontType('normal');
-			doc.text(10, 50, 'Course:');
-			doc.text(35, 50, ''+disciplinary.student.course.course_name);
+			doc.setFontType('italic');
+			doc.text(33, 110, ''+enrollment.course.course_name);
 			
-			doc.text(10, 55, 'Year:');
-			doc.text(35, 55, ''+disciplinary.student.year_level);
+			doc.text(85, 115, enrollment.year_level);
 			
-			var header = [
-						  "School Year",
-						  "Semester",
-						  "Violation",
-						  "",
-						  "Action Taken",
-						  "Remarks"
-						  ];
-			 /* angular.forEach(disciplinary.datas, function(datas,i) {
+			var header = ["Code","Pre-req","Descriptive Title","No. of units","","","Terms","","","","",];
+			
+			angular.forEach(enrollment.students_curriculum_datas, function(economy_h,i) {
 
 				
-				
-			}); */
-		
+			});
+			
 			var rows = [
-				{"2": "Code #","3": "Code Title"},
+			{"3": "Lab","4": "Lec","5": "Total","6": "Prelim","7": "Midterm","8": "Semi-final","9": "Tenta Grade","10": "Final"},
 			];
-			angular.forEach(disciplinary.datas, function(data,i) {
+			angular.forEach(enrollment.students_curriculum_datas, function(data,i) {
 				
 				var row = [];
-				row.push(disciplinary.school_year);
-				row.push(data.semester);
-				row.push(data.code_number.code_number);
-				row.push(data.code_title.code_title);
-				row.push(data.action_taken);
-				row.push(data.remarks);
+				row.push(data.curriculum_data_id.subject_code);
+				row.push(data.curriculum_data_id.pre_req);
+				row.push(data.curriculum_data_id.descriptive_title);
+				row.push(data.curriculum_data_id.lab);
+				row.push(data.curriculum_data_id.lec);
+				row.push(data.curriculum_data_id.total);
+				row.push(data.prelim);
+				row.push(data.midterm);
+				row.push(data.semifinal);
+				row.push(data.final);
+				row.push(data.final);
 				
 				rows.push(row);
 				
-			});	
+			});		
 	
 			doc.autoTable(header, rows,{
 				theme: 'striped',
 				margin: {
-					top: 60, 
+					top: 120, 
 					left: 10 
 				},
 				tableWidth: 500,
@@ -576,23 +485,17 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					overflow: 'linebreak',
 					columnWidth: 'wrap'
 				},
-				/* columnStyles: {
-				 signum: {columnWidth: 50}, 
-				 name:{columnWidth:100}, 
-				 role: {columnWidth: 15}, 
-				 location: {columnWidth: 30}
-				}, */
 				headerStyles: {
 					halign: 'center',
 					fillColor: [191, 191, 191],
 					textColor: 50,
-					fontSize: 10
+					fontSize: 8
 				},
 				bodyStyles: {
 					halign: 'left',
 					fillColor: [255, 255, 255],
 					textColor: 50,
-					fontSize: 10
+					fontSize: 8
 				},
 				alternateRowStyles: {
 					fillColor: [255, 255, 255]

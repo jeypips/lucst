@@ -248,6 +248,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					tentative_grade: 0,
 					final_grade: 0,
 					remarks: '',
+					prelim: 0,
+					midterm: 0,
+					semifinal: 0,
 					adding: 1
 				});
 
