@@ -264,8 +264,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/clubs/print-student.php',
-			  data: {id: scope.sbo.id}
+			  url: 'handlers/sbos/print-student.php',
+			  data: {sbo: scope.sbo}
 			}).then(function mySucces(response) {
 
 				print(scope,response.data);
@@ -324,103 +324,32 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.line(205, 30, 5, 30); // horizontal line 
 			doc.setLineWidth(.5)
 			doc.line(205, 31, 5, 31); // horizontal line
-				
-				
-			doc.setFontSize(15)
+			
+			doc.setFontSize(12)
 			doc.setFont('times');
 			doc.setFontType('bold');
-			doc.text(90, 40, 'Adding Form');
+			doc.text(85, 40, 'SBO OFFICERS');
 			
-			doc.setFontSize(13)
-			doc.setFont('default');
-			doc.setFontType('normal');
-			doc.setFont('times');
+			var header = ["No.","Name","Date Added"];
+			/* var header = [
+				{title: "No", dataKey: "1"},
+				{title: "Name", dataKey: "2"},
+				{title: "Date Added", dataKey: "3"},
+			]; */
+				
 			
-			//x y
-			doc.text(10, 58, 'School Year: '+add.school_year);
-			doc.text(70, 58, 'Semester: '+add.semester);
-			doc.text(140, 58, 'Date: '+add.date);
-			doc.text(10, 65, 'ID Number: '+add.enrollment_id.id_number);
-			doc.text(10, 72, 'Reason for Adding: '+add.reason);
-			doc.text(10, 79, 'Student Name: ');
-			doc.setDrawColor(0, 0, 0) // draw red lines
-			doc.setLineWidth(.2)
-			doc.line(170, 79, 40, 79); // horizontal line 
-			
-			doc.text(55, 78, ''+add.enrollment_id.lastname);
-			doc.text(95, 78, ''+add.enrollment_id.firstname);
-			doc.text(135, 78, ''+add.enrollment_id.middlename);
-			doc.text(10, 91, 'Course: '+add.enrollment_id.course.course_name);
-			doc.text(10, 98, 'Year Level: '+add.enrollment_id.year_level);
-			
-			doc.setFontSize(11)
-			doc.setFont('default');
-			doc.setFontType('italic');
-			doc.setFont('times');
-			//x y
-			doc.text(55, 84, 'Last Name');
-			doc.text(95, 84, 'First Name');
-			doc.text(135, 84, 'Middle Name');
-			
-			doc.setFontSize(11)
-			doc.setFont('default');
-			doc.setFontType('normal');
-			doc.setFont('times');
-			
-			//x y
-			doc.text(10, 175, 'Accomplish By:');
-			doc.text(100, 175, 'Checked By:');
-			
-			doc.text(15, 190, '____________________________________');
-			doc.text(17, 195, 'Signature over printed name of Student');
-			doc.text(27, 200, 'Date: _______________');
-			
-			//
-
-			
-			doc.text(98, 190, '________________________');
-			doc.text(110, 195, 'Program Head');
-			doc.text(100, 200, 'Date: _______________');
-			
-			doc.text(160, 190, '________________________');
-			doc.text(180, 195, 'Registrar');
-			doc.text(163, 200, 'Date: _______________');
-			
-			
-			doc.text(40, 215, 'Verified By:');
-			
-			doc.text(50, 225, '________________________');
-			doc.text(70, 230, 'Cashier');
-			doc.text(55, 235, 'Date: _______________');
-			
-			doc.text(130, 225, '____________________________');
-			doc.text(135, 230, 'Dead of Academic Affairs');
-			doc.text(133, 235, 'Date: _______________');
-			
-			
-			var header = ["Code","Pre-req","Descriptive Title","No. of units","","","Schedule","","","Instructor"];
-			
-			angular.forEach(add.students_curriculum_datas, function(economy_h,i) {
+			angular.forEach(sbo, function(econ,i) {
 
 				
 			});
 			
-			var rows = [
-			{"3": "Lab","4": "Lec","5": "Total","6": "Day","7": "Time","8": "Room"},
-			];
-			angular.forEach(add.students_curriculum_datas, function(data,i) {
+			var rows = [];
+			angular.forEach(sbo, function(data,i) {
 				
 				var row = [];
-				row.push(data.curriculum_data_id.subject_code);
-				row.push(data.curriculum_data_id.pre_req);
-				row.push(data.curriculum_data_id.descriptive_title);
-				row.push(data.curriculum_data_id.lab);
-				row.push(data.curriculum_data_id.lec);
-				row.push(data.curriculum_data_id.total);
-				row.push(data.curriculum_data_id.day);
-				row.push(data.curriculum_data_id.time);
-				row.push(data.curriculum_data_id.room);
-				row.push(data.curriculum_data_id.instructor.fullname);
+				row.push(data.id);
+				row.push(data.enrollment_id.fullname);
+				row.push(data.date_added);
 				
 				rows.push(row);
 				
@@ -429,8 +358,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.autoTable(header, rows,{
 				theme: 'striped',
 				margin: {
-					top: 105, 
-					left: 5 
+					top: 45, 
+					left: 30 
 				},
 				tableWidth: 500,
 				styles: {
@@ -438,19 +367,24 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					lineWidth: 0.02,
 					cellPadding: 3,
 					overflow: 'linebreak',
-					columnWidth: 'wrap'
+					columnWidth: 50
 				},
+				/* columnStyles: {
+					1: {columnWidth: 25},
+					2: {columnWidth: 25},
+					3: {columnWidth: 50},
+				}, */
 				headerStyles: {
 					halign: 'center',
 					fillColor: [191, 191, 191],
 					textColor: 50,
-					fontSize: 7
+					fontSize: 9
 				},
 				bodyStyles: {
-					halign: 'left',
+					halign: 'center',
 					fillColor: [255, 255, 255],
 					textColor: 50,
-					fontSize: 10
+					fontSize: 9
 				},
 				alternateRowStyles: {
 					fillColor: [255, 255, 255]

@@ -601,7 +601,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					halign: 'center',
 					fillColor: [191, 191, 191],
 					textColor: 50,
-					fontSize: 9
+					fontSize: 7
 				},
 				bodyStyles: {
 					halign: 'left',
