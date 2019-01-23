@@ -261,7 +261,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					disciplinary_id: 0,
 					semester: '',
 					code_number: '',
-					code_title: '',
+					// code_title: '',
 					action_taken: '',
 					remarks: ''
 				});
@@ -460,7 +460,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					lineWidth: 0.02,
 					cellPadding: 3,
 					overflow: 'linebreak',
-					columnWidth: 'wrap',
+					columnWidth: 60
 					
 				},
 				columnStyles: {
@@ -473,7 +473,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					fontSize: 9.5
 				},
 				bodyStyles: {
-					halign: 'left',
+					halign: 'center',
 					fillColor: [255, 255, 255],
 					textColor: 50,
 					fontSize: 9.5
@@ -554,7 +554,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				row.push(disciplinary.school_year);
 				row.push(data.semester);
 				row.push(data.code_number.code_number);
-				row.push(data.code_title.code_title);
+				row.push(data.code_number.code_title);
 				row.push(data.action_taken);
 				row.push(data.remarks);
 				
@@ -574,7 +574,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					lineWidth: 0.02,
 					cellPadding: 3,
 					overflow: 'linebreak',
-					columnWidth: 'wrap'
+					columnWidth: 33
 				},
 				/* columnStyles: {
 				 signum: {columnWidth: 50}, 
@@ -589,7 +589,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					fontSize: 10
 				},
 				bodyStyles: {
-					halign: 'left',
+					halign: 'center',
 					fillColor: [255, 255, 255],
 					textColor: 50,
 					fontSize: 10

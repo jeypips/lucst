@@ -16,9 +16,6 @@ foreach($disciplinary_datas as $key => $disciplinary_data){
 	$code_n = $con->getData("SELECT * FROM codes WHERE id  = ".$disciplinary_data['code_number']);
 	$disciplinary_datas[$key]['code_number'] = $code_n[0];
 	
-	$code_t = $con->getData("SELECT * FROM codes WHERE id  = ".$disciplinary_data['code_title']);
-	$disciplinary_datas[$key]['code_title'] = $code_t[0];
-	
 };
 $disciplinary[0]['datas'] = $disciplinary_datas;
 

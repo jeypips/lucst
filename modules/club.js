@@ -381,7 +381,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					fontSize: 9
 				},
 				bodyStyles: {
-					halign: 'left',
+					halign: 'center',
 					fillColor: [255, 255, 255],
 					textColor: 50,
 					fontSize: 9
