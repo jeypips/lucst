@@ -381,7 +381,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				scope.enrollment.students_curriculum_datas.push({
 					id: 0,
 					enrollment_id: 0,
-					curriculum_data_id: 0
+					curriculum_data_id: 0,
+					adding: 0
 				});
 
 			},			

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 28, 2018 at 05:21 AM
+-- Generation Time: Jan 11, 2019 at 05:46 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -19,6 +19,76 @@ SET time_zone = "+00:00";
 --
 -- Database: `lucst`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adds`
+--
+
+CREATE TABLE `adds` (
+  `id` int(11) NOT NULL,
+  `enrollment_id` int(11) DEFAULT NULL,
+  `school_year` varchar(100) DEFAULT NULL,
+  `semester` varchar(100) DEFAULT NULL,
+  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `reason` varchar(550) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `codes`
+--
+
+CREATE TABLE `codes` (
+  `id` int(11) NOT NULL,
+  `code_number` varchar(50) DEFAULT NULL,
+  `code_title` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `codes`
+--
+
+INSERT INTO `codes` (`id`, `code_number`, `code_title`) VALUES
+(1, 'COD # 1', 'Absenteeism 		\r\n'),
+(2, 'COD # 2', 'Sample');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `completion`
+--
+
+CREATE TABLE `completion` (
+  `id` int(11) NOT NULL,
+  `enrollment_id` int(11) DEFAULT NULL,
+  `curriculum_data_id` int(11) DEFAULT NULL,
+  `school_year` varchar(50) DEFAULT NULL,
+  `semester` varchar(100) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `date` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `completion_data`
+--
+
+CREATE TABLE `completion_data` (
+  `id` int(11) NOT NULL,
+  `completion_id` int(11) DEFAULT NULL,
+  `ww` varchar(100) DEFAULT NULL,
+  `obe` varchar(100) DEFAULT NULL,
+  `att` varchar(100) DEFAULT NULL,
+  `exam` varchar(100) DEFAULT NULL,
+  `pg` varchar(100) DEFAULT NULL,
+  `tg` varchar(100) DEFAULT NULL,
+  `fg` varchar(100) DEFAULT NULL,
+  `remarks` varchar(550) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -77,25 +147,73 @@ CREATE TABLE `curriculum_data` (
   `lec` varchar(50) DEFAULT NULL,
   `lab` varchar(50) DEFAULT NULL,
   `total` varchar(50) DEFAULT NULL,
-  `pre_req` varchar(50) DEFAULT NULL
+  `pre_req` varchar(50) DEFAULT NULL,
+  `day` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  `room` varchar(50) DEFAULT NULL,
+  `instructor` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `curriculum_data`
 --
 
-INSERT INTO `curriculum_data` (`id`, `curriculum_id`, `grade`, `subject_code`, `descriptive_title`, `units`, `lec`, `lab`, `total`, `pre_req`) VALUES
-(1, 2, '', 'Engl 1', 'Study and Thinking Skills', '3', NULL, NULL, NULL, ''),
-(2, 2, '', 'Fil 1', 'Sining ng Pakikipagtalastasan', '3', NULL, NULL, NULL, ''),
-(3, 2, '', 'CS 1', 'Intro to Information Technology with Key Boarding', '3', NULL, NULL, NULL, ''),
-(4, 2, '', 'PD', 'Personality Development & Human Relations', '3', NULL, NULL, NULL, ''),
-(5, 2, '', 'HRMS 1', 'Intro to Hotel & Restaurant Management', '3', NULL, NULL, NULL, ''),
-(6, 2, '', 'TC 1', 'Culinary Science – Commercial Cooking', '3/3', NULL, NULL, NULL, ''),
-(7, 2, '', 'HRMR 1', 'Housekeeping Operations & Procedures', '3/2', NULL, NULL, NULL, ''),
-(8, 2, '', 'TC 2', 'Principles of Tourism I', '3', NULL, NULL, NULL, ''),
-(9, 2, '', 'PE 1', 'Self Testing Activities', '2', NULL, NULL, NULL, ''),
-(10, 2, '', 'FTS 1', 'Industry Immersion', '1', NULL, NULL, NULL, ''),
-(11, 1, '', 'sample', 'sample', '1', '2', '3', '4', '5');
+INSERT INTO `curriculum_data` (`id`, `curriculum_id`, `grade`, `subject_code`, `descriptive_title`, `units`, `lec`, `lab`, `total`, `pre_req`, `day`, `time`, `room`, `instructor`) VALUES
+(1, 2, '', 'Engl 1', 'Study and Thinking Skills', '3', NULL, '0', '0', '', 'Mon', '8-9am', '24', '1'),
+(2, 2, '', 'Fil 1', 'Sining ng Pakikipagtalastasan', '3', NULL, '0', '0', '', 'Mon', '9-10am', '24', '1'),
+(3, 2, '', 'CS 1', 'Intro to Information Technology with Key Boarding', '3', NULL, '0', '0', '', 'Tue', '9-12am', '24', '1'),
+(4, 2, '', 'PD', 'Personality Development & Human Relations', '3', NULL, '0', '0', '', 'Wed', '1-3pm', '24', '1'),
+(5, 2, '', 'HRMS 1', 'Intro to Hotel & Restaurant Management', '3', NULL, '0', '0', '', 'Mon', '10-12am', '24', '1'),
+(6, 2, '', 'TC 1', 'Culinary Science – Commercial Cooking', '3/3', NULL, '0', '0', '', 'Fri', '9-12am', '24', '1'),
+(7, 2, '', 'HRMR 1', 'Housekeeping Operations & Procedures', '3/2', NULL, '0', '0', '', 'Thu', '2-3pm', '24', '1'),
+(8, 2, '', 'TC 2', 'Principles of Tourism I', '3', NULL, '0', '0', '', 'Mon', '1-3pm', '24', '1'),
+(9, 2, '', 'PE 1', 'Self Testing Activities', '2', NULL, '0', '0', '', 'Tue', '1-3pm', '24', '1'),
+(10, 2, '', 'FTS 1', 'Industry Immersion', '1', NULL, '3', '3', '', 'Mon', '3-5pm', '24', '1'),
+(11, 1, '', '', 'Sample', 'Sample', '3', '3', '6', 'Sample', '', '1-2pm', '25', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `disciplinary`
+--
+
+CREATE TABLE `disciplinary` (
+  `id` int(11) NOT NULL,
+  `enrollment_id` int(11) DEFAULT NULL,
+  `school_year` varchar(100) DEFAULT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `disciplinary_data`
+--
+
+CREATE TABLE `disciplinary_data` (
+  `id` int(11) NOT NULL,
+  `disciplinary_id` int(11) DEFAULT NULL,
+  `semester` varchar(100) DEFAULT NULL,
+  `code_number` varchar(100) DEFAULT NULL,
+  `code_title` varchar(255) DEFAULT NULL,
+  `action_taken` varchar(255) DEFAULT NULL,
+  `remarks` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `drops`
+--
+
+CREATE TABLE `drops` (
+  `id` int(11) NOT NULL,
+  `enrollment_id` int(11) DEFAULT NULL,
+  `school_year` varchar(50) DEFAULT NULL,
+  `semester` varchar(50) DEFAULT NULL,
+  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `reason` varchar(550) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -105,6 +223,7 @@ INSERT INTO `curriculum_data` (`id`, `curriculum_id`, `grade`, `subject_code`, `
 
 CREATE TABLE `enrollment` (
   `id` int(11) NOT NULL,
+  `id_number` varchar(50) DEFAULT NULL,
   `firstname` varchar(100) DEFAULT NULL,
   `lastname` varchar(100) DEFAULT NULL,
   `middlename` varchar(100) DEFAULT NULL,
@@ -143,13 +262,6 @@ CREATE TABLE `enrollment` (
   `tertiary_school_address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `enrollment`
---
-
-INSERT INTO `enrollment` (`id`, `firstname`, `lastname`, `middlename`, `home_address`, `dob`, `pob`, `age`, `sex`, `religion`, `status`, `phone_number`, `name_of_spouse`, `father_name`, `father_occupation`, `father_number`, `mother_name`, `mother_occupation`, `mother_number`, `address_of_parents`, `guardian_name`, `guardian_occupation`, `guardian_relationship`, `guardian_address`, `guardian_number`, `course`, `date_of_enrollment`, `year_level`, `semester`, `elem_school_name`, `elem_school_address`, `secon_school_name`, `secon_school_address`, `techvoc_school_name`, `techvoc_school_address`, `tertiary_school_name`, `tertiary_school_address`) VALUES
-(1, 'Juan', 'Lee', 'Loo', 'Bauang, La Union', '1997-02-04', 'Bauang, La Union', '21', 'Male', 'Catholic', 'Single', '09586598336', NULL, 'Jaunito Lee', 'OFW', '09586525445', 'Juanita Lee', 'Housekeeper', '09586525448', 'Bauang, La Union', 'Juanita Lee', 'Housekeeper', 'Mother', 'Bauang, La Union', '09586525448', '2', '2018-11-28', 'First Year', '2', 'Catbangen Elementary School', 'Catbangen  San Fernando City La Union', 'LUNHS', 'Catbangen  San Fernando City La Union', '', '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -169,7 +281,8 @@ CREATE TABLE `instructor` (
 --
 
 INSERT INTO `instructor` (`id`, `firstname`, `middlename`, `lastname`, `office`) VALUES
-(1, 'Joan', 'M', 'Balcit', 'BSHRM');
+(1, 'Joan', 'M', 'Balcit', 'BSHRM'),
+(2, 'Jovit', 'A', 'Baldo', 'BSHRM');
 
 -- --------------------------------------------------------
 
@@ -180,19 +293,20 @@ INSERT INTO `instructor` (`id`, `firstname`, `middlename`, `lastname`, `office`)
 CREATE TABLE `students_curriculum_data` (
   `id` int(11) NOT NULL,
   `enrollment_id` int(11) DEFAULT NULL,
-  `curriculum_data_id` int(11) DEFAULT NULL
+  `curriculum_data_id` int(11) DEFAULT NULL,
+  `written_works` varchar(100) DEFAULT NULL,
+  `obe` varchar(100) DEFAULT NULL,
+  `att` varchar(100) DEFAULT NULL,
+  `exam` varchar(100) DEFAULT NULL,
+  `previous_grade` varchar(100) DEFAULT NULL,
+  `tentative_grade` varchar(100) DEFAULT NULL,
+  `final_grade` varchar(100) DEFAULT NULL,
+  `remarks` varchar(550) DEFAULT NULL,
+  `adding` varchar(50) DEFAULT NULL,
+  `prelim` varchar(50) DEFAULT NULL,
+  `midterm` varchar(50) DEFAULT NULL,
+  `semifinal` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `students_curriculum_data`
---
-
-INSERT INTO `students_curriculum_data` (`id`, `enrollment_id`, `curriculum_data_id`) VALUES
-(1, 1, 1),
-(2, 1, 10),
-(3, 1, 10),
-(4, 1, 9),
-(5, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -204,6 +318,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
+  `middlename` varchar(255) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -212,12 +327,40 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `password`) VALUES
-(1, 'Catherine', 'Palabay', 'admin', 'admin');
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `middlename`, `username`, `password`) VALUES
+(1, 'Catherine', 'Palabay', 'M', 'admin', 'admin'),
+(2, 'Jasper', 'Capudoy', 'M', 'jasper', 'admin');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `adds`
+--
+ALTER TABLE `adds`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrollment_id` (`enrollment_id`);
+
+--
+-- Indexes for table `codes`
+--
+ALTER TABLE `codes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `completion`
+--
+ALTER TABLE `completion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrollment_id` (`enrollment_id`);
+
+--
+-- Indexes for table `completion_data`
+--
+ALTER TABLE `completion_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `completion_id` (`completion_id`);
 
 --
 -- Indexes for table `courses`
@@ -238,6 +381,27 @@ ALTER TABLE `curriculum`
 ALTER TABLE `curriculum_data`
   ADD PRIMARY KEY (`id`),
   ADD KEY `curriculum_id` (`curriculum_id`);
+
+--
+-- Indexes for table `disciplinary`
+--
+ALTER TABLE `disciplinary`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrollment_id` (`enrollment_id`);
+
+--
+-- Indexes for table `disciplinary_data`
+--
+ALTER TABLE `disciplinary_data`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `disciplinary_id` (`disciplinary_id`);
+
+--
+-- Indexes for table `drops`
+--
+ALTER TABLE `drops`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrollment_id` (`enrollment_id`);
 
 --
 -- Indexes for table `enrollment`
@@ -269,6 +433,26 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `adds`
+--
+ALTER TABLE `adds`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `codes`
+--
+ALTER TABLE `codes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `completion`
+--
+ALTER TABLE `completion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `completion_data`
+--
+ALTER TABLE `completion_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
@@ -277,17 +461,32 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `curriculum`
 --
 ALTER TABLE `curriculum`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `curriculum_data`
 --
 ALTER TABLE `curriculum_data`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
+-- AUTO_INCREMENT for table `disciplinary`
+--
+ALTER TABLE `disciplinary`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `disciplinary_data`
+--
+ALTER TABLE `disciplinary_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `drops`
+--
+ALTER TABLE `drops`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `enrollment`
 --
 ALTER TABLE `enrollment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `instructor`
 --
@@ -302,10 +501,28 @@ ALTER TABLE `students_curriculum_data`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `adds`
+--
+ALTER TABLE `adds`
+  ADD CONSTRAINT `adds_ibfk_1` FOREIGN KEY (`enrollment_id`) REFERENCES `enrollment` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `completion`
+--
+ALTER TABLE `completion`
+  ADD CONSTRAINT `completion_ibfk_1` FOREIGN KEY (`enrollment_id`) REFERENCES `enrollment` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `completion_data`
+--
+ALTER TABLE `completion_data`
+  ADD CONSTRAINT `completion_data_ibfk_1` FOREIGN KEY (`completion_id`) REFERENCES `completion` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `curriculum`
@@ -318,6 +535,24 @@ ALTER TABLE `curriculum`
 --
 ALTER TABLE `curriculum_data`
   ADD CONSTRAINT `curriculum_data_ibfk_1` FOREIGN KEY (`curriculum_id`) REFERENCES `curriculum` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `disciplinary`
+--
+ALTER TABLE `disciplinary`
+  ADD CONSTRAINT `disciplinary_ibfk_1` FOREIGN KEY (`enrollment_id`) REFERENCES `enrollment` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `disciplinary_data`
+--
+ALTER TABLE `disciplinary_data`
+  ADD CONSTRAINT `disciplinary_data_ibfk_1` FOREIGN KEY (`disciplinary_id`) REFERENCES `disciplinary` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `drops`
+--
+ALTER TABLE `drops`
+  ADD CONSTRAINT `drops_ibfk_1` FOREIGN KEY (`enrollment_id`) REFERENCES `enrollment` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `students_curriculum_data`

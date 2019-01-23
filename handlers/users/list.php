@@ -8,7 +8,7 @@ session_start();
 
 $con = new pdo_db();
 
-$users = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname, username FROM users");
+$users = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname, username, type FROM users");
 
 header("Content-Type: application/json");
 echo json_encode($users);

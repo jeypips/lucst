@@ -7,13 +7,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		var loading = '<div class="col-sm-offset-4 col-sm-8"><button type="button" class="btn btn-dark" title="Loading" disabled><i class="fa fa-spinner fa-spin"></i>&nbsp; Please wait...</button></div>';		
 
 		self.data = function(scope) {
-			
-			scope.snapshot = snapshot;
-			
-			scope.pictures = {
-				front: null
-			};
-			
+				
 			scope.formHolder = {};
 			
 			scope.btns = {
@@ -39,6 +33,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			}).then(function mySucces(response) {
 				
 				scope.students = response.data;
+				
+			},function myError(response) {
+				
+			});	
+			
+		};
+		
+		function codes(scope) {
+			
+			$http({
+				method: 'POST',
+				url: 'api/suggestions/codes.php'
+			}).then(function mySucces(response) {
+				
+				scope.codes = response.data;
 				
 			},function myError(response) {
 				
@@ -119,6 +128,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.disciplinary.id = 0;
 			
 			$timeout(function() { students(scope); },200);
+			$timeout(function() { codes(scope); },200);
 			
 			scope.disciplinary.disciplinary_datas = [];
 			scope.disciplinary.disciplinary_dels = [];
@@ -143,7 +153,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					scope.disciplinary = angular.copy(response.data);
 					// students(scope);
 					/* angular.forEach(scope.pictures, function(item,i) { console.log(i);
-						var photo = 'pictures/'+scope.enrollment.id+'_'+i+'.png';
+						var photo = 'pictures/'+scope.disciplinary.id+'_'+i+'.png';
 						var view = document.getElementById(i+'_picture');
 						console.log(photo);
 						if (imageExists(photo)) view.setAttribute('src', photo);
@@ -163,8 +173,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 		
 		self.cancel = function(scope) {			
 			
-			/* scope.enrollment = {};
-			scope.enrollment.id = 0; */
+			/* scope.disciplinary = {};
+			scope.disciplinary.id = 0; */
 			
 			self.list(scope);
 			
@@ -189,11 +199,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			  data: {disciplinary: scope.disciplinary}
 			}).then(function success(response) {
 				
-				bui.hide();
 				if (scope.disciplinary.id == 0) growl.show('btn btn-success',{from: 'top', amount: 55},'New student record successfully added');				
 				else growl.show('btn btn-success',{from: 'top', amount: 55},'Student record successfully updated');				
-				mode(scope,scope.disciplinary);								
-				snapshot.upload(scope);
+				mode(scope,scope.disciplinary);
+				self.list(scope);
+				bui.hide();
 				
 			}, function error(response) {
 				
@@ -283,12 +293,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
-		/* self.print = function(scope,enrollment) {
+		 self.print = function(scope,disciplinary) {
 			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/students/print-student.php',
-			  data: {id: enrollment.id}
+			  url: 'handlers/disciplinary/print-student.php',
+			  data: {id: disciplinary.id}
 			}).then(function mySucces(response) {
 
 				print(scope,response.data);
@@ -302,7 +312,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		}; 
 		
-		function print(scope,enrollment) {
+		function print(scope,disciplinary) {
 			
 			var d = new Date();
 			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -360,65 +370,65 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setFont('times');
 			//x y
 			doc.text(10, 50, 'Name: ');
-			doc.text(40, 50, enrollment.firstname+' '+enrollment.lastname+' '+enrollment.middlename);
+			doc.text(40, 50, disciplinary.student.firstname+' '+disciplinary.student.lastname+' '+disciplinary.student.middlename);
 
 			doc.text(10, 58, 'Home Address: ');
-			doc.text(40, 58, enrollment.home_address);	
+			doc.text(40, 58, disciplinary.student.home_address);	
 			
 			doc.text(10, 66, 'Date of Birth: ');
-			doc.text(40, 66, enrollment.dob);
+			doc.text(40, 66, disciplinary.student.dob);
 			
 			doc.text(90, 66, 'Age: ');
-			doc.text(100, 66, enrollment.age);
+			doc.text(100, 66, disciplinary.student.age);
 			
 			doc.text(120, 66, 'Sex: ');
-			doc.text(130, 66, enrollment.sex);
+			doc.text(130, 66, disciplinary.student.sex);
 			
 			doc.text(10, 74, 'Place of Birth: ');
-			doc.text(40, 74, enrollment.pob);
+			doc.text(40, 74, disciplinary.student.pob);
 			
 			doc.text(10, 82, 'Religion: ');
-			doc.text(40, 82, enrollment.religion);
+			doc.text(40, 82, disciplinary.student.religion);
 			
 			doc.text(90, 82, 'Status: ');
-			doc.text(110, 82, enrollment.status);
+			doc.text(110, 82, disciplinary.student.status);
 			
 			doc.text(10, 90, 'Phone Number: ');
-			doc.text(40, 90, ''+enrollment.phone_number);
+			doc.text(40, 90, ''+disciplinary.student.phone_number);
 			
 			doc.text(10, 98, 'Name of Spouse (if married): ');
-			doc.text(65, 98, ''+enrollment.name_of_spouse);
+			doc.text(65, 98, ''+disciplinary.student.name_of_spouse);
 			
 			doc.text(10, 106, 'Parents:');
 			doc.text(20, 114, 'Name of Father:');
-			doc.text(52, 114, ''+enrollment.father_name);
+			doc.text(52, 114, ''+disciplinary.student.father_name);
 			doc.text(100, 114, 'Occupation:');
-			doc.text(123, 114, ''+enrollment.father_occupation);
+			doc.text(123, 114, ''+disciplinary.student.father_occupation);
 			doc.text(100, 122, 'Phone Number:');
-			doc.text(130, 122, ''+enrollment.father_number);
+			doc.text(130, 122, ''+disciplinary.student.father_number);
 			
 			doc.text(20, 130, 'Name of Mother:');
-			doc.text(52, 130, ''+enrollment.mother_name);
+			doc.text(52, 130, ''+disciplinary.student.mother_name);
 			doc.text(100, 130, 'Occupation:');
-			doc.text(123, 130, ''+enrollment.mother_occupation);
+			doc.text(123, 130, ''+disciplinary.student.mother_occupation);
 			doc.text(100, 138, 'Phone Number:');
-			doc.text(130, 138, ''+enrollment.mother_number);
+			doc.text(130, 138, ''+disciplinary.student.mother_number);
 			doc.text(20, 146, 'Address of Parents:');
-			doc.text(100, 146, ''+enrollment.address_of_parents);
+			doc.text(100, 146, ''+disciplinary.student.address_of_parents);
 			
 			doc.text(10, 154, 'Guardian:');
 			doc.text(20, 162, 'Name of Guardian:');
-			doc.text(57, 162, ''+enrollment.guardian_name);
+			doc.text(57, 162, ''+disciplinary.student.guardian_name);
 			doc.text(100, 162, 'Occupation');
-			doc.text(123, 162, ''+enrollment.guardian_occupation);
+			doc.text(123, 162, ''+disciplinary.student.guardian_occupation);
 			
 			doc.text(20, 170, 'Relationship:');
-			doc.text(50, 170, ''+enrollment.guardian_relationship);
+			doc.text(50, 170, ''+disciplinary.student.guardian_relationship);
 			doc.text(100, 170, 'Phone Number');
-			doc.text(130, 170, ''+enrollment.guardian_number);
+			doc.text(130, 170, ''+disciplinary.student.guardian_number);
 			
 			doc.text(20, 178, 'Address of Guardian:');
-			doc.text(100, 178, ''+enrollment.guardian_address);
+			doc.text(100, 178, ''+disciplinary.student.guardian_address);
 			
 			doc.text(10, 186, 'Educational Background');
 			
@@ -430,10 +440,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			var rows = [
 				// no
-				{"1": "Elementary","2": enrollment.elem_school_name,"3": enrollment.elem_school_address,},
-				{"1": "Secondary","2": enrollment.secon_school_name,"3": enrollment.secon_school_address},
-				{"1": "Tech-Voc","2": enrollment.techvoc_school_name,"3": enrollment.techvoc_school_address},
-				{"1": "Tertiary","2": enrollment.tertiary_school_name,"3": enrollment.tertiary_school_address},
+				{"1": "Elementary","2": disciplinary.student.elem_school_name,"3": disciplinary.student.elem_school_address,},
+				{"1": "Secondary","2": disciplinary.student.secon_school_name,"3": disciplinary.student.secon_school_address},
+				{"1": "Tech-Voc","2": disciplinary.student.techvoc_school_name,"3": disciplinary.student.techvoc_school_address},
+				{"1": "Tertiary","2": disciplinary.student.tertiary_school_name,"3": disciplinary.student.tertiary_school_address},
 				
 			];	
 							
@@ -474,48 +484,88 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			});
 			
 			doc.addPage(); // add
+			
+			// X-axis, Y-axis, width, height20
+			doc.addImage(logo_lucst, 'PNG', 15, 8, 20, 20)
 		
+			//X-axis, Y-axis
+			doc.setFontSize(12)
+			doc.setFont('times');
+			doc.setFontType('bold');
+			doc.text(50, 10, 'LA UNION COLLEGES OF SCIENCE AND TECHNOLOGY');
+			
+			doc.setFontSize(12)
+			doc.setFont('times');
+			doc.setFontType('normal');
+			doc.text(60, 15, 'Pezcadores St., Central West, Bauang, La Union 2501');
+			
+			doc.setFontSize(12)
+			doc.setFont('times');
+			doc.setFontType('normal');
+			doc.text(70, 20, 'Offline Students  Affairs  Record  System');
+			
+			doc.setFontSize(12)
+			doc.setFont('times');
+			doc.setFontType('normal');
+			doc.text(65, 25, 'Tel Nos.: (072) 607- 2644 / (072) 607 - 7286 ');
+			
+			// how many length, height left, start, height right
+			doc.setDrawColor(0, 0, 0) // draw red lines
+			doc.setLineWidth(.2)
+			doc.line(205, 30, 5, 30); // horizontal line 
+			doc.setLineWidth(.5)
+			doc.line(205, 31, 5, 31); // horizontal line
+				
+				
+			doc.setFontSize(12)
+			doc.setFont('times');
+			doc.setFontType('bold');
+			doc.text(70, 40, 'DISCIPLINARY RECORDS');
+			
 			doc.setFontSize(12)
 			doc.setFont('helvetica');
 			doc.setFontType('normal');
-			doc.text(10, 20, 'Course:');
-			doc.text(35, 20, ''+enrollment.course.course_name);
+			doc.text(10, 50, 'Course:');
+			doc.text(35, 50, ''+disciplinary.student.course.course_name);
 			
-			doc.text(10, 25, 'Year Level and Semester:');
-			doc.text(65, 25, enrollment.semester.semester);
+			doc.text(10, 55, 'Year:');
+			doc.text(35, 55, ''+disciplinary.student.year_level);
 			
-			doc.text(150, 25, 'School Year:');
-			// doc.text(65, 25, enrollment.semester.semester);
-			
-			var header = ["CODE","PRE-REQ","DESCRIPTIVE TITLE","NO. OF UNITS","",""];
-			
-			angular.forEach(enrollment.students_curriculum_datas, function(economy_h,i) {
+			var header = [
+						  "School Year",
+						  "Semester",
+						  "Violation",
+						  "",
+						  "Action Taken",
+						  "Remarks"
+						  ];
+			 /* angular.forEach(disciplinary.datas, function(datas,i) {
 
 				
 				
-			});
-			
+			}); */
+		
 			var rows = [
-			{"3": "Lab","4": "Lec","5": "Total",},
+				{"2": "Code #","3": "Code Title"},
 			];
-			angular.forEach(enrollment.students_curriculum_datas, function(data,i) {
+			angular.forEach(disciplinary.datas, function(data,i) {
 				
 				var row = [];
-				row.push(data.curriculum_data_id.subject_code);
-				row.push(data.curriculum_data_id.pre_req);
-				row.push(data.curriculum_data_id.descriptive_title);
-				row.push(data.curriculum_data_id.lab);
-				row.push(data.curriculum_data_id.lec);
-				row.push(data.curriculum_data_id.total);
+				row.push(disciplinary.school_year);
+				row.push(data.semester);
+				row.push(data.code_number.code_number);
+				row.push(data.code_title.code_title);
+				row.push(data.action_taken);
+				row.push(data.remarks);
 				
 				rows.push(row);
 				
-			});		
+			});	
 	
 			doc.autoTable(header, rows,{
 				theme: 'striped',
 				margin: {
-					top: 30, 
+					top: 60, 
 					left: 10 
 				},
 				tableWidth: 500,
@@ -526,6 +576,12 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					overflow: 'linebreak',
 					columnWidth: 'wrap'
 				},
+				/* columnStyles: {
+				 signum: {columnWidth: 50}, 
+				 name:{columnWidth:100}, 
+				 role: {columnWidth: 15}, 
+				 location: {columnWidth: 30}
+				}, */
 				headerStyles: {
 					halign: 'center',
 					fillColor: [191, 191, 191],
@@ -548,7 +604,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			window.open(URL.createObjectURL(blob));
 		
 		
-		}; */
+		};
 		
 	};
 	

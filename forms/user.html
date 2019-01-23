@@ -31,6 +31,15 @@
 						<input type="password" class="form-control" name="password" ng-model="user.password" ng-disabled="btns.ok.btn" required>
 						<span class="help-block" ng-show="formHolder.user.password.$touched && formHolder.user.password.$invalid">Password is required</span>
 					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.user.type.$touched && formHolder.user.type.$invalid}">
+						<label>Account Type</label>
+						<select class="form-control" name="type" ng-model="user.type" ng-disabled="btns.ok.btn" required>
+						<option value="Admin">Admin</option>
+						<option value="User">User</option>
+						<option value="Guard">Guard</option>
+						</select>
+						<span class="help-block" ng-show="formHolder.user.type.$touched && formHolder.user.type.$invalid">Type is required</span>
+					</div>
 				</div>
 				<hr>
 			</form>
