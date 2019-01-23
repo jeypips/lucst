@@ -12,6 +12,7 @@
 				  <th>No.</th>
 				  <th>Name</th>
 				  <th>Username</th>
+				  <th>Account Type</th>
 				  <th>&nbsp;</th>
 				</tr>
 			  </thead>
@@ -20,6 +21,7 @@
 				  <td>{{u.id}}</td>
 				  <td>{{u.fullname}}</td>
 				  <td>{{u.username}}</td>
+				  <td>{{u.type}}</td>
 				  <td>
 				  <button class="btn btn-sm btn-primary" ng-click="app.user(this,u)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
 				  <button class="btn btn-sm btn-googleplus" ng-click="app.delete(this,u)"><i class="fa fa-close" style="cursor: pointer;"></i></button>

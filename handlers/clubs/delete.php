@@ -6,11 +6,9 @@ require_once '../../db.php';
 
 session_start();
 
-$con = new pdo_db();
-
-$users = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname, username, type FROM users");
-
 header("Content-Type: application/json");
-echo json_encode($users);
+$con = new pdo_db("clubs");
+
+$delete = $con->deleteData(array("id"=>implode(",",$_POST['id'])));	
 
 ?>
