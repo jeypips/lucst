@@ -7,58 +7,57 @@ include_once '../../db.php';
 header("Content-Type: application/json");
 $con = new pdo_db("sbos");
 
-/* $students_curriculum_datas = $_POST['add']['students_curriculum_datas'];
-unset($_POST['add']['students_curriculum_datas']);
+$awards = $_POST['sbo']['awards'];
+unset($_POST['sbo']['awards']);
 
-$students_curriculum_dels = $_POST['add']['students_curriculum_dels'];
-unset($_POST['add']['students_curriculum_dels']);
- */
+$dels = $_POST['sbo']['dels'];
+unset($_POST['sbo']['dels']);
 
 if ($_POST['sbo']['id']) {
 	
 	$sbo = $con->updateObj($_POST['sbo'],'id');
-	$enrollment_id = $_POST['sbo']['enrollment_id'];
+	$sbo_id = $_POST['sbo']['id'];
 	
 } else {
 	
 	$sbo = $con->insertObj($_POST['sbo']);
-	$enrollment_id = $_POST['sbo']['enrollment_id'];
+	$sbo_id = $con->insertId;
 	echo $con->insertId;
 
 };
 
-/* if (count($students_curriculum_dels)) {
+if (count($dels)) {
 
-	$con->table = "students_curriculum_data";
-	$delete = $con->deleteData(array("id"=>implode(",",$students_curriculum_dels)));		
+	$con->table = "sbo_awards";
+	$delete = $con->deleteData(array("id"=>implode(",",$dels)));		
 	
 };
                                     
-if (count($students_curriculum_datas)) {
+if (count($awards)) {
 
-	$con->table = "students_curriculum_data";
+	$con->table = "sbo_awards";
 	
-	foreach ($students_curriculum_datas as $index => $value) {
+	foreach ($awards as $index => $value) {
 		
-		$students_curriculum_datas[$index]['enrollment_id'] = $enrollment_id;		
+		$awards[$index]['sbos_id'] = $sbo_id;		
 		
 	}
 	
-	foreach ($students_curriculum_datas as $index => $value) {
+	foreach ($awards as $index => $value) {
 
 		if ($value['id']) {
 			
-			$curriculum_row = $con->updateObj($students_curriculum_datas[$index],'id');
+			$curriculum_row = $con->updateObj($awards[$index],'id');
 			
 		} else {
 			
-			unset($students_curriculum_datas[$index]['id']);
-			$curriculum_row = $con->insertObj($students_curriculum_datas[$index]);
+			unset($awards[$index]['id']);
+			$curriculum_row = $con->insertObj($awards[$index]);
 			
 		}
 	
 	}
 	
-}; */
+};
 
 ?>

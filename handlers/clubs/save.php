@@ -7,58 +7,57 @@ include_once '../../db.php';
 header("Content-Type: application/json");
 $con = new pdo_db("clubs");
 
-/* $students_curriculum_datas = $_POST['add']['students_curriculum_datas'];
-unset($_POST['add']['students_curriculum_datas']);
+$awards = $_POST['club']['awards'];
+unset($_POST['club']['awards']);
 
-$students_curriculum_dels = $_POST['add']['students_curriculum_dels'];
-unset($_POST['add']['students_curriculum_dels']);
- */
+$dels = $_POST['club']['dels'];
+unset($_POST['club']['dels']);
 
 if ($_POST['club']['id']) {
 	
 	$club = $con->updateObj($_POST['club'],'id');
-	$enrollment_id = $_POST['club']['enrollment_id'];
+	$club_id = $_POST['club']['id'];
 	
 } else {
 	
 	$club = $con->insertObj($_POST['club']);
-	$enrollment_id = $_POST['club']['enrollment_id'];
+	$club_id = $con->insertId;
 	echo $con->insertId;
 
 };
 
-/* if (count($students_curriculum_dels)) {
+if (count($dels)) {
 
-	$con->table = "students_curriculum_data";
-	$delete = $con->deleteData(array("id"=>implode(",",$students_curriculum_dels)));		
+	$con->table = "club_awards";
+	$delete = $con->deleteData(array("id"=>implode(",",$dels)));		
 	
 };
                                     
-if (count($students_curriculum_datas)) {
+if (count($awards)) {
 
-	$con->table = "students_curriculum_data";
+	$con->table = "club_awards";
 	
-	foreach ($students_curriculum_datas as $index => $value) {
+	foreach ($awards as $index => $value) {
 		
-		$students_curriculum_datas[$index]['enrollment_id'] = $enrollment_id;		
+		$awards[$index]['clubs_id'] = $club_id;		
 		
 	}
 	
-	foreach ($students_curriculum_datas as $index => $value) {
+	foreach ($awards as $index => $value) {
 
 		if ($value['id']) {
 			
-			$curriculum_row = $con->updateObj($students_curriculum_datas[$index],'id');
+			$curriculum_row = $con->updateObj($awards[$index],'id');
 			
 		} else {
 			
-			unset($students_curriculum_datas[$index]['id']);
-			$curriculum_row = $con->insertObj($students_curriculum_datas[$index]);
+			unset($awards[$index]['id']);
+			$curriculum_row = $con->insertObj($awards[$index]);
 			
 		}
 	
 	}
 	
-}; */
+};
 
 ?>

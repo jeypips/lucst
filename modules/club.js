@@ -16,7 +16,10 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			};
 			
 			scope.club = {};
-			scope.club.id = 0;				
+			scope.club.id = 0;	
+
+			scope.club.awards = [];
+			scope.club.dels = [];			
 			
 			scope.clubs = []; //list
 			
@@ -108,6 +111,9 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 			scope.club = {};
 			scope.club.id = 0;
+			
+			scope.club.awards = [];
+			scope.club.dels = [];	
 			
 			$timeout(function() { students(scope); },200);
 			
@@ -211,26 +217,14 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				
 		};
 		
-		/* self.curriculum_data = {
+		self.award = {
 			
 			add: function(scope) {
 
-				scope.add.students_curriculum_datas.push({
+				scope.club.awards.push({
 					id: 0,
-					enrollment_id: 0,
-					curriculum_data_id: 0,
-					written_works: 0,
-					obe: 0,
-					att: 0,
-					exam: 0,
-					previous_grade: 0,
-					tentative_grade: 0,
-					final_grade: 0,
-					remarks: '',
-					prelim: 0,
-					midterm: 0,
-					semifinal: 0,
-					adding: 1
+					clubs_id: 0,
+					award: ''
 				});
 
 			},			
@@ -238,19 +232,19 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			delete: function(scope,row) {
 				
 				if (row.id > 0) {
-					scope.add.students_curriculum_dels.push(row.id);
+					scope.club.dels.push(row.id);
 				};
 				
-				var students_curriculum_datas = scope.add.students_curriculum_datas;
-				var index = scope.add.students_curriculum_datas.indexOf(row);
-				scope.add.students_curriculum_datas = [];			
+				var awards = scope.club.awards;
+				var index = scope.club.awards.indexOf(row);
+				scope.club.awards = [];			
 				
-				angular.forEach(students_curriculum_datas, function(d,i) {
+				angular.forEach(awards, function(d,i) {
 					
 					if (index != i) {
 						
 						delete d['$$hashKey'];
-						scope.add.students_curriculum_datas.push(d);
+						scope.club.awards.push(d);
 						
 					};
 					
@@ -258,7 +252,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 
 			}			
 			
-		}; */
+		};
 		
 		self.print = function(scope,club) {
 			
