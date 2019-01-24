@@ -18,18 +18,20 @@
 			  <thead>
 				<tr>
 				  <th>No.</th>
+				  <th>ID Number</th>
 				  <th>Name</th>
 				  <th>Course</th>
-				  <th>Year of First Enrollment</th>
+				  <th>Address</th>
 				  <!-- <th>Actions</th> -->
 				</tr>
 			  </thead>
 			  <tbody>
 				<tr ng-repeat="e in filterData = (enrollments | filter:search) | pagination: currentPage:pageSize">
 				  <td>{{e.id}}</td>
+				  <td>{{e.id_number}}</td>
 				  <td>{{e.fullname}}</td>
 				  <td>{{e.course.course_name}}</td>
-				  <td>{{e.date_of_enrollment}}</td>
+				  <td>{{e.home_address}}</td>
 				 <!--  <td>
 				  <button class="btn btn-sm btn-primary" ng-click="app.enrollment(this,e)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>
 				  <button class="btn btn-sm btn-googleplus" ng-click="app.delete(this,e)"><i class="fa fa-close" style="cursor: pointer;"></i></button>
