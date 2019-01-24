@@ -1,0 +1,87 @@
+<form name="formHolder.disciplinary" name="formHolder.disciplinary" novalidate autocomplete="off">
+	<div class="col-lg-12">
+		<div class="card-box">
+			<div class="row">
+				<h4 class="m-t-0 header-title"><b>Personal Information</b><button class="btn btn-inverse pull-right" ng-click="app.print(this,disciplinary)"><i class="icon-printer"></i></button></h4><hr>
+				<div class="row">
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.disciplinary.en.$touched && formHolder.disciplinary.enrollment_id.$invalid}">
+						<label>First Name</label>
+						<select class="form-control" name="enrollment_id" ng-model="disciplinary.enrollment_id" ng-options="student.fullname for student in students track by student.id" disabled required></select>
+						<span class="help-block" ng-show="formHolder.disciplinary.enrollment_id.$touched && formHolder.disciplinary.enrollment_id.$invalid">Student Name is required</span>
+					</div>
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.disciplinary.school_year.$touched && formHolder.disciplinary.school_year.$invalid}">
+						<label>School Year</label>
+						<input type="text" class="form-control" name="school_year" ng-model="disciplinary.school_year" disabled required></select>
+						<span class="help-block" ng-show="formHolder.disciplinary.school_year.$touched && formHolder.disciplinary.school_year.$invalid">School Year is required</span>
+					</div>
+					
+					<!-- <div class="col-lg-12">
+						<button class="btn btn-primary pull-right" ng-click="app.disciplinary_data.add(this)" ng-disabled="btns.ok.btn"><i class="fa fa-plus"></i></button>
+					</div> -->
+					<br>
+					<div class="col-lg-12">
+						<table class="table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th colspan="2"><center>Violation</center></th>
+									<th><center>Action Taken</center></th>
+									<th><center>Remarks</center></th>
+									<th><center>Action</center></th>
+								</tr>
+								<tr>
+									<th><center>Code #</center></th>
+									<th><center>Code Title</center></th>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="dd in disciplinary.disciplinary_datas">
+								<td>
+									<div class="col-lg-12 form-group">
+									  <select class="form-control" name="code_number{{index}}" ng-options="code.code_number for code in codes track by code.id" ng-model="dd.code_number" disabled></select>
+									</div>
+								</td>
+								<td>
+									<div class="col-lg-12 form-group">
+									  {{dd.code_number.code_title}}
+									</div>
+								</td>
+								<td>
+									<div class="col-lg-12 form-group">
+									  <input type="text" class="form-control" name="degree{{index}}" ng-model="dd.degree"  ng-disabled="btns.ok.btn"></select>
+									</div>
+								</td>
+								<td>
+									<div class="col-lg-12 form-group">
+									  <input type="text" class="form-control" name="remarks{{index}}" ng-model="dd.remarks"  ng-disabled="btns.ok.btn"></select>
+									</div>
+								</td>
+								<td>
+									<button class="btn btn-danger" ng-click="app.disciplinary_data.delete(this,dd)" ng-disabled="btns.ok.btn"><i class="fa fa-remove"></i></button>
+								</td>
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<button class="btn btn-primary btn-lg pull-right" ng-click="app.cancel(this)">{{btns.cancel.label}}</button>
+					<button class="btn btn-primary btn-lg pull-right" style="margin-right: 5px;" ng-click="app.edit(this)">Edit</button>
+					<button class="btn btn-success btn-lg pull-right" ng-disabled="btns.ok.btn" style="margin-right: 5px;" ng-click="app.save(this)">{{btns.ok.label}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="col-lg-4">
+		<div class="card-box">
+			<div class="row">
+				<div class="col-lg-12">		
+					<img id="front_picture" src="pictures/avatar.png" alt="image" class="img-responsive img-rounded" width="300">
+				</div>
+			</div>
+		</div>
+	</div> -->
+</form>
