@@ -10,7 +10,7 @@ $con = new pdo_db();
 
 $curriculum = $con->getData("SELECT * FROM curriculum WHERE id = $_POST[id]");
 
-$course = $con->getData("SELECT id, course_name FROM courses WHERE id = ".$curriculum[0]['course_id']);
+$course = $con->getData("SELECT * FROM courses WHERE id = ".$curriculum[0]['course_id']);
 $curriculum[0]['course_id'] = $course[0];
 
 $curriculum_datas = $con->getData("SELECT * FROM curriculum_data WHERE curriculum_id = ".$curriculum[0]['id']);

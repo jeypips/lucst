@@ -15,6 +15,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				cancel: { btn: false, label: 'Cancel'},
 			};
 			
+			studentAsyncSuggest(scope);
+			
 			scope.disciplinary = {};
 			scope.disciplinary.id = 0;
 
@@ -24,6 +26,56 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.disciplinarys = []; //list
 			
 		};
+		
+		self.selectCode = function(scope,item) {
+			
+			code(scope,item);
+			
+			scope.code.id = item.id;
+
+		};
+		
+		function studentAsyncSuggest(scope) { //filter
+
+			scope.studentAsyncSuggest = function(f) {
+				
+				return $http({
+				  method: 'POST',
+				  url: 'handlers/disciplinary/student-async-suggest.php',
+				  data: {filter: f}
+				}).then(function mySucces(response) {
+					
+					return response.data;
+					
+				},
+				function myError(response) {
+
+				});					
+				
+			};
+
+			scope.studentAsyncSuggest('');
+
+		};
+		
+		function code(scope,disciplinary) {
+			
+			scope.search = '';
+					
+			$http({
+			  method: 'POST',
+			  url: 'handlers/disciplinary/student-sync.php',
+			  data: {id: disciplinary.id}
+			}).then(function mySucces(response) {
+				
+				scope.disciplinary = angular.copy(response.data);
+			
+			}, function myError(response) {
+				
+				bui.hide();
+				
+			});						
+		};	
 		
 		function students(scope) {
 			
@@ -89,7 +141,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			bui.show();
 			
 			if (scope.$id > 2) scope = scope.$parent;			
-			
+	
 			scope.disciplinary = {};
 			scope.disciplinary.id = 0;						
 			
@@ -115,9 +167,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				$timeout(function() {
 					$('#disciplinary').DataTable({
 						"ordering": false
-					});	
-				},200);
-				
+					});
+				},200);	
 			});		
 			
 		};

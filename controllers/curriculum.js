@@ -9,4 +9,3 @@ app.controller('curriculumCtrl',function($scope,app) {
 	app.list($scope);
 	
 });
-

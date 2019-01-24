@@ -17,11 +17,13 @@ if ($_POST['curriculum']['id']) {
 	
 	$curriculum = $con->updateObj($_POST['curriculum'],'id');
 	$curriculum_id = $_POST['curriculum']['id'];
+	$course_id = $_POST['curriculum']['course_id'];
 	
 } else {
 	
 	$curriculum = $con->insertObj($_POST['curriculum']);
 	$curriculum_id = $con->insertId;
+	$course_id = $_POST['curriculum']['course_id'];
 	echo $con->insertId;
 
 };
@@ -40,6 +42,7 @@ if (count($curriculum_datas)) {
 	foreach ($curriculum_datas as $index => $value) {
 		
 		$curriculum_datas[$index]['curriculum_id'] = $curriculum_id;
+		$curriculum_datas[$index]['course_id'] = $course_id;
 		
 	}
 	
