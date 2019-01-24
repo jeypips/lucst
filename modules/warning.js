@@ -415,41 +415,24 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setFontSize(12)
 			doc.setFont('times');
 			doc.setFontType('bold');
-			doc.text(70, 40, 'OFFICE OF THE STUDENT AFFAIRS');
+			doc.text(70, 40, 'WARNING FORM');
 			
 			doc.setFontSize(13)
 			doc.setFont('default');
 			doc.setFontType('normal');
 			doc.setFont('times');
 			//x y
-			doc.text(10, 50,'______________________ (Date) ');
-			doc.text(15, 50, months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear());
+			doc.text(10, 50,'Name: '+disciplinary.student.firstname+' '+disciplinary.student.lastname);
 			
-			doc.text(10, 60,'______________________ (Name of Guardian/Parents');
-			doc.text(15, 60, disciplinary.student.mother_name);
-			
-			doc.text(10, 70,'__________________________________ (Home Address');
-			doc.text(15, 70, disciplinary.student.home_address);
-			
-			doc.text(10, 85,"Dear Sir/Ma'am,");
-			
-			doc.text(15, 95,"Greetings in JESUS name!");
-			
-			doc.setFontSize(12)
-			doc.setFont('default');
-			doc.setFontType('normal');
-			doc.setFont('times');
-			
-			var lMargin=15; //left margin in mm
-			var rMargin=5; //right margin in mm
-			var pdfInMM=210;  // width of A4 in mm
+			doc.text(10, 60,'Year and Semester: '+disciplinary.student.semester.semester);
+			doc.text(10, 70,'Course: '+disciplinary.student.course.course_name);
+			doc.text(10, 80, 'Date: '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear());
 		
-			// var paragraph = ;
+			doc.text(15, 90,"After due process of investigation and deliberation of the members of the discipline committee, the above");
 			
-			var lines = doc.splitTextToSize('We regret to inform you that your daughter/son, '+disciplinary.student.firstname+' '+disciplinary.student.lastname+', a '+disciplinary.student.course.course_name+' student of La Union Colleges of Science and Technology, Inc. has been evaluated and deliberated in the following offenses as mandated by the CODE of DISCIPLINE of the STUDENT HANDBOOK.', (pdfInMM-lMargin-rMargin));
-			doc.text(lMargin,105,lines);
-		
-			var header = ["CODE","OFFENSE","DEGREE","REMARKS"];
+			doc.text(10, 95,"mentioned student has committed the following offenses:");
+
+			var header = ["CODE","CODE OF DISCIPLINE TITLE","REMARKS"];
 			
 			angular.forEach(disciplinary, function(econ,i) {
 
@@ -462,8 +445,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 				var row = [];
 				row.push(data.code_number.code_number);
 				row.push(data.code_number.code_title);
-				row.push(data.degree);
-				row.push(data.remarks);
+				row.push(data.warning_remarks);
 				
 				rows.push(row);
 				
@@ -473,7 +455,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.autoTable(header, rows,{
 				theme: 'striped',
 				margin: {
-					top: 125, 
+					top: 105, 
 					left: 10 
 				},
 				tableWidth: 500,
@@ -482,7 +464,7 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					lineWidth: 0.02,
 					cellPadding: 3,
 					overflow: 'linebreak',
-					columnWidth: 50
+					columnWidth: 65
 					
 				},
 				columnStyles: {
@@ -510,21 +492,20 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.setFontType('normal');
 			doc.setFont('times');
 			
-			var lMargin=15; //left margin in mm
-			var rMargin=5; //right margin in mm
-			var pdfInMM=210;  // width of A4 in mm
+			doc.text(15, 180,"This document will serve as warning to the student. Commitment of the same offense or other violation stipulated");
+			doc.text(10, 185," in the Code of Discipline of the Student Handbook will lead to stricter penalty such as suspension or expulsion. ");
 		
-			// var paragraph = ;
+			doc.text(127, 205,"___________________________________");
+			doc.text(130, 210,"Student’s Signature over Printed Name");
 			
-			var lines = doc.splitTextToSize('The Office of Students Affairs would like to invite you to have a dialogue regarding your child’s performance and to discuss matters on whatever assistance or help we could offer to your child’s development.', (pdfInMM-lMargin-rMargin));
-			doc.text(lMargin,195,lines);
+			doc.text(18, 250,"___________________________________");
+			doc.text(20, 255,"Adviser’s Signature over Printed Name");
 			
-			doc.text(20, 210,"Your presence will be very much appreciated.");
-			doc.text(20, 220,"Thank you very much! ");
-		
-			doc.text(130, 230,"Mr. ALVARO D. GACUSAN, Jr.");
-			doc.text(128, 235,"Dean of Academic and student Affairs");
-			doc.text(128, 230,"______________________________");
+			doc.text(100, 230,"Attested By:");
+			
+			doc.text(130, 250,"Mr. ALVARO D. GACUSAN, Jr.");
+			doc.text(128, 255,"Dean of Academic and student Affairs");
+			doc.text(128, 250,"______________________________");
 			
 			var blob = doc.output('blob');
 			window.open(URL.createObjectURL(blob));

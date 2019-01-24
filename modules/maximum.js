@@ -522,9 +522,11 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			doc.text(20, 210,"Your presence will be very much appreciated.");
 			doc.text(20, 220,"Thank you very much! ");
 		
-			doc.text(130, 230,"Mr. ALVARO D. GACUSAN, Jr.");
-			doc.text(128, 235,"Dean of Academic and student Affairs");
-			doc.text(128, 230,"______________________________");
+			doc.text(130, 230,"Respectfully Yours,");
+			
+			doc.text(130, 250,"Mr. ALVARO D. GACUSAN, Jr.");
+			doc.text(128, 255,"Dean of Academic and student Affairs");
+			doc.text(128, 250,"______________________________");
 			
 			var blob = doc.output('blob');
 			window.open(URL.createObjectURL(blob));
