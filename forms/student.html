@@ -66,7 +66,7 @@
 				<div class="row">
 					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.religion.$touched && formHolder.enrollment.religion.$invalid}">
 						<label>Religion</label>
-						<input type="text" class="form-control" name="religion" ng-model="enrollment.religion" ng-disabled="btns.ok.btn" required>
+						<select class="form-control" name="religion" ng-model="enrollment.religion" ng-options="religion.name for religion in religions track by religion.id" ng-disabled="btns.ok.btn" required></select>
 						<span class="help-block" ng-show="formHolder.enrollment.religion.$touched && formHolder.enrollment.religion.$invalid">Religion is required</span>
 					</div>
 					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.status.$touched && formHolder.enrollment.status.$invalid}">
@@ -208,47 +208,65 @@
 			<div class="row">
 				<h4 class="m-t-0 header-title"><b>Educational Background</b></h4><hr>
 				<div class="row">
-					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.enrollment.elem_school_name.$touched && formHolder.enrollment.elem_school_name.$invalid}">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.elem_school_name.$touched && formHolder.enrollment.elem_school_name.$invalid}">
 						<label>Elementary School </label>
 						<input type="text" class="form-control" name="elem_school_name" ng-model="enrollment.elem_school_name" ng-disabled="btns.ok.btn" required>
 						<span class="help-block" ng-show="formHolder.enrollment.elem_school_name.$touched && formHolder.enrollment.elem_school_name.$invalid">This field is required</span>
 					</div>
-					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.enrollment.elem_school_address.$touched && formHolder.enrollment.elem_school_address.$invalid}">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.elem_school_address.$touched && formHolder.enrollment.elem_school_address.$invalid}">
 						<label>Elementary School Addres </label>
 						<input type="text" class="form-control" name="elem_school_address" ng-model="enrollment.elem_school_address" ng-disabled="btns.ok.btn" required>
 						<span class="help-block" ng-show="formHolder.enrollment.elem_school_address.$touched && formHolder.enrollment.elem_school_address.$invalid">This field is required</span>
 					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.elem_sy.$touched && formHolder.enrollment.elem_sy.$invalid}">
+						<label>S.Y Graduated</label>
+						<input type="text" class="form-control" name="elem_sy" ng-model="enrollment.elem_sy" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.enrollment.elem_sy.$touched && formHolder.enrollment.elem_sy.$invalid">This field is required</span>
+					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.enrollment.secon_school_name.$touched && formHolder.enrollment.secon_school_name.$invalid}">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.secon_school_name.$touched && formHolder.enrollment.secon_school_name.$invalid}">
 						<label>Secondary School </label>
 						<input type="text" class="form-control" name="secon_school_name" ng-model="enrollment.secon_school_name" ng-disabled="btns.ok.btn" required>
 						<span class="help-block" ng-show="formHolder.enrollment.secon_school_name.$touched && formHolder.enrollment.secon_school_name.$invalid">This field is required</span>
 					</div>
-					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.enrollment.secon_school_address.$touched && formHolder.enrollment.secon_school_address.$invalid}">
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.secon_school_address.$touched && formHolder.enrollment.secon_school_address.$invalid}">
 						<label>Secondary School Addres </label>
 						<input type="text" class="form-control" name="secon_school_address" ng-model="enrollment.secon_school_address" ng-disabled="btns.ok.btn" required>
 						<span class="help-block" ng-show="formHolder.enrollment.secon_school_address.$touched && formHolder.enrollment.secon_school_address.$invalid">This field is required</span>
 					</div>
+					<div class="col-lg-4 form-group" ng-class="{'has-error': formHolder.enrollment.hs_sy.$touched && formHolder.enrollment.hs_sy.$invalid}">
+						<label>S.Y Graduated</label>
+						<input type="text" class="form-control" name="hs_sy" ng-model="enrollment.hs_sy" ng-disabled="btns.ok.btn" required>
+						<span class="help-block" ng-show="formHolder.enrollment.hs_sy.$touched && formHolder.enrollment.hs_sy.$invalid">This field is required</span>
+					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 form-group">
+					<div class="col-lg-4 form-group">
 						<label>Tech-Voc School </label>
 						<input type="text" class="form-control" name="techvoc_school_name" ng-model="enrollment.techvoc_school_name" ng-disabled="btns.ok.btn">
 					</div>
-					<div class="col-lg-6 form-group">
+					<div class="col-lg-4 form-group">
 						<label>Tech-Voc School Addres </label>
 						<input type="text" class="form-control" name="techvoc_school_address" ng-model="enrollment.techvoc_school_address" ng-disabled="btns.ok.btn">
 					</div>
+					<div class="col-lg-4 form-group">
+						<label>S.Y Graduated</label>
+						<input type="text" class="form-control" name="tv_sy" ng-model="enrollment.tv_sy" ng-disabled="btns.ok.btn">
+					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 form-group">
+					<div class="col-lg-4 form-group">
 						<label>Tertiary School </label>
 						<input type="text" class="form-control" name="tertiary_school_name" ng-model="enrollment.tertiary_school_name" ng-disabled="btns.ok.btn">
 					</div>
-					<div class="col-lg-6 form-group">
+					<div class="col-lg-4 form-group">
 						<label>Tertiary School Addres </label>
 						<input type="text" class="form-control" name="tertiary_school_address" ng-model="enrollment.tertiary_school_address" ng-disabled="btns.ok.btn">
+					</div>
+					<div class="col-lg-4 form-group">
+						<label>S.Y Graduated</label>
+						<input type="text" class="form-control" name="ty_sy" ng-model="enrollment.ty_sy" ng-disabled="btns.ok.btn">
 					</div>
 				</div>
 				<hr>

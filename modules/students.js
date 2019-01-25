@@ -76,6 +76,21 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			
 		};
 		
+		function religion(scope) {
+			
+			$http({
+				method: 'POST',
+				url: 'api/suggestions/religion.php'
+			}).then(function mySucces(response) {
+				
+				scope.religions = response.data;
+				
+			},function myError(response) {
+				
+			});	
+			
+		};
+		
 		function validate(scope) {
 			
 			var controls = scope.formHolder.enrollment.$$controls;
@@ -151,6 +166,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 			scope.enrollment.students_curriculum_datas = [];
 			scope.enrollment.students_curriculum_dels = [];
 			
+
+			$timeout(function() { religion(scope); },200);
 			mode(scope,row);
 			
 			$('#content').html(loading);
