@@ -6,23 +6,27 @@ require_once '../../db.php';
 
 $con = new pdo_db();
 
-// $id = $_POST['id'];
+$id = $_POST['id'];
 
-$clubs = $con->getData("SELECT *, DATE_FORMAT(date_added, '%M %d, %Y') date_added FROM clubs");
+$club = $con->getData("SELECT *, DATE_FORMAT(date_added, '%M %d, %Y') date_added FROM clubs WHERE id = $_POST[id]");
 
-foreach($clubs as $i => $club){
+foreach($club as $i => $c){
 	
-	$students = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname FROM enrollment WHERE id = ".$club['enrollment_id']);
-	$clubs[$i]['enrollment_id'] = $students[0];
+	$students = $con->getData("SELECT id, CONCAT(firstname,' ',lastname) fullname FROM enrollment WHERE id = ".$c['enrollment_id']);
+	$club[$i]['enrollment_id'] = $students[0];
 	
+	$awards = $con->getData("SELECT * FROM club_awards WHERE clubs_id = ".$c['id']);
+	$club[$i]['club_awards'] = $awards;
 };
-foreach ($clubs as $i => $p) {
+
+
+foreach ($club as $i => $p) {
 	
-	if ($p == null) $clubs[$i] = "n/a"; // pdf equals null
+	if ($p == null) $club[$i] = "n/a"; // pdf equals null
 	
 };
 
 header("Content-Type: application/json");
-echo json_encode($clubs);
+echo json_encode($club[0]);
 
 ?>
