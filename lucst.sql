@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2019 at 01:07 PM
+-- Generation Time: Jan 25, 2019 at 04:45 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -322,17 +322,21 @@ CREATE TABLE `enrollment` (
   `techvoc_school_name` varchar(255) DEFAULT NULL,
   `techvoc_school_address` varchar(255) DEFAULT NULL,
   `tertiary_school_name` varchar(255) DEFAULT NULL,
-  `tertiary_school_address` varchar(255) DEFAULT NULL
+  `tertiary_school_address` varchar(255) DEFAULT NULL,
+  `elem_sy` varchar(50) DEFAULT NULL,
+  `hs_sy` varchar(50) DEFAULT NULL,
+  `tv_sy` varchar(50) DEFAULT NULL,
+  `ty_sy` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `enrollment`
 --
 
-INSERT INTO `enrollment` (`id`, `id_number`, `firstname`, `lastname`, `middlename`, `home_address`, `dob`, `pob`, `age`, `sex`, `religion`, `status`, `phone_number`, `name_of_spouse`, `father_name`, `father_occupation`, `father_number`, `mother_name`, `mother_occupation`, `mother_number`, `address_of_parents`, `guardian_name`, `guardian_occupation`, `guardian_relationship`, `guardian_address`, `guardian_number`, `course`, `date_of_enrollment`, `year_level`, `semester`, `elem_school_name`, `elem_school_address`, `secon_school_name`, `secon_school_address`, `techvoc_school_name`, `techvoc_school_address`, `tertiary_school_name`, `tertiary_school_address`) VALUES
-(1, '123', 'Cardo', 'Dalisay', 'D', 'Bauang, La Union', '2019-01-23', 'sad', '0', 'Male', 'asd', 'Single', '123', NULL, 'asd', 'd', 'd', 'Carda Dalisay', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', '2', '2019-01-23', NULL, '2', 'd', 'd', 'd', 'd', 'd', NULL, NULL, NULL),
-(2, '12345', 'Jesffer', 'Capudoy', 'G', 'sad', '2019-01-23', 'sd', '0', 'Male', 'd', 'Single', 'asd', NULL, 'dasd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', '2', '2019-01-24', NULL, '2', 'd', 'd', 'd', 'd', NULL, NULL, NULL, NULL),
-(3, '12342', 'Catherine', 'Palabay', 'G', 'Bauang, La Union', '2000-01-23', 'asd', '19', 'Male', 'ad', 'Single', 'asd', NULL, 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', '2', '2019-01-24', NULL, '2', 'd', 'd', 'd', 'd', 'd', 'dd', 'd', 'd');
+INSERT INTO `enrollment` (`id`, `id_number`, `firstname`, `lastname`, `middlename`, `home_address`, `dob`, `pob`, `age`, `sex`, `religion`, `status`, `phone_number`, `name_of_spouse`, `father_name`, `father_occupation`, `father_number`, `mother_name`, `mother_occupation`, `mother_number`, `address_of_parents`, `guardian_name`, `guardian_occupation`, `guardian_relationship`, `guardian_address`, `guardian_number`, `course`, `date_of_enrollment`, `year_level`, `semester`, `elem_school_name`, `elem_school_address`, `secon_school_name`, `secon_school_address`, `techvoc_school_name`, `techvoc_school_address`, `tertiary_school_name`, `tertiary_school_address`, `elem_sy`, `hs_sy`, `tv_sy`, `ty_sy`) VALUES
+(1, '123', 'Cardo', 'Dalisay', 'D', 'Bauang, La Union', '2019-01-23', 'sad', '0', 'Male', '1', 'Single', '123', NULL, 'asd', 'd', 'd', 'Carda Dalisay', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', '2', '2019-01-23', NULL, '2', 'd', 'd', 'd', 'd', '', NULL, NULL, NULL, '2008-2015', '2008-2015', NULL, NULL),
+(2, '12345', 'Jesffer', 'Capudoy', 'G', 'sad', '2019-01-23', 'sd', '0', 'Male', '1', 'Single', 'asd', NULL, 'dasd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', '2', '2019-01-24', NULL, '2', 'd', 'd', 'd', 'd', NULL, NULL, NULL, NULL, '2008-2015', '2008-2015', NULL, NULL),
+(3, '12342', 'Catherine', 'Palabay', 'G', 'Bauang, La Union', '2000-01-23', 'asd', '19', 'Male', '1', 'Single', 'asd', NULL, 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', '2', '2019-01-24', NULL, '2', 'd', 'd', 'd', 'd', 'd', 'dd', 'd', 'd', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -355,6 +359,25 @@ CREATE TABLE `instructor` (
 INSERT INTO `instructor` (`id`, `firstname`, `middlename`, `lastname`, `office`) VALUES
 (1, 'Joan', 'M', 'Balcit', 'BSHRM'),
 (2, 'Jovit', 'A', 'Baldo', 'BSHRM');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `religions`
+--
+
+CREATE TABLE `religions` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `religions`
+--
+
+INSERT INTO `religions` (`id`, `name`) VALUES
+(1, 'Roman Catholic'),
+(2, 'Iglesia ni Cristo');
 
 -- --------------------------------------------------------
 
@@ -426,7 +449,7 @@ CREATE TABLE `students_curriculum_data` (
 INSERT INTO `students_curriculum_data` (`id`, `enrollment_id`, `curriculum_data_id`, `written_works`, `obe`, `att`, `exam`, `previous_grade`, `tentative_grade`, `final_grade`, `remarks`, `adding`, `prelim`, `midterm`, `semifinal`) VALUES
 (1, 1, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Active', NULL, '10', '10'),
 (2, 1, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Active', NULL, NULL, NULL),
-(3, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL),
+(3, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Active', NULL, NULL, NULL),
 (4, 3, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -553,6 +576,12 @@ ALTER TABLE `instructor`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `religions`
+--
+ALTER TABLE `religions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sbos`
 --
 ALTER TABLE `sbos`
@@ -652,6 +681,11 @@ ALTER TABLE `enrollment`
 -- AUTO_INCREMENT for table `instructor`
 --
 ALTER TABLE `instructor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `religions`
+--
+ALTER TABLE `religions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sbos`
