@@ -12,6 +12,7 @@
 				<tr>
 				  <th>No.</th>
 				  <th>Name</th>
+				  <th>Student Affairs Officer</th>
 				  <th>Date Added</th>
 				  <th>&nbsp;</th>
 				</tr>
@@ -20,6 +21,7 @@
 				<tr ng-repeat="c in clubs">
 				  <td>{{c.id}}</td>
 				  <td>{{c.enrollment_id.fullname}}</td>
+				  <td>{{c.part}}</td>
 				  <td>{{c.date_added}}</td>
 				  <td>
 				  <button class="btn btn-sm btn-primary" ng-click="app.add(this,c)" style="margin-right: 5px;" ><i class="fa fa-search" style="cursor: pointer;"></i></button>

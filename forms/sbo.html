@@ -9,6 +9,20 @@
 						<select class="form-control" name="enrollment_id" ng-model="sbo.enrollment_id" ng-options="student.fullname for student in students track by student.id" ng-disabled="btns.ok.btn" required></select>
 						<span class="help-block" ng-show="formHolder.sbo.enrollment_id.$touched && formHolder.sbo.enrollment_id.$invalid">Name is required</span>
 					</div>
+					<div class="col-lg-6 form-group" ng-class="{'has-error': formHolder.sbo.part.$touched && formHolder.sbo.part.$invalid}">
+						<label>Student Affairs Officer</label>
+						<select class="form-control" name="part" ng-model="sbo.part" ng-disabled="btns.ok.btn" required>
+							<option value="President">President</option>
+							<option value="Vice President">Vice President</option>
+							<option value="Secretary">Secretary</option>
+							<option value="Tresurer">Tresurer</option>
+							<option value="Auditor">Auditor</option>
+							<option value="PRO">PRO</option>
+							<option value="PO">PO</option>
+							<option value="Member">Member</option>
+						</select>
+						<span class="help-block" ng-show="formHolder.sbo.part.$touched && formHolder.sbo.part.$invalid">This field is required</span>
+					</div>
 				</div>
 				<hr>
 				<div class="row" style="margin-bottom: 5px;">
